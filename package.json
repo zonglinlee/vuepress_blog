@@ -1,0 +1,22 @@
+{
+  "name": "vuepress_blog",
+  "version": "1.0.0",
+  "description": "vuePress 风格的文档",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build:github": "cross-env NODE_ENV=github vuepress build docs",
+    "build:jdy": "cross-env NODE_ENV=jdy vuepress build docs",
+    "commit": "git add --all && git commit -m 'add' && git push",
+    "node:commit": "node commit"
+  },
+  "author": "lizonglin",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "vuepress": "^2.0.0-beta.22"
+  }
+}
