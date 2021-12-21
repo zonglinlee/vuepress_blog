@@ -29,6 +29,7 @@ const SidebarConfig = {
             children: [
                 '/others/github.md',
                 '/others/npm.md',
+                '/others/git.md',
             ],
         },
     ],
