@@ -7,7 +7,7 @@ actions:
   - text: 阿里云
     link: /aliyun/
     type: primary
-  - text: Git
+  - text: Git~~~~
     link: /git/gitCommit.html
     type: primary
   - text: 微信
