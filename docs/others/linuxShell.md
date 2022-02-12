@@ -22,3 +22,32 @@ echo $greeting  $greeting_1
 val=`expr 2 + 2`
 echo "两数之和为 : $val"
 ```
+
+
+- `$?` return value of the last executed command.
+
+### [shell变量](https://www.runoob.com/linux/linux-shell-variable.html)
+- 定义变量时，变量名不加美元符号 `your_name="runoob.com"`, **变量名和等号之间不能有空格**
+- 使用一个定义过的变量，只要在变量名前面加美元符号即可 `echo $your_name` 或者 `echo ${your_name}`，变量名外面的花括号是可选的，加不加都行，加花括号是为了帮助解释器识别变量的边界
+### [shell字符串](https://www.runoob.com/linux/linux-shell-variable.html)
+- 字符串是shell编程中最常用最有用的数据类型，字符串可以用`单引号`，也可以用`双引号`，也可以`不用引号`。
+- 单引号字符串的限制：
+    - 单引号里的任何字符都会原样输出，单引号字符串中的 **变量** 是无效的；
+    - 单引号字串中不能出现单独一个的单引号（对单引号使用转义符后也不行），但可成对出现，作为字符串拼接使用。
+- 双引号的优点：
+    - 双引号里可以有变量
+    - 双引号里可以出现转义字符
+### 参考链接
+- [shell特殊变量](https://wiki.jikexueyuan.com/project/shell-tutorial/shell-special-variable.html)
+
+
+
+https://man.linuxde.net/
+https://github.com/nodesource/distributions/blob/master/README.md#deb
+
+### 定时任务
+- [crontab](https://www.yiibai.com/linux/crontab.html)
+- [一次性定时任务at](https://www.yiibai.com/linux/at.html)
+
+### [ubuntu apt-get命令 阿里云镜像更换](https://developer.aliyun.com/article/704603)
+### [jdk安装](https://www.huaweicloud.com/articles/3c4a009f8f0be4ecc9199045bc151f83.html)
