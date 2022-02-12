@@ -37,6 +37,10 @@ ieda中插件市场下载太慢，v2rayN全局代理不生效，需要给idea配
 在 `package.json` 上点击右键，然后选择 `show npm scripts` 选项即可，
 会发现左下角侧边栏上出现了一个 npm 的按钮
 ```
+- webstorm 光标变粗解决方案
+```text
+应该是不小心按了键盘上的 insert 键，再按下切换回来就可以
+```
 
 ## npm代理配置
 ### 使用nrm管理registry地址
