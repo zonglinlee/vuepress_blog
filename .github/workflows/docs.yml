@@ -47,7 +47,7 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v2.2.0
         with:
           repo: zonglinlee/vuepress_blog
-          target_branch: master
+          target_branch: gh-pages
           build_dir: docs/.vuepress/dist
         env:
           # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
