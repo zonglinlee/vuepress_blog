@@ -1,4 +1,13 @@
 const SidebarConfig = {
+    '/front-end/': [
+        {
+            text: '前端环境配置',
+            children: [
+                '/front-end/setNpmGitProxy.md',
+                '/front-end/test.md',
+            ],
+        },
+    ],
     '/aliyun/': [
         {
             text: '阿里云',
