@@ -21,6 +21,9 @@ actions:
     type: primary
   - text: jsBasic
     link: /js_basic/js_module.html
+    type: primary  
+  - text: 前端库
+    link: /library/tailwindcss.html
     type: primary
   - text: js实践
     link: /js_practice/h5_image_upload.html

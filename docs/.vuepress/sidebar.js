@@ -32,6 +32,14 @@ const SidebarConfig = {
             ],
         },
     ],
+    '/library/': [
+        {
+            text: '前端库',
+            children: [
+                '/library/tailwindcss.md'
+            ],
+        },
+    ],
     '/others/': [
         {
             text: '杂项',
@@ -39,6 +47,9 @@ const SidebarConfig = {
                 '/others/github.md',
                 '/others/npm.md',
                 '/others/git.md',
+                '/others/linuxShell.md',
+                '/others/vim.md',
+                '/others/windows-cmd.md',
             ],
         },
     ],
@@ -55,6 +66,7 @@ const SidebarConfig = {
             text: 'css',
             children: [
                 '/css/css_transition_animation.md',
+                '/css/scss.md',
             ],
         },
     ],
