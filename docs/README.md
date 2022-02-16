@@ -10,9 +10,6 @@ actions:
   - text: 阿里云
     link: /aliyun/
     type: primary
-  - text: Git~~~~
-    link: /git/gitCommit.html
-    type: primary
   - text: 微信
     link: /wechat/wechat_sdk.html
     type: primary
@@ -28,8 +25,20 @@ actions:
   - text: js实践
     link: /js_practice/h5_image_upload.html
     type: primary
+  - text: Typescript
+    link: /typescript/typescript.html
+    type: primary
   - text: 杂项
     link: /others/github.html
     type: primary
 footer: Hello-world!
 ---
+  
+<hr/>
+
+### TodoList
+- 更换主题： <a href="http://v2.vuepress-reco.recoluan.com/" target="_blank">vuepress-reco.recoluan</a>
+- [数组去重](https://ssshooter.com/2021-02-25-array-unique-performance/)
+- [eventloop](https://zh.javascript.info/event-loop) [time-slicing](https://juejin.cn/post/6844903847249330184#heading-0)
+- [坑：移动端100vh](https://juejin.cn/post/6844904017051549703)
+- [css-animation-101](https://cssanimation.rocks/css-animation-101/#welcome)

@@ -16,14 +16,6 @@ const SidebarConfig = {
             ],
         },
     ],
-    '/git/': [
-        {
-            text: 'Git',
-            children: [
-                '/git/gitCommit.md',
-            ],
-        },
-    ],
     '/wechat/': [
         {
             text: '微信',
@@ -75,6 +67,14 @@ const SidebarConfig = {
             text: 'jsBasic',
             children: [
                 '/js_basic/js_module.md',
+            ],
+        },
+    ],
+    '/typescript/': [
+        {
+            text: 'Typescript',
+            children: [
+                '/typescript/typescript.md',
             ],
         },
     ]
