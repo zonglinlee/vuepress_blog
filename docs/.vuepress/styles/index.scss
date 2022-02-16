@@ -1,0 +1,17 @@
+:root {
+  scroll-behavior: smooth;
+}
+.hero .actions {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+  grid-auto-rows: 60px;
+
+  a.nav-link {
+    width: 150px;
+    font-size: 20px;
+    height: 60px;
+    box-sizing: border-box;
+    margin-left: 0!important;
+  }
+}
