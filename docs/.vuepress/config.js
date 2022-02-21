@@ -15,6 +15,11 @@ module.exports = {
     sidebar:SidebarConfig,
     sidebarDepth: 4
   },
+  markdown: {
+    toc: {
+      level:[1, 2, 3, 4]
+    }
+  },
   plugins: [
     // ['@vuepress/plugin-debug']
     // [
