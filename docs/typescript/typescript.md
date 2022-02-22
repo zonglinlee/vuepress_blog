@@ -20,6 +20,91 @@ title: Typescript入门
 - `.d.ts` 文件中的顶级声明必须以 `"declare" 或 "export"` 修饰符开头。 通过 `declare` 声明的类型或者变量或者模块，在include包含的文件范围内，都可以直接引用而不用去 import 或者
   import type 相应的变量或者类型
 
+## TypeScript for Functional Programmers
+
+### important TypeScript types
+
+|  **Type**   | **Explanation**  |
+|  ----  | ----  |
+| `T[]`  | mutable arrays, also written `Array<T>` |
+| `[T, T]`  | tuples, which are fixed-length but mutable |
+
+```ts
+// Function syntax
+let fst1: (a: any, b: any) => any = (a, b) => a;
+// or more precisely:
+let fst2: <T, U>(a: T, b: U) => T = (a, b) => a;
+// Object literal type syntax
+let o: { n: number; xs: object[] } = {n: 1, xs: []};
+// [T, T] is a subtype of T[]
+```
+
+### Unit types
+
+Unit types are **subtypes** of primitive types that contain exactly one primitive value. For example, the string "foo"
+has the type "foo". When needed, the compiler widens — converts to a supertype — the unit type to the primitive type,
+such as "foo" to string
+
+```ts
+declare function pad(s: string, n: number, direction: "left" | "right"): string;
+
+pad("hi", 10, "left"); // ok
+// 但是下面的写法有问题,这里ts编译器将 s 变量扩展到了 string type, string type  不能赋值给 联合类型 "left" | "right"
+// "right": "right"
+// s: string because "right" widens to string on assignment to a mutable variable.
+// string is not assignable to "left" | "right"
+let s = "right";
+pad("hi", 10, s);  // error: 'string' is not assignable to '"left" | "right"'
+// 可以这么改写
+let s1: "left" | "right" = "right";
+pad("hi", 10, s1); // ok
+```
+
+### Type Parameters
+
+Like most C-descended languages, TypeScript **requires declaration of type parameters**.There is no case requirement,
+but type parameters are conventionally single uppercase letters. Type parameters can also be constrained to a type,
+which behaves a bit like type class constraints
+
+```ts
+function liftArray<T>(t: T): Array<T> {
+    return [t];
+}
+```
+
+### readonly and const
+
+In JavaScript, mutability is the default, although it allows variable declarations with `const` to declare that the
+reference is immutable. TypeScript additionally has a `readonly` modifier for properties. It also ships with a mapped
+type `Readonly<T>` that makes all properties readonly. And it has a specific `ReadonlyArray<T>` type.
+
+```ts
+interface X {
+    x: number;
+}
+
+let rx: Readonly<X> = {x: 1};
+rx.x = 12; // error
+```
+
+### [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
+
+- no literal types in that expression should be **widened** (e.g. no going from "hello" to string)
+- object literals get `readonly` properties
+- array literals become `readonly tuples`
+- One thing to note is that const assertions can only be applied immediately on simple literal expressions.
+
+```ts
+// Type '"hello"'
+let x = "hello" as const;
+// Type 'readonly [10, 20]'
+let y = [10, 20] as const;
+// Type '{ readonly text: "hello" }'
+let z = {text: "hello"} as const;
+// 错误写法
+let b = (60 * 60 * 1000) as const;
+```
+
 ## everyDay types
 
 ### Type Annotations on Variables
@@ -91,14 +176,17 @@ const a = (expr as any) as T;
 ### Literal Inference
 
 In addition to the general types string and number, we can refer to specific strings and numbers in type positions
-Both `var` and `let` allow for changing what is held inside the variable, and `const` does not, it can only represent 1 possible string, it
-has a literal type representation
+Both `var` and `let` allow for changing what is held inside the variable, and `const` does not, it can only represent 1
+possible string, it has a literal type representation
+
 ```ts
 let x: "hello" = "hello";
 ```
 
-You can use as const to convert the entire object to be type literals.
-The as const suffix acts like `const` but for the type system, ensuring that all properties are assigned the literal type instead of a more general version like string or number
+You can use as const to convert the entire object to be type literals. The as const suffix acts like `const` but for the
+type system, ensuring that all properties are assigned the literal type instead of a more general version like string or
+number
+
 ```ts
 const req = {url: "https://example.com", method: "GET"} as const;
 
@@ -109,81 +197,413 @@ handleRequest(req.url, req.method);
 ```
 
 ### Non-null Assertion Operator (Postfix!)
-TypeScript also has a special syntax for removing null and undefined from a type without doing any explicit checking. Writing ! after any expression is effectively a type assertion that the value isn’t null or undefined
+
+TypeScript also has a special syntax for removing null and undefined from a type without doing any explicit checking.
+Writing ! after any expression is effectively a type assertion that the value isn’t null or undefined
+
 ```ts
 function liveDangerously(x?: number | null) {
-  // No error
-  console.log(x!.toFixed());
+    // No error
+    console.log(x!.toFixed());
 }
 ```
 
 ### Enums
+
 An enum can be defined using the `enum` keyword
+
 ```ts
 // Numeric enums
 enum Direction {
-  Up = 1,
-  Down,
-  Left,
-  Right,
+    Up = 1,
+    Down,
+    Left,
+    Right,
 }
 ```
-Above, we have a `numeric enum` where Up is initialized with 1. All of the following members are auto-incremented from that point on. In other words, Direction.Up has the value 1, Down has 2, Left has 3, and Right has 4.
+
+Above, we have a `numeric enum` where Up is initialized with 1. All of the following members are auto-incremented from
+that point on. In other words, Direction.Up has the value 1, Down has 2, Left has 3, and Right has 4.
+
 ```ts
 enum Direction {
-  Up = "UP",
-  Down = "DOWN",
-  Left = "LEFT",
-  Right = "RIGHT",
+    Up = "UP",
+    Down = "DOWN",
+    Left = "LEFT",
+    Right = "RIGHT",
 }
 ```
-In a string enum, each member has to be **constant-initialized with a string literal**, or with another string enum member
+
+In a string enum, each member has to be **constant-initialized with a string literal**, or with another string enum
+member
+
 ## Functions
+
 ### Function Type Expressions
-The simplest way to describe a function is with a `function type expression`. These types are syntactically similar to **arrow functions**.
+
+The simplest way to describe a function is with a `function type expression`. These types are syntactically similar
+to **arrow functions**.
+
 ```ts
 // The syntax (a: string) => void means “a function with one parameter, named a, of type string, that doesn’t have a return value”.
 // Note that the parameter name is required.
 function greeter(fn: (a: string) => void) {
-  fn("Hello, World");
+    fn("Hello, World");
 }
 ```
+
 Of course, we can use a type alias to name a function type
+
 ```ts
 type GreetFunction = (a: string) => void;
+
 function greeter(fn: GreetFunction) {
-  // ...
+    // ...
 }
 ```
+
 ### Call Signatures
-In JavaScript, functions can have properties in addition to being callable. However, the function type expression syntax **doesn’t allow for declaring properties**. If we want to describe something callable with properties, we can write a call signature in an object type
+
+In JavaScript, functions can have properties in addition to being callable. However, the function type expression
+syntax **doesn’t allow for declaring properties**. If we want to describe something callable with properties, we can
+write a call signature in an object type
+
 ```ts
 type DescribableFunction = {
-  description: string;
-  (someArg: number): boolean;
+    description: string;
+    (someArg: number): boolean;
 };
+
 function doSomething(fn: DescribableFunction) {
-  console.log(fn.description + " returned " + fn(6));
+    console.log(fn.description + " returned " + fn(6));
 }
 ```
-Note that the syntax is slightly different compared to a function type expression - use `:` between the parameter list and the return type rather than `=>`.
+
+Note that the syntax is slightly different compared to a function type expression - use `:` between the parameter list
+and the return type rather than `=>`.
+
 ### Construct Signatures
-avaScript functions can also be invoked with the new operator. TypeScript refers to these as constructors because they usually create a new object. You can write a construct signature by adding the new keyword in front of a call signature
+
+avaScript functions can also be invoked with the new operator. TypeScript refers to these as constructors because they
+usually create a new object. You can write a construct signature by adding the new keyword in front of a call signature
+
 ```ts
 type SomeConstructor = {
-  new (s: string): SomeObject;
+    new(s: string): SomeObject;
 };
+
 function fn(ctor: SomeConstructor) {
-  return new ctor("hello");
+    return new ctor("hello");
 }
 ```
+
 ### Generic Functions
-In TypeScript, generics are used when we want to describe a correspondence between two values. We do this by declaring a type parameter in the function signature
+
+In TypeScript, generics are used when we want to describe a correspondence between two values. We do this by declaring a
+type parameter in the function signature
+
 ```ts
 function firstElement<Type>(arr: Type[]): Type | undefined {
-  return arr[0];
+    return arr[0];
 }
 ```
-constraint of types
+
+### Function Overloads
+
+In TypeScript, we can specify a function that can be called in different ways by writing overload signatures. To do
+this, write some number of function signatures (usually two or more), followed by the body of the function
+
+```ts
+// 这个函数只可以接收一个参数或者两个参数，第三个函数签名是用来实现前两个函数签名的
+// 前两个函数叫做 Overload Signatures ，第三个叫做 Implementation Signature
+function makeDate(timestamp: number): Date;
+function makeDate(m: number, d: number, y: number): Date;
+function makeDate(mOrTimestamp: number, d?: number, y?: number): Date {
+    if (d !== undefined && y !== undefined) {
+        return new Date(y, mOrTimestamp, d);
+    } else {
+        return new Date(mOrTimestamp);
+    }
+}
+```
+
+In this example, we wrote two overloads: one accepting one argument, and another accepting three arguments. **These
+first two signatures are called the overload signatures.**
+
+Then, **we wrote a function implementation with a compatible signature.** Functions have an implementation signature, **
+but this signature can’t be called directly. Even though we wrote a function with two optional parameters after the
+required one, it can’t be called with two parameters!**
+
+### `unknown` type && `never` type
+
+The` unknown type` represents any value. This is similar to the any type, but is safer because it’s not legal to do
+anything with an unknown value. This is useful when describing function types because you can describe functions that
+accept any value without having any values in your function body.
+
+The never type represents values which are never observed. In a return type, **this means that the function throws an
+exception or terminates execution of the program**
+
+### `Function` type
+
+The global type Function describes properties like `bind, call, apply`, and others present on all function values in
+JavaScript. It also has the special property that values of type Function can always be called; these calls return any
+
+### Parameter Destructuring
+
+```ts
+function sum({a, b, c}: { a: number; b: number; c: number }) {
+    console.log(a + b + c);
+}
+
+// 或者定义一个type
+type ABC = { a: number; b: number; c: number };
+```
+
+### Return type void
+
+- Contextual typing with a return type of void does not force functions to not return something.when implemented, can
+  return any other value, but it will be ignored.
+- when a literal function definition has a void return type, that function must not return anything
+
+## [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.htm)
+
+TypeScript provides several utility types to facilitate common type transformations. These utilities are available
+globally.
+
+### `ReturnType<Type>`
+
+Constructs a type consisting of the return type of `function Type`.
+
+```ts
+// 注意必须传入一个 function type 才可以
+declare function f1(): { a: number; b: string };
+
+type T1 = ReturnType<(s: string) => void>;
+type T4 = ReturnType<typeof f1>;
+
+```
+
+### `Parameters<Type>`
+
+Constructs` a tuple type` from the types `used in the parameters of a function type Type`.
+
+```ts
+
+// 传入的是一个 function type ,得到一个元组类型的 type 
+type T1 = Parameters<(s: string) => void>;
+type T1 = [s: string]
+
+```
+
+### `Record<Keys, Type>`
+
+Constructs an` object type` whose property keys are Keys and whose property values are Type. This utility can be used to
+map the properties of a type to another type.
+
+## Object Types
+
+### [Index Signatures](https://www.typescriptlang.org/docs/handbook/2/objects.html#index-signatures)
+
+Sometimes you don’t know all the names of a type’s properties ahead of time, but you do know the shape of the values.In
+those cases you can use an index signature to describe the types of possible values, for example:
+
+```ts
+// This index signature states that when a StringArray is indexed with a number, it will return a string
+// An index signature property type must be either ‘string’ or ‘number’.
+interface StringArray {
+    [index: number]: string;
+}
+
+const myArray: StringArray = getStringArray();
+const secondItem = myArray[1]
+
+// name 属性不能返回 string type 的值，因为index signature 规定了必须返回number，你可以在 index signature 中返回联合类型来解决这个问题
+interface NumberDictionary {
+    [index: string]: number;
+
+    length: number; // ok
+    name: string; // not ok : Property 'name' of type 'string' is not assignable to 'string' index type 'number'.
+}
+```
+
+### Intersection Types
+
+An intersection type is defined using the & operator.
+
+```ts
+// 不冲突 Combined has two properties, a and b, just as if they had been written as one object literal type.
+type Combined = { a: number } & { b: string };
+// 冲突  
+// Intersection and union are recursive in case of conflicts, so Conflicting.a: number & string.
+type Conflicting = { a: number } & { a: string };
+// test变量只能赋值为字符串 'hello'， string 和 'hello' 的交叉类型为 'hello'
+type Test = string & 'hello'
+let test: Test = 'hey'; // 报错，只能为 hello
+```
+
 ## Type Manipulation
+
 ### Generics
+
+### Type Operator
+
+- the `keyof operator` takes an `object type` and produces `a string or numeric literal union of its keys`
+
+- `typeof operator` you can use in a type context to refer to the type of a variable or property
+- Indexed Access Types: We can use an indexed access type to look up a specific property on another type.特例：
+  using `number` type to get the type of an array’s elements. We can combine this with typeof to conveniently capture
+  the element type of an array literal
+
+```ts
+// 这是一种类似数组下标访问的方式，index 本身也是一种 type ,所以也可以使用联合类型
+type Person = { age: number; name: string; alive: boolean };
+type I1 = Person["age" | "name"];
+type I2 = Person[keyof Person];
+type AliveOrName = "alive" | "name";
+type I3 = Person[AliveOrName];
+// 特例 : 通过 number type 获取数组元素的type  
+const MyArray = [
+    {name: "Alice", age: 15},
+    {name: "Bob", age: 23},
+    {name: "Eve", age: 38},
+];
+
+type Person = typeof MyArray[number];
+```
+
+- Conditional types take a form like `(SomeType extends OtherType ? TrueType : FalseType)`
+- Mapped Types :
+
+```ts
+type OptionsFlags<Type> = {
+    [Property in keyof Type]: boolean; // JavaScript中的 in 操作符
+};
+type FeatureFlags = {
+    darkMode: () => void;
+    newUserProfile: () => void;
+};
+
+type FeatureOptions = OptionsFlags<FeatureFlags>;
+```
+
+Mapping Modifiers
+
+```ts
+// Removes 'readonly' attributes from a type's properties
+type CreateMutable<Type> = {
+    -readonly [Property in keyof Type]: Type[Property];
+};
+// Removes 'optional' attributes from a type's properties
+type Concrete<Type> = {
+    [Property in keyof Type]-?: Type[Property];
+};
+```
+
+- Template Literal Types Template literal types build on `string literal types`, and have the ability to expand into
+  many strings via unions.
+
+```ts
+type World = "world";
+type Greeting = `hello ${World}`;
+type Greeting = "hello world"
+```
+
+- Intrinsic String Manipulation Types To help with string manipulation, TypeScript includes a set of types which can be
+  used in string manipulation. These types come built-in to the compiler for performance and can’t be found in the .d.ts
+  files included with TypeScript。 `Uppercase<StringType>` `Lowercase<StringType>` `Capitalize<StringType>`
+
+## [Modules](https://www.typescriptlang.org/docs/handbook/2/modules.html)
+
+In TypeScript, just as in ECMAScript 2015, **any file containing a top-level import or export is considered a module.**
+Conversely, **a file without any top-level import or export declarations is treated as a script** whose contents are
+available in the global scope (and therefore to modules as well).
+
+If you have a file that doesn’t currently have any imports or exports, but you want to be treated as a module, add the
+line:
+
+```ts
+export {};
+```
+
+You can import a file and not include any variables into your current module via import "./file".In this case, the
+import does nothing. However, all of the code in maths.ts was evaluated, which could trigger side-effects which affect
+other objects
+
+```ts
+import "./maths.js";
+
+console.log("3.14");
+```
+
+`Types` can be exported and imported using the same syntax as JavaScript values TypeScript has extended the import
+syntax with two concepts for declaring an import of a type: `import type`. TypeScript 4.5 also allows for individual
+imports to be prefixed with type to indicate that the imported reference is a type.
+
+```ts
+// Inline type imports
+import {createCatName, type Cat, type Dog} from "./animal.js";
+// can only import types
+import type {Cat, Dog} from "./animal.js";
+```
+
+```ts
+// @filename: animal.ts
+export type Cat = { breed: string; yearOfBirth: number };
+
+export interface Dog {
+    breeds: string[];
+    yearOfBirth: number;
+}
+
+// @filename: app.ts
+import {Cat, Dog} from "./animal.js";
+
+type Animals = Cat | Dog;
+```
+
+## [Classes](https://www.typescriptlang.org/docs/handbook/2/classes.html)
+
+### Constructors
+
+- Constructors can’t have type parameters - these belong on the outer class declaration
+- Constructors can’t have return type annotations - the class instance type is always what’s returned
+
+```ts
+class Point {
+    // Overloads
+    constructor(x: number, y: string);
+    constructor(s: string);
+    constructor(xs: any, y?: any) {
+        // ...
+    }
+}
+```
+#### Super Calls
+Just as in JavaScript, if you have a `base class`, you’ll need to call `super()`; in your constructor body before using any `this.` members
+```ts
+class Base {
+  k = 4;
+}
+ 
+class Derived extends Base {
+  constructor() {
+    console.log(this.k);
+    super(); // 'super' must be called before accessing 'this' in the constructor of a derived class.
+  }
+}
+```
+### Getters / Setters
+- If get exists but no set, the property is automatically readonly
+- If the type of the setter parameter is not specified, it is inferred from the return type of the getter
+- Getters and setters must have the same Member Visibility
+```ts
+class C {
+  _length = 0;
+  get length() {
+    return this._length;
+  }
+  set length(value) {
+    this._length = value;
+  }
+}
+```
