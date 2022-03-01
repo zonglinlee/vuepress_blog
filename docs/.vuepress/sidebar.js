@@ -3,8 +3,7 @@ const SidebarConfig = {
         {
             text: '前端环境配置',
             children: [
-                '/front-end/setNpmGitProxy.md',
-                '/front-end/test.md',
+                '/front-end/setNpmGitProxy.md'
             ],
         },
     ],

@@ -22,6 +22,22 @@ module.exports = {
     }
   },
   plugins: [
-    copyCode({})
+    copyCode({}),
+    // [
+    //   '@vuepress/docsearch',
+    //   '@vuepress/plugin-docsearch',
+    //   {
+    //     apiKey: '<API_KEY>',
+    //     indexName: '<INDEX_NAME>',
+    //     locales: {
+    //       '/': {
+    //         placeholder: 'Search Documentation',
+    //       },
+    //       '/zh/': {
+    //         placeholder: '搜索文档',
+    //       },
+    //     },
+    //   },
+    // ]
   ]
 };
