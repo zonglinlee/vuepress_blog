@@ -578,32 +578,168 @@ class Point {
     }
 }
 ```
+
 #### Super Calls
-Just as in JavaScript, if you have a `base class`, you’ll need to call `super()`; in your constructor body before using any `this.` members
+
+Just as in JavaScript, if you have a `base class`, you’ll need to call `super()`; in your constructor body before using
+any `this.` members
+
 ```ts
 class Base {
-  k = 4;
+    k = 4;
 }
- 
+
 class Derived extends Base {
-  constructor() {
-    console.log(this.k);
-    super(); // 'super' must be called before accessing 'this' in the constructor of a derived class.
-  }
+    constructor() {
+        console.log(this.k);
+        super(); // 'super' must be called before accessing 'this' in the constructor of a derived class.
+    }
 }
 ```
+
 ### Getters / Setters
+
 - If get exists but no set, the property is automatically readonly
 - If the type of the setter parameter is not specified, it is inferred from the return type of the getter
 - Getters and setters must have the same Member Visibility
+
 ```ts
 class C {
-  _length = 0;
-  get length() {
-    return this._length;
-  }
-  set length(value) {
-    this._length = value;
-  }
+    _length = 0;
+    get length() {
+        return this._length;
+    }
+
+    set length(value) {
+        this._length = value;
+    }
 }
+```
+
+### Member Visibility
+
+- `public` : public is already the default visibility modifier, you don’t ever need to write it on a class member
+- `protected` : protected members are only visible to subclasses of the class they’re declared in or the current class
+- `private` is like `protected`, but doesn’t allow access to the member even from subclasses
+- Classes may have `static` members. These members aren’t associated with a particular instance of the class.
+
+```ts
+class MySafe {
+    private secretKey = 12345;
+}
+
+const s = new MySafe();
+console.log(s.secretKey); // Not allowed during type checking
+// OK : 这种写法是可以访问的 these private fields are soft private and don’t strictly enforce privacy
+// Unlike TypeScripts’s private, JavaScript’s private fields (#) remain private after compilation 
+console.log(s["secretKey"]);
+```
+
+### [**js Private class
+
+features**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields)
+
+Class fields are public by default, but private class members can be created by using a hash # prefix. The privacy
+encapsulation of these class features is enforced by JavaScript itself.
+
+### static Blocks in Classes
+
+`Static blocks` allow you to write a sequence of statements with their own scope that **can access private fields**
+within the containing class. This means that we can write `initialization code` with all the capabilities of writing
+statements, no leakage of variables, and full access to our class’s internals.
+
+### js arrow function
+
+- 箭头函数没有 this。如果访问 this，则会从外部获取
+- 不能对箭头函数进行 `new` 操作,不具有 this 自然也就意味着另一个限制：箭头函数不能用作构造器（constructor）。不能用 new 调用它们。
+- 箭头函数也没有 arguments 变量。
+
+箭头函数 => 和使用 .bind(this) 调用的常规函数之间有细微的差别：
+
+#### 箭头函数 VS bind
+
+- `.bind(this)` 创建了一个该函数的“绑定版本”。
+- 箭头函数 => 没有创建任何绑定。箭头函数只是没有 this。this 的查找与常规变量的搜索方式完全相同：在外部词法环境中查找。
+
+### `this` parameters
+
+In a method or function definition, an initial parameter named `this` has special meaning **in TypeScript**. These
+parameters are **erased** during compilation。
+
+箭头函数的缺点：will use more memory, because each class instance will have its own copy of each function defined this way。
+Instead of using an arrow function, so we can add a `this` parameter to method definitions to statically enforce that
+the method is called correctly
+
+```ts
+// TypeScript input with 'this' parameter
+function fn(this: SomeType, x: number) {
+    /* ... */
+}
+
+// After compilation : JavaScript output 编译后第一个参数就去掉了
+function fn(x) {
+    /* ... */
+}
+```
+
+传入this指向
+
+```ts
+class MyClass {
+    name = "MyClass";
+
+    getName(this: MyClass) {
+        return this.name;
+    }
+}
+
+const c = new MyClass();
+c.getName();// OK : this 指向正确
+
+// Error, would crash
+const g = c.getName;
+// The 'this' context of type 'void' is not assignable to method's 'this' of type 'MyClass'.
+console.log(g());
+
+```
+
+### [this Types](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-types)
+
+In classes, `a special type` called `this` refers dynamically to **the type of the current class**.
+
+```ts
+// sameAs 方法的 other 参数 type 为 this，它代表的是当前实例对象
+class Box {
+    content: string = "";
+
+    sameAs(other: this) {
+        return other.content === this.content;
+    }
+}
+```
+
+#### [this based type guards](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-based-type-guards)
+
+You can use `this is Type` **in the return position for methods in classes and interfaces**. When mixed with a type
+narrowing (e.g. if statements) the type of the target object would be narrowed to the specified Type.
+
+### Parameter Properties
+
+typeScript offers **special syntax** for **turning a constructor parameter into a class property** with the same name
+and value. These are called `parameter properties` and are created by prefixing a constructor argument with one of the
+visibility modifiers `public, private, protected, or readonly`. The resulting field gets those modifier(s):
+
+```ts
+class Params {
+    constructor(
+        public readonly x: number,
+        protected y: number,
+        private z: number
+    ) {
+        // No body necessary
+    }
+}
+
+const a = new Params(1, 2, 3);
+console.log(a.x);
 ```
