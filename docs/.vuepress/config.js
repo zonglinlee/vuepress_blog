@@ -1,10 +1,11 @@
 let myBase = process.env.NODE_ENV === 'github' ? '/vuepress_blog/' : '/'
 const {SidebarConfig} = require('./sidebar')
 const {navbarConfig} = require('./navbar')
+const { copyCode }  = require("vuepress-plugin-copy-code2")
 
 module.exports = {
   title: 'Hello,tumbleweed!',
-  // description: '风滚草的个人博客',
+  description: '-',
   base:myBase,
   lang:'zh-CN',
   // 自定义header
@@ -21,9 +22,6 @@ module.exports = {
     }
   },
   plugins: [
-    // ['@vuepress/plugin-debug']
-    // [
-    //   "@mr-hope/copy-code", {},
-    // ],
+    copyCode({})
   ]
 };

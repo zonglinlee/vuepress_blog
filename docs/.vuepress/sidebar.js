@@ -57,8 +57,10 @@ const SidebarConfig = {
         {
             text: 'css',
             children: [
+                '/css/css补漏.md',
                 '/css/css_transition_animation.md',
                 '/css/scss.md',
+                '/css/css_tricks.md'
             ],
         },
     ],
