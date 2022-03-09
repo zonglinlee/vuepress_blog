@@ -107,4 +107,20 @@ and stay invisible until 20% through the animation*/
 }
 ```
 
+- Lastly, you can **omit the 0% keyframe** and the browser will take the element’s style as implied. For example, to
+  have something fade away, we don’t necessarily have to give it a starting opacity of 1 (assuming the element is
+  already visible)
+
+```css
+@keyframes name {
+    100% {
+        opacity: 0;
+    }
+}
+```
+
+- If a keyframe rule doesn't specify the start or end states of the animation (that is, `0%/from` and `100%/to`), browsers
+  will use the element's existing styles for the start/end states. This can be used to animate an element from its
+  initial state and back.
+
 ## Multiple animations
