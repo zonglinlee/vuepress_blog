@@ -54,3 +54,13 @@ class User {
 }
 
 ```
+
+## Nullish coalescing operator (??)
+
+The nullish coalescing operator (`??`) is a logical operator that returns its right-hand side operand when its left-hand
+side operand is `null` or `undefined`, and otherwise returns its left-hand side operand.
+
+```js
+const foo = null ?? 'default string'; // expected output: "default string"
+const baz = 0 ?? 42; // expected output: 0
+```

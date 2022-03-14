@@ -27,7 +27,8 @@ const SidebarConfig = {
         {
             text: '前端库',
             children: [
-                '/library/tailwindcss.md'
+                '/library/tailwindcss.md',
+                '/library/vueRouter4.md'
             ],
         },
     ],
@@ -60,6 +61,14 @@ const SidebarConfig = {
                 '/css/css_transition_animation.md',
                 '/css/scss.md',
                 '/css/css_tricks.md'
+            ],
+        },
+    ],
+    '/html/': [
+        {
+            text: 'Html',
+            children: [
+                '/html/html_basic.md'
             ],
         },
     ],

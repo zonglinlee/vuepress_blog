@@ -15,6 +15,9 @@ actions:
     type: primary
   - text: css
     link: /css/css_transition_animation.html
+    type: primary  
+  - text: Html
+    link: /html/html_basic.html
     type: primary
   - text: jsBasic
     link: /js_basic/js_module.html

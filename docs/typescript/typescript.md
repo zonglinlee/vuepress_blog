@@ -410,6 +410,10 @@ those cases you can use an index signature to describe the types of possible val
 ```ts
 // This index signature states that when a StringArray is indexed with a number, it will return a string
 // An index signature property type must be either ‘string’ or ‘number’.
+interface StringByString {
+    [key: string]: string;
+}
+
 interface StringArray {
     [index: number]: string;
 }
