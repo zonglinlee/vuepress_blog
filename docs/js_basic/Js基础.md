@@ -64,3 +64,42 @@ side operand is `null` or `undefined`, and otherwise returns its left-hand side 
 const foo = null ?? 'default string'; // expected output: "default string"
 const baz = 0 ?? 42; // expected output: 0
 ```
+
+## 数字转化，一元运算符 `+`
+
+一元运算符加号，或者说，加号 + 应用于单个值，对数字没有任何作用。但是如果运算元不是数字，加号 + 则会将其转化为数字。它的效果和 `Number(...)` 相同，但是更加简短。
+
+```js
+// 转化非数字
+alert(+true); // 1
+alert(+"");   // 0
+let apples = "2";
+let oranges = "3";
+alert(+apples + +oranges); // 5
+```
+
+## [赋值 `=` 运算符](https://zh.javascript.info/operators#fu-zhi-fan-hui-yi-ge-zhi)
+
+在 JavaScript 中，所有运算符都会返回一个值。这对于 `+` 和 `-` 来说是显而易见的，但对于 `=` 来说也是如此。 语句 `x = value` 将值 `value` 写入 `x` 然后返回 `x`。
+
+```js
+let a = 1;
+let b = 2;
+let c = 3 - (a = b + 1);
+alert(a); // 3
+alert(c); // 0
+```
+
+## [逗号运算符](https://zh.javascript.info/operators#dou-hao-yun-suan-fu)
+
+逗号运算符能让我们处理多个语句，使用 , 将它们分开。每个语句都运行了，但是只有最后的语句的结果会被返回。 请注意逗号运算符的优先级非常低，比 `=` 还要低，因此下面的例子中圆括号非常重要。
+
+```js
+let a = (1 + 2, 3 + 4);
+alert(a); // 7（3 + 4 的结果）
+
+// 有时候，人们会使用它把几个行为放在一行上来进行复杂的运算。
+for (a = 1, b = 3, c = a * b; a < 10; a++) {
+// ...
+}
+```

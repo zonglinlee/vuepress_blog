@@ -2,6 +2,15 @@
 title: VueRouter4
 ---
 
+## `createWebHistory`
+
+初始化vueRouter时候，需要调用 `createWebHistory` 创建 `html5 history` 对象,在此过程中调用 `useHistoryListeners` 监听了 `popstate` 事件
+
+```ts
+window.addEventListener('popstate', popStateHandler)
+window.addEventListener('beforeunload', beforeUnloadListener)
+```
+
 ## vueRouter路由权重匹配
 
 ### `path` 解析成 `token`
@@ -81,7 +90,37 @@ const result = {
 }
 ```
 
+#### insertMatcher
+
+`insertMatcher` 函数中通过路由权重对 matchers 做了排序
+
 ### ref
+
+### routerLink组件
+
+routerLink默认渲染成为一个 `a` 标签，并添加了 `click`事件，点击触发 `link.navigate` 方法，会调用 `router` 对象的 `router.replace` 或者 `router.push`,
+最终调用的是浏览器history对象的replaceState 或者 pushState,这会导致浏览器的url改变
+
+```ts
+// routerLink最终默认渲染的是 a 标签 （/src/RouterLink.ts）
+return () => {
+    const children = slots.default && slots.default(link)
+    return props.custom
+        ? children
+        : h('a',
+            {
+                href: link.href,
+                onClick: link.navigate,
+                class: elClass.value,
+            },
+            children
+        )
+}
+
+// 调用history对象方法改变url (/src/history/html5.ts)
+history[replace ? 'replaceState' : 'pushState'](state, '', url)
+
+```
 
 - [VueRouter4路由权重](https://sumygg.com/2021/05/11/vue-router-4-path-ranking/)
 - [Path Ranking](https://reach.tech/router/ranking)
