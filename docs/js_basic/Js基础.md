@@ -360,3 +360,37 @@ for (let key in user) {
 ```
 
 对象有顺序吗？换句话说，如果我们遍历一个对象，我们获取属性的顺序是和属性添加时的顺序相同吗？ 简短的回答是：`“有特别的顺序”`：`整数属性`会被进行排序，`其他属性`则按照创建的顺序显示
+
+## Promise
+
+### Thenables
+
+**JavaScript引擎** 检查在 `(*)` 行中由 `.then` 处理程序（`handler`）返回的对象：如果它具有名为 `then` 的可调用方法，那么它将调用该方法并提供 JavaScript
+原生的函数 `resolve` 和 `reject` 作为参数（类似于
+`executor`），并等待直到其中一个函数被调用。在上面的示例中，`resolve(2)` 在 1 秒后被调用 `(**)`。然后，`result` 会被进一步沿着链向下传递。
+
+这个特性允许我们将自定义的对象与 `promise` 链集成在一起，而不必继承自 `Promise`。
+
+```js
+class Thenable {
+    constructor(num) {
+        this.num = num;
+    }
+
+    then(resolve, reject) {
+        alert(resolve); // function() { native code }
+        // 1 秒后使用 this.num*2 进行 resolve
+        setTimeout(() => resolve(this.num * 2), 1000); // (**)
+    }
+}
+
+new Promise(resolve => resolve(1))
+    .then(result => {
+        return new Thenable(result); // (*)
+    })
+    .then(alert); // 1000ms 后显示 2
+```
+
+## continue 用法
+
+`continue` 可以用于跳出 `for`  | `for...in` | `for...of` 循环中符合条件的单次循环，进行下一次循环
