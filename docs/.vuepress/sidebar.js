@@ -88,6 +88,24 @@ const SidebarConfig = {
                 '/typescript/typescript.md',
             ],
         },
+    ],
+    '/vue2/': [
+        {
+            text: 'Vue2',
+            children: [
+                '/vue2/vue_question.md',
+                '/vue2/vue_1.md',
+            ],
+        },
+    ],
+    '/element-ui/': [
+        {
+            text: 'ElementUi',
+            children: [
+                '/element-ui/dialog.md',
+                '/element-ui/table.md',
+            ],
+        },
     ]
 }
 

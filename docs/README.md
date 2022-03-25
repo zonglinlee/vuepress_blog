@@ -30,6 +30,12 @@ actions:
     type: primary
   - text: Typescript
     link: /typescript/typescript.html
+    type: primary  
+  - text: Vue2.0
+    link: /vue2/vue_1.html
+    type: primary  
+  - text: ElementUi
+    link: /element-ui/dialog.html
     type: primary
   - text: 杂项
     link: /others/github.html
