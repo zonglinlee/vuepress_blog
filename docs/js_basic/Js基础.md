@@ -394,3 +394,120 @@ new Promise(resolve => resolve(1))
 ## continue 用法
 
 `continue` 可以用于跳出 `for`  | `for...in` | `for...of` 循环中符合条件的单次循环，进行下一次循环
+
+## 构造器和操作符 `new`
+
+构造函数在技术上是**常规函数**,不过有两个约定,它们的命名以大写字母开头;它们只能由 `new 操作符` 来执行。当一个函数被使用 new 操作符执行时:
+
+- 一个**新的空对象**被创建并分配给 `this`。
+- 函数体执行。通常它会修改 `this`，为其添加新的属性。
+- 返回 `this` 的值。
+
+构造器的主要目的就是， **实现可重用的对象创建代码**，从技术上讲，**任何函数**（除了箭头函数，它没有自己的 this）都可以用作构造器。即可以通过 `new` 来运行. 在一个函数内部，我们可以使用 `new.target`
+属性来检查它是否被使用 `new` 进行调用了.
+
+如下方法有时被用在库中以使语法更加灵活。这样人们在调用函数时，**无论是否使用了** `new`，程序都能工作
+
+```js
+// 如果你没有通过 new 运行我,我会给你添加 new
+function User(name) {
+    if (!new.target) {
+        return new User(name);
+    }
+    this.name = name;
+}
+```
+
+通常，构造器没有 `return` 语句。 但是，如果这有一个 `return` 语句,则
+
+- 如果 `return` 返回的是一个对象，则返回这个对象，而不是 `this`。
+- 如果 `return` 返回的是一个原始类型，则忽略。
+
+顺便说一下，如果没有参数，我们**可以省略 `new` 后的括号**
+
+```js
+let user = new User; // <-- 没有参数
+// 等同于
+let user = new User();
+```
+
+## 可选链
+
+如果可选链 `?.` 前面的值为 `undefined` 或者 `null`，它会停止运算并返回 `undefined`。注意`?.` 前的变量必须已声明
+
+```js
+let user = {}; // user 没有 address 属性
+alert(user?.address?.street); // undefined（不报错）
+```
+
+可选链 `?.` 不是一个运算符，而是一个特殊的语法结构。它还**可以与函数和方括号一起使用**。
+
+```js
+let userAdmin = {
+    admin() {
+        alert("I am admin");
+    }
+};
+
+let userGuest = {};
+
+userAdmin.admin?.(); // I am admin
+
+userGuest.admin?.(); // 啥都没有（没有这样的方法,不会报错）
+
+let key = "firstName";
+
+let user1 = {
+    firstName: "John"
+};
+
+let user2 = null;
+alert(user1?.[key]); // John
+alert(user2?.[key]);// undefined
+// 我们还可以将 ?. 跟 delete 一起使用
+delete user?.name; // 如果 user 存在，则删除 user.name
+```
+
+可选链 `?.` 语法有三种形式
+
+- `obj?.prop` —— 如果 `obj` 存在则返回 `obj.prop`，否则返回 `undefined`。
+- `obj?.[prop]` —— 如果 `obj` 存在则返回 `obj[prop]`，否则返回 `undefined`。
+- `obj.method?.()` —— 如果 `obj.method` 存在则调用 `obj.method()`，否则返回 `undefined`
+
+## 对象包装器
+
+人们可能想对诸如字符串或数字之类的原始类型执行很多操作。最好使用方法来访问它们,为了使它们起作用，创建了提供额外功能的特殊“**对象包装器**”，使用后即被销毁。
+
+对象包装器对于每种原始类型都是不同的，它们被称为 `String`、`Number`、`Boolean`、`Symbol` 和 `BigInt`
+以下是 `str.toUpperCase()` 中实际发生的情况：
+
+```js
+let str = "Hello";
+alert(str.toUpperCase()); // HELLO
+```
+
+字符串 `str` 是一个原始值。因此，在访问其属性时，会创建一个**包含字符串字面值的特殊对象**，并且具有有用的方法，例如 `toUpperCase()`。 该方法运行并返回一个新的字符串（由 `alert` 显示）。
+特殊对象被销毁，只留下原始值 `str`。JavaScript 引擎高度优化了这个过程。它甚至可能跳过创建额外的对象。但是它仍然必须遵守规范，并且表现得好像它创建了一样。
+
+特殊的原始类型 `null` 和 `undefined` 是例外。它们没有对应的“对象包装器”，也没有提供任何方法。从某种意义上说，它们是“最原始的”。
+
+我能为字符串添加一个属性吗？
+
+```js
+let str = "Hello";
+
+str.test = 5;
+
+alert(str.test);
+```
+
+根据你是否开启了严格模式 `use strict`，会得到如下结果：
+
+非严格模式 :undefined
+
+严格模式:报错
+
+为什么？让我们看看在 (*) 那一行到底发生了什么：
+
+当访问 `str` 的属性时，一个“对象包装器”被创建了。 在严格模式下，向其写入内容会报错。 否则，将继续执行带有属性的操作，该对象将获得 `test` 属性，但是此后，“对象包装器”将消失，因此在最后一行，`str`
+并没有该属性的踪迹。
