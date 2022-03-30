@@ -28,7 +28,8 @@ const SidebarConfig = {
             text: '前端库',
             children: [
                 '/library/tailwindcss.md',
-                '/library/vueRouter4.md'
+                '/library/vueRouter4.md',
+                '/library/layui.md'
             ],
         },
     ],

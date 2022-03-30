@@ -128,8 +128,9 @@ Vue.component('blog-post', {
 - `vm.$scopedSlots` 类型：`{ [name: string]: props => Array<VNode> | undefined }`, 他是一个函数，调用后会返回 `Array<VNode>`
   ,所有的 `$slots` 现在都会作为函数暴露在 `$scopedSlots` 中。如果你在使用渲染函数，不论当前插槽是否带有作用域，我们都**推荐始终通过** `$scopedSlots` 访问它们。
 
-如果要渲染 `<div><slot :text="message"></slot></div>` 这样的模板，`render` 函数可以这样写
+`vm.$scopedSlots`的 ts 类型为 `type ScopedSlot = (props: any) => ScopedSlotChildren`
 
+如果要渲染 `<div><slot :text="message"></slot></div>` 这样的模板，`render` 函数可以这样写
 ```js
 render: function (createElement) {
     return createElement('div', [
@@ -139,6 +140,7 @@ render: function (createElement) {
     ])
 }
 ```
+如下所示 `default` 函数传入的 `props` 最终会渲染到 `v-slot:default="props"`  即作为 `slotProp` 传入
 
 ```js
 // 如果要渲染 `<div><child v-slot="props"><span>{{ props.text }}</span></child></div>` 这样的模板，`render` 函数可以这样写
