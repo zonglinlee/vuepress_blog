@@ -34,5 +34,125 @@ title: vue常见问题解答
 - 在使用 `vue-router` 时有时需要使用来缓存组件状态，这个时候 `created` 钩子就不会被重复调用了，如果我们的子组件需要在每次加载或切换状态的时候进行某些操作，可以使用 `activated` 钩子触发。
 - **父子组件的钩子并不会等待请求返回，请求是异步的**，`VUE` 设计也不能因为请求没有响应而不执行后面的钩子。所以，我们必须通过 `v-if` 来控制子组件钩子的执行时机
 
+## vue 插槽
 
+- 具名插槽: 书写组件的时候使用 `<slot>标签` + `name` 属性来提供插槽占位。 不带 `name` 的 `<slot>` 默认 `name="default" `
 
+```html
+
+<div class="container">
+    <header>
+        <slot name="header"></slot>
+    </header>
+</div>
+```
+
+- 具名插槽使用： ` <template>` 元素上使用 `v-slot` 指令，并以 `v-slot` 的参数的形式提供其**名称**; 任何没有被包裹在带有 `v-slot` 的 `<template>` 中的内容都会被视为**
+  默认插槽**的内容
+- 注意： `v-slot` 只能添加在 `<template>` 上
+- `v-slot` 也有缩写，即把参数之前的所有内容 (`v-slot:`) 替换为字符` #`。例如 `v-slot:header` 可以被重写为 `#header`
+
+```html
+
+<base-layout>
+    <template v-slot:header>
+        <h1>Here might be a page title</h1>
+    </template>
+</base-layout>
+```
+
+- 绑定在 `<slot>` 元素上的 `attribute` 被称为 `插槽 prop`
+
+```html
+<!--书写组件时候定义插槽，绑定 插槽prop-->
+<span>
+  <slot v-bind:user="user">
+    {{ user.lastName }}
+  </slot>
+</span>
+<!--使用组件时候访问 整个插槽 slotProps 属性，这里的 slotProps 名称可以自己随便定义-->
+<current-user>
+    <template v-slot:default="slotProps">
+        {{ slotProps.user.firstName }}
+    </template>
+</current-user>
+```
+
+- 特殊情况简写 ： **独占默认插槽**的缩写语法，当被提供的内容**只有默认插槽**时，组件的标签才可以被当作插槽的模板来使用。这样我们就可以把 `v-slot` **直接用在组件上**
+
+```html
+
+<current-user v-slot:default="slotProps">
+    {{ slotProps.user.firstName }}
+</current-user>
+<!--或者-->
+<current-user v-slot="slotProps">
+    {{ slotProps.user.firstName }}
+</current-user>
+```
+
+- 废弃的语法书写形式
+
+```html
+
+<!--插槽的使用: 在template上使用slot属性指定插槽名称 -->
+<!--使用slot-scope属性指定 slot prop-->
+
+<slot-example>
+    <template slot="default" slot-scope="slotProps">
+        {{ slotProps.msg }}
+    </template>
+</slot-example>
+
+```
+
+## [`$slots` vs `$scopeSlots`](https://cn.vuejs.org/v2/api/#vm-scopedSlots)
+
+- `vm.$slots` 类型：`{ [name: string]: ?Array<VNode> }`
+
+```js
+Vue.component('blog-post', {
+    render: function (createElement) {
+        var header = this.$slots.header
+        var body = this.$slots.default
+        var footer = this.$slots.footer
+        return createElement('div', [
+            createElement('header', header),
+            createElement('main', body),
+            createElement('footer', footer)
+        ])
+    }
+})
+```
+
+- `vm.$scopedSlots` 类型：`{ [name: string]: props => Array<VNode> | undefined }`, 他是一个函数，调用后会返回 `Array<VNode>`
+  ,所有的 `$slots` 现在都会作为函数暴露在 `$scopedSlots` 中。如果你在使用渲染函数，不论当前插槽是否带有作用域，我们都**推荐始终通过** `$scopedSlots` 访问它们。
+
+如果要渲染 `<div><slot :text="message"></slot></div>` 这样的模板，`render` 函数可以这样写
+
+```js
+render: function (createElement) {
+    return createElement('div', [
+        this.$scopedSlots.default({
+            text: this.message
+        })
+    ])
+}
+```
+
+```js
+// 如果要渲染 `<div><child v-slot="props"><span>{{ props.text }}</span></child></div>` 这样的模板，`render` 函数可以这样写
+render: function (createElement) {
+    return createElement('div', [
+        createElement('child', {
+            // 在数据对象中传递 `scopedSlots`
+            // 格式为 { name: props => VNode | Array<VNode> }
+            scopedSlots: {
+                default: function (props) {
+                    return createElement('span', props.text)
+                }
+            }
+        })
+    ])
+}
+```
