@@ -559,3 +559,46 @@ alert(9999999999999999); // 显示 10000000000000000
 ```
 
 我们能解决这个问题吗？当然，最可靠的方法是借助方法 `toFixed(n)` 对结果进行舍入,请注意，`toFixed` 总是返回一个字符串
+
+## [方法借用-method borrowing](https://zh.javascript.info/call-apply-decorators#method-borrowing)
+
+我们从常规数组 `[].join` 中获取（借用）`join` 方法，并使用 `[].join.call` 在 `arguments` 的上下文中运行它。
+
+```js
+function hash() {
+    alert([].join.call(arguments)); // 1,2
+}
+
+hash(1, 2);
+```
+
+它为什么有效？ 那是因为原生方法 `arr.join(glue)` 的内部算法非常简单。类似于调用 `[1,2,3].join()`,这里的 `this` 指向的是数组 `[1,2,3]`,所以方法借用中只需要指定 `this`
+上下文即可, `join` 方法工作机制如下
+
+- 让 `glue` 成为第一个参数，如果没有参数，则使用逗号 ","。
+- 让 `result` 为空字符串。
+- 将 `this[0]` 附加到 `result`。
+- 附加 `glue` 和 `this[1]`。
+- 附加 `glue` 和 `this[2]`。
+- ……以此类推，直到 `this.length` 项目被粘在一起。
+- 返回 `result`
+
+因此，从技术上讲，**它需要** `this` 并将 `this[0]，this[1]` ……等 `join` 在一起。它的编写方式是故意允许任何类数组的 `this`
+的（不是巧合，很多方法都遵循这种做法）。这就是为什么它也可以和 `this=arguments`
+一起使用
+
+## Function.prototype.apply
+
+用 `apply` 将数组各项添加到另一个数组 我们可以使用 `push` 将元素追加到数组中。由于 `push` 接受**可变数量**的参数，所以也可以一次追加多个元素。 但是，如果 `push`
+的参数是数组，它会将该数组作为单个元素添加，而不是将这个数组内的每个元素添加进去，因此我们最终会得到一个数组内的数组。如果不想这样呢？`concat` 符合我们的需求，但它并不是将元素添加到现有数组，而是创建并返回一个新数组。
+然而我们需要将元素追加到现有数组 ，这里`apply` 正派上用场！
+
+```js
+var array = ['a', 'b'];
+var elements = [0, 1, 2];
+array.push.apply(array, elements);
+console.info(array); // ["a", "b", 0, 1, 2]
+```
+
+`apply` 接收的是一个数组或者类数组对象，但实际调用函数的时候是将数组或者类数组对象拆成逗号分割的参数传入方法中调用的， `Function.prototype.call`
+则接收的是一组参数，调用的时候也是将其传入方法调用的，js内部对 `apply` 方法做了优化，同样的情况下，`apply` 性能比 `call` 好

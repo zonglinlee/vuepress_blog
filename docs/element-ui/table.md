@@ -33,7 +33,11 @@ export function createStore(table, initialState = {}) {
 
 ## table-column
 
-`tableColumn` 组件的 `computed` 属性中有个 `owner` 属性，它指向的是当前 `tableColumn` 组件所归属的父组件 `table` 实例
+`tableColumn` 组件就是补全当前列的 `props`, 设置当前列单元格渲染 `render` 函数，设置 watch 监听各个 `props` 的变化，并在 `mounted` 的时候将当前列添加到 `el-table`
+组件内部的 `store`上，在 `destroyed` 的时候将当前 `column` 从 `store` 中移除掉。
+
+`tableColumn` 组件的 `computed` 属性中有个 `owner` 属性，它指向的是当前 `tableColumn` 组件所归属的父组件实例（可能是 `el-table` 或者 `el-table-column`,
+存在多级表头的情况）
 
 ```text
 owner(){
@@ -46,8 +50,7 @@ owner(){
 ```
 
 `tableColumn` 组件在 `mounted` 钩子中会调用 `store` 原型上的 `commit` 方法插入 `tableColumn` 组件，将所有挂载的 `tableColumn`
-组件维护在`store.states._columns`
-中，然后在`table-header`组件中使用
+组件维护在`store.states._columns` 中，然后在`table-header`组件中使用
 
 ```js
 owner.store.commit('insertColumn', this.columnConfig, columnIndex, this.isSubColumn ? parent.columnConfig : null);
@@ -162,3 +165,64 @@ export function getPropByPath(obj, path, strict) {
 
 ```
 
+#### `setColumnWidth`
+
+这个步骤是为了标准化当前 `column` 上的`with` 属性，`table-column` 中有个计算属性 `realWidth`,如果 `el-column` 组件传入了 `width` 属性，则会将 `with`
+进行 `parseInt` 转换为 `number`类型 赋给 `this.width 和 this.realWith`;如果没有传入 `width` 属性， 则 `with` 和 `realWith` 为 `undefined`;
+如果没有传入 `minWidth` 属性，则设置默认 `minWith` 为 `80`。对于 `with` 和 `realWith` 为 `undefined`的列，最后会被当作弹性列 `flexColumns`,会给它们分配剩余空间
+
+## table-header
+
+### vue内置方法`this._l`
+
+`this._l` 是 `vue` 框架中的遍历方法（`Runtime helper for rendering v-for lists`） 返回值是 `Array<VNode>`,这个方法存在于
+
+`vue/src/core/instance/render-helpers/render-list.js （vue version 2.6）`
+
+它接收两个参数 第一个是要渲染的 对象 ，第二个参数是一个 `render` 函数
+
+```ts
+export function renderList(
+    val: any,
+    render: (
+        val: any,
+        keyOrIndex: string | number,
+        index?: number
+    ) => VNode
+): ?Array<VNode> {
+    let ret: ?Array<VNode>, i, l, keys, key
+    if (Array.isArray(val) || typeof val === 'string') {
+        ret = new Array(val.length)
+        for (i = 0, l = val.length; i < l; i++) {
+            ret[i] = render(val[i], i)
+        }
+    } else if (typeof val === 'number') {
+        ret = new Array(val)
+        for (i = 0; i < val; i++) {
+            ret[i] = render(i + 1, i)
+        }
+    } else if (isObject(val)) {
+        if (hasSymbol && val[Symbol.iterator]) {
+            ret = []
+            const iterator: Iterator<any> = val[Symbol.iterator]()
+            let result = iterator.next()
+            while (!result.done) {
+                ret.push(render(result.value, ret.length))
+                result = iterator.next()
+            }
+        } else {
+            keys = Object.keys(val)
+            ret = new Array(keys.length)
+            for (i = 0, l = keys.length; i < l; i++) {
+                key = keys[i]
+                ret[i] = render(val[key], key, i)
+            }
+        }
+    }
+    if (!isDef(ret)) {
+        ret = []
+    }
+    // (ret: any)._isVList = true
+    return ret
+}
+```

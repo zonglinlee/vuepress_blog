@@ -14,7 +14,7 @@ module.exports = {
     logo: 'https://vuejs.org/images/logo.png',
     navbar: navbarConfig,
     sidebar:SidebarConfig,
-    sidebarDepth: 4
+    sidebarDepth: 2, // 最大值为2  可以提取到 h3
   },
   markdown: {
     toc: {

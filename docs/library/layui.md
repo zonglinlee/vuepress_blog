@@ -38,3 +38,14 @@ function radioRequired(value, item) {
     }
 }
 ```
+
+## [`layui radio/select` 不能通过 js 触发事件](https://blog.csdn.net/qq_33769914/article/details/104770125)
+
+`layui` 对 `radio和select` 组件做过包装处理，直接选中 `input和select` 元素通过 `click()` 触发是不生效的， 对于 `radio` 应该选中当前 `radio相应的input元素`
+的下一个 `class="layui-form-radio"` 的 `div` 元素,在这个 div 上面触发 `click()`, 此时会触发 `form.on(radio(radio-filter),callback)`
+中的 `callback` 函数
+
+```js
+const radioElement = $(layero).find('input.none-standard-radio[name="addressStandard"]')
+radioElement.next('.layui-form-radio').trigger('click')
+```
