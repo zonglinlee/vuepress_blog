@@ -39,7 +39,7 @@ function radioRequired(value, item) {
 }
 ```
 
-## [`layui radio/select` 不能通过 js 触发事件](https://blog.csdn.net/qq_33769914/article/details/104770125)
+## [`layui radio` 不能通过 js 触发事件](https://blog.csdn.net/qq_33769914/article/details/104770125)
 
 `layui` 对 `radio和select` 组件做过包装处理，直接选中 `input和select` 元素通过 `click()` 触发是不生效的， 对于 `radio` 应该选中当前 `radio相应的input元素`
 的下一个 `class="layui-form-radio"` 的 `div` 元素,在这个 div 上面触发 `click()`, 此时会触发 `form.on(radio(radio-filter),callback)`
@@ -48,4 +48,18 @@ function radioRequired(value, item) {
 ```js
 const radioElement = $(layero).find('input.none-standard-radio[name="addressStandard"]')
 radioElement.next('.layui-form-radio').trigger('click')
+```
+
+## `layui-select` 自动触发 `(select(filter),callback)` 中的 `callback`
+
+layui 源码中就是监听的是 `dd` 上的 `click` 事件，如下所示 `liveTypeEle` 为当前的 `select` 元素，需要选中 `dl` 中的 `dd` 元素才可以触发事件
+
+```js
+function setDefaultValue(layero) {
+    let liveTypeEle = layero ? $(layero).find('select[name="livetype"]') : $('select[name="livetype"]')
+    liveTypeEle.val('1') // 这个要加上 否则有很奇怪的 bug
+    liveTypeEle.next().find('dl dd[lay-value="1"]').trigger('click')
+    liveTypeEle.attr('disabled', true)
+    form.render()
+}
 ```
