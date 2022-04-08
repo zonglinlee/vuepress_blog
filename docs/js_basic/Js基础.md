@@ -602,3 +602,498 @@ console.info(array); // ["a", "b", 0, 1, 2]
 
 `apply` 接收的是一个数组或者类数组对象，但实际调用函数的时候是将数组或者类数组对象拆成逗号分割的参数传入方法中调用的， `Function.prototype.call`
 则接收的是一组参数，调用的时候也是将其传入方法调用的，js内部对 `apply` 方法做了优化，同样的情况下，`apply` 性能比 `call` 好
+
+`apply` 用例
+
+**间谍装饰器**: 储存调用的参数
+
+```js
+function spy(func) {
+
+    function wrapper(...args) {
+        wrapper.calls.push(args);
+        return func.apply(this, args);
+    }
+
+    wrapper.calls = [];
+
+    return wrapper;
+}
+```
+
+**延时装饰器**
+
+```js
+function delay(fn, delayTime) {
+    return function (...args) {
+        // 这里使用箭头函数来指向外层函数的this
+        setTimeout(() => fn.apply(this, args), delayTime)
+    }
+}
+```
+
+**防抖装饰器**
+
+`debounce(f, ms)` 装饰器的结果是一个包装器，该包装器将暂停对 `f` 的调用，直到经过 `ms` 毫秒的非活动状态（没有函数调用，“冷却期”），然后使用最新的参数调用 `f` 一次。举个例子，我们有一个函数
+`f`，并将其替换为 `f = debounce(f, 1000)`。 然后，如果包装函数分别在 `0ms、200ms 和 500ms` 时被调用了，之后没有其他调用，那么实际的 `f` 只会在 `1500ms`
+时被调用一次。也就是说：从最后一次调用开始经过 `1000ms` 的冷却期之后。
+
+```js
+function debounce(func, ms) {
+    let timeout;
+    return function () {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, arguments), ms);
+    };
+}
+```
+
+**节流装饰器**
+
+创建一个“节流”装饰器 `throttle(f, ms)` —— 返回一个包装器。 当被多次调用时，它会在每 `ms` 毫秒最多将调用传递给 `f` 一次。`debounce`
+会在 冷却（`cooldown`）期后运行函数一次。适用于处理最终结果。 `throttle` 运行函数的频率不会大于所给定的时间 `ms` 毫秒。适用于不应该经常进行的定期更新。 节流函数第一次会立即调用，后续调用会间隔给定时间再次调用
+
+```js
+function throttle(func, ms) {
+
+    let isThrottled = false,
+        savedArgs,
+        savedThis;
+
+    function wrapper() {
+
+        if (isThrottled) { // (2)
+            savedArgs = arguments;
+            savedThis = this;
+            return;
+        }
+        isThrottled = true;
+
+        func.apply(this, arguments); // (1)
+
+        setTimeout(function () {
+            isThrottled = false; // (3)
+            if (savedArgs) {
+                wrapper.apply(savedThis, savedArgs);
+                savedArgs = savedThis = null;
+            }
+        }, ms);
+    }
+
+    return wrapper;
+}
+```
+
+调用 `throttle(func, ms)` 返回 `wrapper`。
+
+- 1.在第一次调用期间，`wrapper` 只运行 `func` 并设置冷却状态（`isThrottled = true`）。
+- 2.在这种状态下，所有调用都记忆在 `savedArgs/savedThis` 中。请注意，上下文和参数（`arguments`）同等重要，应该被记下来。我们同时需要他们以重现调用。
+- 3.然后经过 `ms` 毫秒后，触发 `setTimeout`。冷却状态被移除（`isThrottled = false`），如果我们忽略了调用，则将使用最后记忆的参数和上下文执行 `wrapper`。
+- 4.第 3 步运行的不是 `func`，而是 `wrapper`，因为我们不仅需要执行 `func`，还需要再次进入冷却状态并设置 `timeout` 以重置它
+
+## 递归和堆栈
+
+最大的嵌套调用次数（包括首次）被称为 **递归深度**
+
+最大递归深度受限于 `JavaScript` 引擎。对我们来说，引擎在最大迭代深度为 `10000` 及以下时是**可靠的**，有些引擎可能允许更大的最大深度，但是对于大多数引擎来说，100000
+可能就超出限制了。有一些自动优化能够帮助减轻这种情况（`尾部调用优化`），但目前它们还没有被完全支持，只能用于简单场景。
+
+任何递归都可以用循环来重写。通常循环变体更有效。但有时重写很难，尤其是函数根据条件使用不同的子调用，然后合并它们的结果，或者分支比较复杂时。而且有些优化可能没有必要，完全不值得。递归可以使代码更短，更易于理解和维护。
+
+斐波那契数 斐波那契数 序列有这样的公式： `Fn = Fn-1 + Fn-2`。换句话说，下一个数字是前两个数字的和。 编写一个函数 `fib(n)` 返回第 `n` 个斐波那契数,前两个数字都是 1
+
+```js
+// 递归实现
+function fib1(n) {
+    return n <= 1 ? n : fib(n - 1) + fib(n - 2);
+}
+
+// fib1(77); // 超级慢，不要尝试调用
+// 循环实现
+function fib2(n) {
+    let a = 1;
+    let b = 1;
+    for (let i = 3; i <= n; i++) {
+        let c = a + b;
+        a = b;
+        b = c;
+    }
+    return b;
+}
+
+// fib2(77); // 很快
+```
+
+[尾调用（`tail call`）”优化](https://www.ruanyifeng.com/blog/2015/04/tail-call.html)
+
+尾调用的概念非常简单，一句话就能说清楚，就是指**某个函数的最后一步是调用另一个函数**。 递归非常耗费内存，因为需要同时保存成千上百个调用记录，很容易发生"栈溢出"错误（`stack overflow`
+）。但对于尾递归来说，由于只存在一个调用记录，所以永远不会发生"栈溢出"错误。
+
+## Rest 参数 `...`
+
+`Rest` 参数可以通过使用三个点 `...` 并在后面跟着包含剩余参数的数组名称，来将它们包含在函数定义中。这些点的字面意思是“**将剩余参数收集到一个数组中**”。`Rest` 参数必须放到参数列表的末尾
+
+`Spread` 语法看起来和 `rest` 参数很像，也使用 `...`，但是二者的用途完全相反
+
+若 `...` 出现在函数参数列表的最后，那么它就是 `rest 参数`，它会把参数列表中剩余的参数收集到一个数组中。
+
+若 `...` 出现在函数调用或类似的表达式中，那它就是 `spread 语法`，它会把一个数组展开为列表。
+
+## [变量作用域，闭包](https://zh.javascript.info/closure#step-1-bian-liang)
+
+在 `JavaScript` 中，每个运行的函数，代码块 `{...}` 以及**整个脚本**，都有一个被称为 **词法环境**（Lexical Environment） 的内部（隐藏）的关联对象。词法环境对象由两部分组成：
+
+- 环境记录（Environment Record） —— 一个存储所有局部变量作为其属性（包括一些其他信息，例如 this 的值）的对象。
+- 对 外部词法环境 的引用，与外部代码相关联。
+
+在一个函数运行时，在调用刚开始时，会自动创建一个新的词法环境以存储这个调用的局部变量和参数。在这个函数调用期间，我们有两个词法环境：内部一个（用于函数调用）和外部一个（全局） 当代码要访问一个变量时 ——
+首先会搜索内部词法环境，然后搜索外部环境，然后搜索更外部的环境，以此类推，直到全局词法环境。
+
+所有的函数在“诞生”时都会记住创建它们的词法环境。从技术上讲，这里没有什么魔法：所有函数都有名为 `[[Environment]]`
+的隐藏属性，该属性保存了对创建该函数的词法环境的引用。
+
+闭包：是指内部函数总是可以访问其所在的外部函数中声明的变量和参数，即使在其外部函数被返回（寿命终结）了之后。在某些编程语言中，这是不可能的，或者应该以特殊的方式编写函数来实现。在 JavaScript
+中，所有函数都是天生闭包的（只有一个例外，将在 "`new Function`" 语法 中讲到）。 也就是说：JavaScript 中的函数会自动通过隐藏的 `[[Environment]]`
+属性记住创建它们的位置，所以它们都可以访问外部变量。
+
+```js
+function Counter() {
+    let count = 0;
+
+    this.up = function () {
+        return ++count;
+    };
+    this.down = function () {
+        return --count;
+    };
+}
+
+let counter = new Counter();
+console.log(counter.count) // undefined,new调用并不会生成 count 属性
+alert(counter.up()); // 1 ，counter.up函数生成时候在词法环境中保存了count
+alert(counter.up()); // 2
+alert(counter.down()); // 1
+```
+
+**按字段排序**
+
+```js
+let users = [
+    {name: "John", age: 20, surname: "Johnson"},
+    {name: "Pete", age: 18, surname: "Peterson"},
+    {name: "Ann", age: 19, surname: "Hathaway"}
+];
+
+function byField(fieldName) {
+    return (a, b) => a[fieldName] > b[fieldName] ? 1 : -1;
+}
+
+users.sort(byField('name'));
+users.sort(byField('age'));
+```
+
+## 旧时的 "`var`"
+
+用 `var` 声明的变量，不是函数作用域就是全局作用域。它们在代码块外也是可见的（译注：也就是说，`var` 声明的变量只有函数作用域和全局作用域，没有块级作用域）。
+
+```js
+for (var i = 0; i < 10; i++) {
+    var one = 1;
+    // ...
+}
+
+alert(i);   // 10，"i" 在循环结束后仍可见，它是一个全局变量
+alert(one); // 1，"one" 在循环结束后仍可见，它是一个全局变量
+```
+
+`var` 声明会被提升，但是赋值不会。 声明在函数刚开始执行的时候（“提升”）就被处理了，但是赋值操作始终是在它出现的地方才起作用
+
+在浏览器中，使用 `var`（而不是 `let/const`！）声明的全局函数和变量会**成为全局对象的属性**
+
+`IIFE`
+
+在之前，JavaScript 中只有 `var`
+这一种声明变量的方式，并且这种方式声明的变量没有块级作用域，程序员们就发明了一种模仿块级作用域的方法。这种方法被称为“立即调用函数表达式”（`immediately-invoked function expressions，IIFE`）。
+请再注意一下：如今我们没有理由来编写这样的代码。
+
+```js
+// 创建 IIFE 的方法
+(function () {
+    alert("Parentheses around the function");
+})();
+
+(function () {
+    alert("Parentheses around the whole thing");
+}());
+
+!function () {
+    alert("Bitwise NOT operator starts the expression");
+}();
+
++function () {
+    alert("Unary plus starts the expression");
+}();
+```
+
+## 函数对象
+
+一个容易理解的方式是把函数想象成可被调用的“行为对象（`action object`）”。我们不仅可以调用它们，还能把它们当作对象来处理：增/删属性，按引用传递等。
+
+- 属性 “name” 函数对象包含一些便于使用的属性。
+
+```js
+function sayHi() {
+    alert("Hi");
+}
+
+alert(sayHi.name); // sayHi
+```
+
+- 属性 “`length`” 还有另一个内建属性 “`length`”，它返回函数入参的个数, 但是注意 `rest` 参数不参与计数
+
+```js
+function f1(a) {
+}
+
+function many(a, b, ...more) {
+}
+
+alert(f1.length); // 2
+alert(many.length); // 2
+```
+
+这种特别的情况就是所谓的 **多态性** —— 根据参数的类型，或者根据在我们的具体情景下的 `length` 来做不同的处理。这种思想在 JavaScript 的库里有应用。
+
+**命名函数表达式**
+命名函数表达式（NFE，`Named Function Expression`），指**带有名字的函数表达式**的术语。它仍然是一个函数表达式。在 `function` 后面加一个名字 "`func`"
+没有使它成为一个函数声明，因为它仍然是作为赋值表达式中的一部分被创建的。
+
+```js
+// 普通的函数表达式
+let sayHi = function (who) {
+    alert(`Hello, ${who}`);
+};
+// 添加一个名字
+let sayHi = function func(who) {
+    alert(`Hello, ${who}`);
+};
+```
+
+添加它的原因：
+
+- 它允许函数在内部引用自己。
+- 它在函数外是不可见的。
+
+```js
+let sayHi = function func(who) {
+    if (who) {
+        alert(`Hello, ${who}`);
+    } else {
+        func("Guest"); // 使用 func 再次调用函数自身
+    }
+};
+
+func(); // Error, func is not defined（在函数外不可见）
+```
+
+## `new Function` 语法
+
+`let func = new Function ([arg1, arg2, ...argN], functionBody)`
+
+```js
+// 这三种变体语法形式也是可以的
+new Function('a', 'b', 'return a + b'); // 基础语法
+new Function('a,b', 'return a + b'); // 逗号分隔
+new Function('a , b', 'return a + b'); // 逗号和空格分隔
+```
+
+该函数是通过使用参数 `arg1...argN` 和给定的 `functionBody` 创建的,与我们已知的其他方法相比，这种方法最大的不同在于，它实际上是通过运行时通过**参数传递过来的字符串**创建的,以前的所有声明方法都需要 ——
+程序员，在脚本中编写函数的代码。 但是 `new Function` 允许我们将任意字符串变为函数。例如，我们**可以从服务器接收一个新的函数并执行它**
+
+```js
+let str = `动态地接收来自服务器的代码`
+let func = new Function(str);
+func();
+```
+
+使用 `new Function` 创建函数的应用场景非常特殊，比如在复杂的 Web 应用程序中，我们需要从服务器获取代码或者动态地从**模板编译函数**时才会使用
+
+通常，闭包是指使用一个特殊的属性 `[[Environment]]` 来记录函数自身的创建时的环境的函数。它具体指向了函数创建时的词法环境。 但是如果我们使用 new Function
+创建一个函数，那么该函数的 `[[Environment]]` 并不指向当前的词法环境，而是指向**全局环境**。 因此，此类函数无法访问外部（`outer`）变量，只能访问全局变量。
+
+```js
+function getFunc() {
+    let value = "test";
+
+    let func = new Function('alert(value)');
+    // let func = function() { alert(value); }; //如果这样写就可以访问
+
+    return func;
+}
+
+getFunc()(); // error: value is not defined
+```
+
+## 调度：setTimeout 和 setInterval
+
+`let timerId = setTimeout(func|code, [delay], [arg1], [arg2], ...)`
+
+`let timerId = setInterval(func|code, [delay], [arg1], [arg2], ...)`
+
+`func|code` 想要执行的函数或代码字符串。 一般传入的都是函数。由于某些历史原因，支持传入代码字符串，但是不建议这样做。
+
+浏览器中的 `setTimeout` 方法有些特殊：它为函数调用设定了 `this=window`（注意 `this` 丢失的问题）
+
+嵌套的 `setTimeout`
+
+周期性调度有两种方式。一种是使用 `setInterval`，另外一种就是嵌套的 `setTimeout` 。 嵌套的 `setTimeout` 能够精确地设置两次执行之间的延时，而 `setInterval` 却不能。
+
+```js
+let timerId = setTimeout(function tick() {
+    alert('tick');
+    timerId = setTimeout(tick, 2000); // (*)
+}, 2000);
+```
+
+嵌套的 `setTimeout` 要比 `setInterval` 灵活得多。采用这种方式可以根据当前执行结果来调度下一次调用，因此下一次调用可以与当前这一次不同
+
+```js
+let delay = 5000;
+let timerId = setTimeout(function request() {
+    // ...发送请求...
+    if (`request failed due to server overload`) {
+        // 下一次执行的间隔是当前的 2 倍
+        delay *= 2;
+    }
+    timerId = setTimeout(request, delay);
+}, delay);
+```
+
+使用 `setInterval` 时，`func` 函数的实际调用间隔要比代码中设定的时间间隔要短！**这也是正常的**，因为 `func` 的执行所花费的时间“消耗”了一部分间隔时间。假如时间间隔是 100ms ,也可能出现这种情况，就是
+`func` 的执行所花费的时间比我们预期的时间更长，并且超出了 100 毫秒。 在这种情况下，JavaScript 引擎会等待 `func` 执行完成，然后检查调度程序，如果时间到了，则 **立即**
+再次执行它。极端情况下，如果函数每次执行时间都超过 `delay` 设置的时间，那么每次调用之间将完全没有停顿。
+
+嵌套的 `setTimeout` 就能确保延时的固定,不会出现上述情况
+
+零延时的 `setTimeout`
+
+这儿有一种特殊的用法：`setTimeout(func, 0)`，或者仅仅是 `setTimeout(func)`。
+
+这样调度可以让 `func` 尽快执行。但是只有在当前正在执行的脚本执行完成后，调度程序才会调用它。 也就是说，该函数被调度在当前脚本执行完成“之后”立即执行。
+
+## 偏函数（Partial functions）
+
+偏函数 : 我们通过绑定先有函数的一些参数来创建一个新函数。为什么我们通常会创建一个偏函数？
+
+好处是我们可以创建一个具有可读性高的名字（`double，triple`）的独立函数。我们可以使用它，并且不必每次都提供一个参数，因为参数是被绑定了的。
+
+`Function.prototype.bind` 不仅可以绑定 this, 还可以绑定 函数参数,`bind` 的完整语法如下:
+
+`let bound = func.bind(context, [arg1], [arg2], ...)`
+
+虽然很少这么做，但有时它可以派上用场。
+
+```js
+function mul(a, b) {
+    return a * b;
+}
+
+let double = mul.bind(null, 2);
+alert(double(3)); // = mul(2, 3) = 6
+```
+
+对 `mul.bind(null, 2)` 的调用创建了一个新函数 `double`，它将调用传递到 `mul`，将 `null` 绑定为上下文，并将 `2` 绑定为第一个参数。并且，参数（`arguments`）均被“原样”传递。
+
+又一个偏函数的实现（**在没有上下文情况下的 partial**）
+
+```js
+function partial(func, ...argsBound) {
+    return function (...args) { // (*)
+        return func.call(this, ...argsBound, ...args);
+    }
+}
+
+// 用法：
+let user = {
+    firstName: "John",
+    say(time, phrase) {
+        alert(`[${time}] ${this.firstName}: ${phrase}!`);
+    }
+};
+
+// 为user添加一个带有绑定时间的 sayNow 偏函数方法
+user.sayNow = partial(user.say, new Date().getHours() + ':' + new Date().getMinutes());
+
+user.sayNow("Hello");
+// 类似于这样的一些内容：
+// [10:00] John: Hello!
+```
+
+一个函数不能被重绑定（`re-bound`）
+
+```js
+function f() {
+    alert(this.name);
+}
+
+f = f.bind({name: "John"}).bind({name: "Ann"});
+
+f(); // John
+```
+
+**箭头函数 VS `bind`**
+
+箭头函数 `=>` 和使用 `.bind(this)` 调用的常规函数之间有细微的差别：
+
+- `.bind(this)` 创建了一个该函数的“绑定版本”。
+- 箭头函数 `=>` 没有创建任何绑定。箭头函数只是没有 `this`。`this` 的查找与常规变量的搜索方式完全相同：在外部词法环境中查找。
+
+## 属性标志和属性描述符
+
+对象属性（`properties`），除 `value` 外，还有三个特殊的特性（`attributes`），也就是所谓的“标志”：
+
+- `writable` — 如果为 `true`，则值可以被修改，否则它是只可读的。
+- `enumerable` — 如果为 `true`，则会被在循环中列出，否则不会被列出。
+- `configurable` — 如果为 `true`，则此属性可以被删除，这些特性也可以被修改，否则不可以。
+
+当我们用“常用的方式”创建一个属性时，它们都为 `true`。但我们也可以随时更改它们。`Object.getOwnPropertyDescriptor` 方法允许查询有关属性的 完整 信息
+
+`let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName)`
+
+为了修改标志，我们可以使用
+
+`Object.defineProperty(obj, propertyName, descriptor)`
+
+如下例子中，只在严格模式下会出现 `Errors` 在非严格模式下，在对不可写的属性等进行写入操作时，不会出现错误。但是操作仍然不会成功。在非严格模式下，违反标志的行为（`flag-violating action`）只会被默默地忽略掉
+
+```js
+let user = {
+    name: "John"
+};
+
+Object.defineProperty(user, "name", {
+    writable: false
+});
+
+user.name = "Pete"; // Error: Cannot assign to read only property 'name'
+```
+
+不可配置标志（`configurable:false`）有时会预设在内建对象和属性中,比如， 开发人员无法修改 `Math.PI`的值或覆盖它; 请注意：`configurable: false` 防止**更改和删除**
+属性标志，但是允许更改对象的值(`value`属性)。
+
+```js
+let user = {
+    name: "John"
+};
+
+Object.defineProperty(user, "name", {
+    configurable: false
+});
+
+user.name = "Pete"; // 正常工作
+delete user.name; // Error
+```
+
+
+要一次获取所有属性描述符，我们可以使用` Object.getOwnPropertyDescriptors(obj)` 方法。
+有一个方法 `Object.defineProperties(obj, descriptors)`，允许一次定义多个属性。
