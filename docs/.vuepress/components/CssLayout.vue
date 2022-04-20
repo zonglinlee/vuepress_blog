@@ -64,11 +64,12 @@ export default {
 }
 
 .father {
+  height: 100px;
   .center {
-    height: 200px;
+    height: 100px;
     background: #68e0a5;
-    margin-left: 200px;
-    margin-right: 150px;
+    margin-left: 100px;
+    margin-right: 200px;
 
   }
 
@@ -83,16 +84,16 @@ export default {
 
   .left {
     background: yellow;
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
     margin-left: -100%;
   }
 
   .right {
     background: #ef4343;
-    height: 200px;
-    width: 150px;
-    margin-left: -150px;
+    height: 100px;
+    width: 200px;
+    margin-left: -200px;
   }
 }
 
