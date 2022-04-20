@@ -6,6 +6,8 @@ title: css layout
 
 ### 圣杯布局
 
+<css-layout />
+
 ```html
 
 <div class="outer">
@@ -51,22 +53,4 @@ title: css layout
     height: 100px;
     background: lightgreen;
 }
-```
-### vuepress
-```text
-const {path} = require('@vuepress/utils')
-        // [
-        //     '@vuepress/register-components',
-        //     {
-        //         componentsDir: path.resolve(__dirname, './components'),
-        //     },
-        // ],
-
-    "@vuepress/plugin-register-components": "2.0.0-beta.38",
-    "@vuepress/utils": "^2.0.0-alpha.1"
-    
-    
-      "resolutions": {
-    "vite": "2.8.6"
-  }
 ```
