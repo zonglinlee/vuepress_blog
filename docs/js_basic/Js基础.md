@@ -1094,6 +1094,54 @@ user.name = "Pete"; // 正常工作
 delete user.name; // Error
 ```
 
+要一次获取所有属性描述符，我们可以使用` Object.getOwnPropertyDescriptors(obj)` 方法。 有一个方法 `Object.defineProperties(obj, descriptors)`
+，允许一次定义多个属性。
 
-要一次获取所有属性描述符，我们可以使用` Object.getOwnPropertyDescriptors(obj)` 方法。
-有一个方法 `Object.defineProperties(obj, descriptors)`，允许一次定义多个属性。
+## 对象属性的 `getter` 和 `setter`
+
+**访问器属性**（`accessor properties`）。它们本质上是用于获取和设置值的函数，但从外部代码来看就像常规属性。访问器属性由 `getter` 和 `setter` 方法表示。在对象字面量中，它们用 `get`
+和 `set` 表示
+
+```js
+let user = {
+    name: "John",
+    surname: "Smith",
+
+    get fullName() {
+        return `${this.name} ${this.surname}`;
+    },
+
+    set fullName(value) {
+        [this.name, this.surname] = value.split(" ");
+    }
+};
+user.fullName = "Alice Cooper";
+alert(user.name); // Alice
+alert(user.surname); // Cooper
+```
+
+访问器属性的**描述符**与数据属性的不同,对于访问器属性，没有 `value` 和 `writable`，但是有 `get` 和 `set` 函数。所以访问器描述符可能有：
+
+- `get` —— 一个没有参数的函数，在读取属性时工作.
+- `set` —— 带有一个参数的函数，当属性被设置时调用.
+- `enumerable` —— 与数据属性的相同.
+- `configurable` —— 与数据属性的相同.
+
+```js
+let user = {
+    name: "John",
+    surname: "Smith"
+};
+
+Object.defineProperty(user, 'fullName', {
+    get() {
+        return `${this.name} ${this.surname}`;
+    },
+
+    set(value) {
+        [this.name, this.surname] = value.split(" ");
+    }
+});
+```
+请注意，一个属性要么是访问器（具有 `get/set` 方法），要么是数据属性（具有 `value`），但不能两者都是
+
