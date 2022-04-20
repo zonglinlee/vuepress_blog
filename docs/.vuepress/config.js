@@ -2,6 +2,7 @@ let myBase = process.env.NODE_ENV === 'github' ? '/vuepress_blog/' : '/'
 const {SidebarConfig} = require('./sidebar')
 const {navbarConfig} = require('./navbar')
 const { copyCode }  = require("vuepress-plugin-copy-code2")
+const {path} = require('@vuepress/utils')
 
 module.exports = {
   title: 'Hello,tumbleweed!',
@@ -9,7 +10,10 @@ module.exports = {
   base:myBase,
   lang:'zh-CN',
   // 自定义header
-  head: [['link', { rel: 'icon', href: '/images/favicon_io/favicon-32x32.png' }]],
+  head: [
+      ['link', { rel: 'icon', href: '/images/favicon_io/favicon-32x32.png' }],
+      ['script', {  src: '/js/tailwind.css.js' }]
+  ],
   themeConfig: {
     logo: 'https://vuejs.org/images/logo.png',
     navbar: navbarConfig,
@@ -23,6 +27,12 @@ module.exports = {
   },
   plugins: [
     copyCode({}),
+    [
+        '@vuepress/register-components',
+        {
+            componentsDir: path.resolve(__dirname, './components'),
+        },
+    ],
     // [
     //   '@vuepress/docsearch',
     //   '@vuepress/plugin-docsearch',

@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@docsearch/js": "3",
-    "@vuepress/plugin-docsearch": "^2.0.0-alpha.1"
+    "@vuepress/plugin-docsearch": "^2.0.0-alpha.1",
+    "@vuepress/plugin-register-components": "2.0.0-beta.38"
   }
 }
