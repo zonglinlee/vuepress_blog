@@ -7,6 +7,14 @@
       <div class="left">div.left</div>
       <div class="right">div.right</div>
     </div>
+    <div class="text-center mb-2">双飞翼布局</div>
+    <div class="father text-white">
+      <div class="center-wrap">
+        <div class="center">div.center</div>
+      </div>
+      <div class="left">div.left</div>
+      <div class="right">div.right</div>
+    </div>
   </div>
 </template>
 
@@ -54,4 +62,38 @@ export default {
   height: 100px;
   background: lightgreen;
 }
+
+.father {
+  .center {
+    height: 200px;
+    background: #68e0a5;
+    margin-left: 200px;
+    margin-right: 150px;
+
+  }
+
+  .center-wrap {
+    width: 100%;
+  }
+
+  .center-wrap, .left, .right {
+    float: left;
+
+  }
+
+  .left {
+    background: yellow;
+    height: 200px;
+    width: 200px;
+    margin-left: -100%;
+  }
+
+  .right {
+    background: #ef4343;
+    height: 200px;
+    width: 150px;
+    margin-left: -150px;
+  }
+}
+
 </style>
