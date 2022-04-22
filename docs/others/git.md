@@ -40,6 +40,8 @@ title: git常用命令
 
 `git revert` 回撤销历史提交中的指定 commit id,但是它的 HEAD 不是往回退，而是重新创建一个 commit 记录，让 HEAD 前进一步，相当于创建一个撤销的commit来对冲历史提交的记录
 
+### [git cherry-pick] (https://www.ruanyifeng.com/blog/2020/04/git-cherry-pick.html)
+
 ## FAQ
 
 ### Git origin/master

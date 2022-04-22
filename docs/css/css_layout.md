@@ -106,3 +106,9 @@ relative并分别配合right和left属性，以便左右两栏div移动后不遮
     margin-left: -150px;
 }
 ```
+
+[垂直居中](https://www.ltonus.com/Css/css-center.html)
+
+[What's the difference between align-content and align-items?](https://stackoverflow.com/questions/27539262/whats-the-difference-between-align-content-and-align-items)
+
+<css-center />

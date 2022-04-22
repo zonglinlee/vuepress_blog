@@ -41,6 +41,8 @@ ieda中插件市场下载太慢，v2rayN全局代理不生效，需要给idea配
 ```text
 应该是不小心按了键盘上的 insert 键，再按下切换回来就可以
 ```
+- webstorm 不能识别 vue项目中 alias 路径
+  在 WebStorm `Setting -> Language & Framework -> JavaScript -> Webpack` 由 `auto -> manual -> auto`,切换一下，`webstorm` 就会自行 `analyze`
 
 ## npm代理配置
 ### 使用nrm管理registry地址
