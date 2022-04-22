@@ -30,13 +30,6 @@ export default {
 }
 </script>
 
-<style type="text/tailwindcss">
-@layer components {
-  .lee-title-divider {
-    @apply border-l-4 bolder-solid rounded-l-lg border-indigo-500/100 h-6 p4;
-  }
-}
-</style>
 <style scoped lang="scss">
 
 </style>
