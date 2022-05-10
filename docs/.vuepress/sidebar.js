@@ -51,6 +51,7 @@ const SidebarConfig = {
             text: 'js实践',
             children: [
                 '/js_practice/h5_image_upload.md',
+                '/js_practice/practice_problem.md',
             ],
         },
     ],
