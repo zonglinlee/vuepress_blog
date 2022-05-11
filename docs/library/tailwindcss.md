@@ -185,3 +185,7 @@ Vue中自定义按钮
     }
 </style>
 ```
+
+## Resource for learn
+- [TailwindCSS 资源推荐](https://juejin.cn/post/7049594844926181390)
+- [github:awesome-tailwindcss](https://github.com/aniftyco/awesome-tailwindcss)
