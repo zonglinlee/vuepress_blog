@@ -23,3 +23,26 @@ server blocks (virtual hosts).
  }
 ```
 
+## `http-server` 启动 `https` 服务
+
+`gitBash` 中就带有 `openssl` 命令行,打开需要执行 `http-server` 命令的目录，在当前目录中使用 `gitBash` 执行 以下命令
+
+```shell
+#生成ssl证书
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+#启动静态服务
+http-server -S -C cert.pem -o
+```
+
+- [How to install OpenSSL in windows 10](https://stackoverflow.com/questions/50625283/how-to-install-openssl-in-windows-10)
+- [npm http-server with SSL](https://stackoverflow.com/questions/35127383/npm-http-server-with-ssl)
+
+## Vue2.0 使用 https 启动工程设置
+
+在 `vueconfig.js` 中 配置 `devServer`
+
+```text
+devServer: {
+    https: true
+} 
+```
