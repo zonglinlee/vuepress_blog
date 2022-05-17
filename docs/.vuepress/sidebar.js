@@ -109,6 +109,14 @@ const SidebarConfig = {
                 '/element-ui/table.md',
             ],
         },
+    ],
+    '/algorithms/': [
+        {
+            text: 'Algorithms',
+            children: [
+                '/algorithms/algorithms.md',
+            ],
+        },
     ]
 }
 

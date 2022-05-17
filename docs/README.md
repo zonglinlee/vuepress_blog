@@ -37,6 +37,9 @@ actions:
   - text: ElementUi
     link: /element-ui/dialog.html
     type: primary
+  - text: Algorithms
+    link: /algorithms/algorithms.html
+    type: primary
   - text: 杂项
     link: /others/github.html
     type: primary
@@ -47,7 +50,6 @@ footer: Hello-world!
 
 ### TodoList
 - 更换主题： <a href="http://v2.vuepress-reco.recoluan.com/" target="_blank">vuepress-reco.recoluan</a>
-- [数组去重](https://ssshooter.com/2021-02-25-array-unique-performance/)
 - [eventloop](https://zh.javascript.info/event-loop) [time-slicing](https://juejin.cn/post/6844903847249330184#heading-0)
 - [坑：移动端100vh](https://juejin.cn/post/6844904017051549703)
 - [css-animation-101](https://cssanimation.rocks/css-animation-101/#welcome)
