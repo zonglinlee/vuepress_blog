@@ -81,6 +81,7 @@ const SidebarConfig = {
             children: [
                 '/js_basic/js基础.md',
                 '/js_basic/js_module.md',
+                '/js_basic/some_detail.md',
             ],
         },
     ],
