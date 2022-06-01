@@ -76,6 +76,11 @@ alert(typeof button); // object：脚本可以“看见”下面的 button
 <button id="button">Button</button>
 ```
 
+## The `import()` expression
+
+Although `import()` looks like a function call, it’s a **special syntax** that just happens to use parentheses (similar
+to `super()`). So we can’t copy import to a variable or use `call/apply` with it. It’s **not a function**.
+
 ## Reference
 
 [深入理解 ES6 模块机制](https://zhuanlan.zhihu.com/p/33843378)

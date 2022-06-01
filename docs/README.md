@@ -35,7 +35,7 @@ actions:
     link: /vue2/vue_1.html
     type: primary  
   - text: ElementUi
-    link: /element-ui/dialog.html
+    link: /element-ui/code_organization.html
     type: primary
   - text: Algorithms
     link: /algorithms/algorithms.html
