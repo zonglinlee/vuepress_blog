@@ -71,3 +71,45 @@ var uppercamelcase = require('uppercamelcase');
 var path = require('path');
 var endOfLine = require('os').EOL;
 ```
+
+### 构建 demo 文件
+
+在 `deploy:build` 脚本中使用 `cross-env NODE_ENV=production webpack --config build/webpack.demo.js`命令构建了 `element-UI` 文档中的
+demo， 这里使用了elementUI自研的 `md-loader`, 这个loader会先将 Markdown
+文档使用 [`markdown-it`](https://github.com/markdown-it/markdown-it)  将 `markdown` 解析为
+`html`
+,然后再使用 [vue-template-compiler](https://github.com/vuejs/vue/tree/dev/packages/vue-template-compiler#readme)将html文件转换为
+Vue组件交给 `vue-loader` 去处理
+
+```shell
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              compilerOptions: {
+                preserveWhitespace: false
+              }
+            }
+          },
+          {
+            loader: path.resolve(__dirname, './md-loader/index.js')
+          }
+        ]
+      },
+```
+
+调试 `md-loader`,将打包命令单独拉出来，如下
+
+将断点设置好，在 `webstorm` 中 debug `build:md` 脚本进行调试
+
+```shell
+"build:md": "cross-env NODE_ENV=production webpack --config build/webpack.demo.js",
+```
+
+Element 自定义了 Markdown-container 解析，并覆写了 `markdown-it` 的默认的 `fence` 渲染策略
+
+- [markdown-it-container](https://github.com/markdown-it/markdown-it-container)
+
+Plugin for creating **block-level custom containers** for `markdown-it` markdown parser.
