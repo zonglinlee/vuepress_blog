@@ -72,7 +72,7 @@ var path = require('path');
 var endOfLine = require('os').EOL;
 ```
 
-### 构建 demo 文件
+### [构建 demo 文件](https://juejin.cn/post/6943866186438443016)
 
 在 `deploy:build` 脚本中使用 `cross-env NODE_ENV=production webpack --config build/webpack.demo.js`命令构建了 `element-UI` 文档中的
 demo， 这里使用了elementUI自研的 `md-loader`, 这个loader会先将 Markdown
@@ -113,3 +113,14 @@ Element 自定义了 Markdown-container 解析，并覆写了 `markdown-it` 的�
 - [markdown-it-container](https://github.com/markdown-it/markdown-it-container)
 
 Plugin for creating **block-level custom containers** for `markdown-it` markdown parser.
+
+## [MakeFile 文件](https://juejin.cn/post/6844903775912591368)
+
+`Makefile` 是一个适用于 `C/C++` 的工具，较早作为工程化工具出现在 `UNIX` 系统中， 通过 `make` 命令来执行一系列的编译和连接操作。在拥有 `make` 环境的目录下， 如果存在一个 `Makefile`
+文件。 那么输入 `make` 命令将会执行 `Makefile` 文件中的某个目标命令。
+
+[Windows下载 make 的 GUN 工具](http://gnuwin32.sourceforge.net/packages/make.htm)
+
+## reference
+
+[ElementUI的构建流程](https://segmentfault.com/a/1190000016419049)
