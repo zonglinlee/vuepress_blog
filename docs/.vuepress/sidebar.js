@@ -107,6 +107,7 @@ const SidebarConfig = {
             text: 'ElementUi',
             children: [
                 '/element-ui/code_organization.md',
+                '/element-ui/element_utils.md',
                 '/element-ui/dialog.md',
                 '/element-ui/table.md',
             ],
