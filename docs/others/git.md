@@ -6,7 +6,7 @@ title: git常用命令
 
 ### git rebase
 
-  Note: **永远不要去 rebase 本地之外的任何提交**
+Note: **永远不要去 rebase 本地之外的任何提交**
 
 #### 用法一:通过 rebase 策略执行 git pull
 
@@ -22,7 +22,7 @@ title: git常用命令
 
 ### `git reset` vs `git revert` (版本回退)
 
-  Note: **已经push到远程仓库的commit不允许reset**,
+Note: **已经push到远程仓库的commit不允许reset**,
 如果commit已经被push到远程仓库上了，也就意味着其他开发人员就可能基于这个commit形成了新的commit，这时你去reset，就会造成其他开发人员的提交历史莫名其妙的丢失
 `git reset` 会回退当前 `HEAD` 到指定 `commit id`, 比如现在有 `commit1, commit2, commit3` 共三条 commit 记录，现在需要回退到 `commit1`
 ,回退之后，` commit2, commit3`的提交信息在默认(--mixed情况下)会被 放到缓冲区
@@ -41,6 +41,26 @@ title: git常用命令
 `git revert` 回撤销历史提交中的指定 commit id,但是它的 HEAD 不是往回退，而是重新创建一个 commit 记录，让 HEAD 前进一步，相当于创建一个撤销的commit来对冲历史提交的记录
 
 ### [git cherry-pick] (https://www.ruanyifeng.com/blog/2020/04/git-cherry-pick.html)
+
+### git tag
+
+```shell
+# 删除远程tag
+git push origin --delete <tagname>
+# 删除本地分支tag
+git tag -d <tagname>
+# 推送全部tag
+git push origin --tags
+# 推送单个tag
+git push origin <tagname>
+# 轻量tag
+git tag <tagname>
+# 附注tag
+git tag -a <tagname> -m  "tag submit msg"
+# 查看tag
+git tag
+
+```
 
 ## FAQ
 

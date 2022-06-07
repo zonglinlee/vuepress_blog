@@ -63,3 +63,7 @@ function setDefaultValue(layero) {
     form.render()
 }
 ```
+
+## layer.load不生效
+
+`layer.load` 在同步 `ajax` 请求中不生效，异步 `Ajax` 才生效

@@ -17,14 +17,26 @@ title: element-utils
 browsers.
 `normalize-wheel` was used to standardize the mousewheel event
 > If you need to react to the mouse wheel in a predictable way, this code is like your bestest friend.
-
 > As of today, there are 4 DOM event types you can listen to:
-'wheel' -- Chrome(31+), FF(17+), IE(9+)
-'mousewheel' -- Chrome, IE(6+), Opera, Safari
-'MozMousePixelScroll' -- FF(3.5 only!) (2010-2013) -- don't bother!
-'DOMMouseScroll' -- FF(0.9.7+) since 2003
-> In your event callback, use this code to get sane interpretation of the deltas. This code will return an object with properties:
-spinX -- normalized spin speed (use for zoom) - x plane spinY -- " - y plane pixelX -- normalized distance (to pixels) - x plane pixelY -- " - y plane
+> 
+> 'wheel' -- Chrome(31+), FF(17+), IE(9+)
+>
+>'mousewheel' -- Chrome, IE(6+), Opera, Safari
+>
+>'MozMousePixelScroll' -- FF(3.5 only!) (2010-2013) -- don't bother!
+>
+>'DOMMouseScroll' -- FF(0.9.7+) since 2003
+
+
+> In your event callback, use this code to get sane interpretation of the deltas. This code will return an object with 4 properties:
+> 
+> spinX -- normalized spin speed (use for zoom) - x plane
+>
+> spinY -- " - y plane
+>
+> pixelX -- normalized distance (to pixels) - x plane
+>
+> pixelY -- " - y plane
 
 fireFox 中监听的是 `DOMMouseScroll` 事件，其他浏览器中监听的是 `mousewheel`事件， v-mousewheel在table组件中有所使用
 
@@ -42,6 +54,26 @@ const mousewheel = function (element, callback) {
     }
 };
 ```
+
+### clickoutside.js
+
+`v-clickoutside` 在element中应用很广泛，以 `<el-color-picker />` 组件为例，当组件挂载的时候，`clickoutside.js` 模块会将使用 `v-clickoutside`
+指令的dom元素保存到`nodeList` 变量中，并且在该 `dom` 元素中绑定属性为 `@@clickoutsideContext` 的对象，该对象上绑定了3个重要的属性
+
+- `documentHandler`: 当 document `mouseup` 事件触发时，nodeList会循环触发所有绑定`v-clickoutside`指令所在dom元素上的 `documentHandler` 函数，
+  并且判断当前mouse事件是否作用于 dom 元素的内部还是外部，当作用于dom外部的时候，会执行 `v-clickoutside` 绑定的函数，该函数执行的时候会传入两个事件对象 `mouseup` 和 `mousedown`
+- `methodName`: `v-clickoutside` 指令绑定的函数名,可以通过 `vnode.context[el[ctx].methodName]()` 调用
+- `bindingFn`: `v-clickoutside` 指令绑定的函数对象，可以通过 `el[ctx].bindingFn()` 直接调用
+
+当前dom元素包含或者就是点击的元素时候，判定位作用于当前dom上
+
+`el.contains(mouseup.target) || el.contains(mousedown.target) || el === mouseup.target`
+
+当前vue实例存在popperElm(弹出层)
+`(vnode.context.popperElm && (vnode.context.popperElm.contains(mouseup.target) || vnode.context.popperElm.contains(
+mousedown.target)))`
+
+@[code js](../_code/element-ui/clickoutside.js)
 
 ## mixins
 
