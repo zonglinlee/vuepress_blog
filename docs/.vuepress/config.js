@@ -13,6 +13,7 @@ module.exports = {
     head: [
         ['link', {rel: 'icon', href: '/images/favicon_io/favicon-32x32.png'}],
         ['link', {rel: 'stylesheet', href: 'https://fonts.googlefonts.cn/css?family=Merriweather'}],
+        ['script', {  src: myBase + 'js/baiduAnalysis.js' }]
         // ['script', {  src: myBase + 'js/tailwind.css.js' }]
     ],
     themeConfig: {
