@@ -18,7 +18,7 @@ browsers.
 `normalize-wheel` was used to standardize the mousewheel event
 > If you need to react to the mouse wheel in a predictable way, this code is like your bestest friend.
 > As of today, there are 4 DOM event types you can listen to:
-> 
+>
 > 'wheel' -- Chrome(31+), FF(17+), IE(9+)
 >
 >'mousewheel' -- Chrome, IE(6+), Opera, Safari
@@ -29,7 +29,7 @@ browsers.
 
 
 > In your event callback, use this code to get sane interpretation of the deltas. This code will return an object with 4 properties:
-> 
+>
 > spinX -- normalized spin speed (use for zoom) - x plane
 >
 > spinY -- " - y plane
@@ -120,4 +120,110 @@ this.broadcast('ElSelectDropdown', 'updatePopper');
 
 ```
 
+### date.js && date-util.js
 
+date.js is Modified from [fecha](https://github.com/taylorhakes/fecha)  which is a Lightweight date formatting and
+parsing utils(~2KB) and Meant to replace parsing and formatting functionality of **moment.js**
+
+date.util.js is for **date-picker** component, which include some useful functions for date operation.
+
+interesting
+Question: [Incrementing a date in JavaScript](https://stackoverflow.com/questions/3674539/incrementing-a-date-in-javascript)
+
+### dom.js
+
+- on
+- off
+- once
+- hasClass
+- addClass
+- removeClass
+- getStyle
+- setStyle
+- isScroll
+- getScrollContainer
+- isInContainer
+
+### popper.js && vue-popper.js && `utils/popup/popup-manager.js` && `utils/popup/index.js`
+
+#### [Popper.js V1](https://github.com/floating-ui/floating-ui/tree/v1.x)
+
+A popper is **an element** on the screen which "pops out" from the natural flow of your application. Common examples of
+poppers are tooltips, popovers, and drop-downs.
+
+Popper.js is a positioning engine; its purpose is to calculate the position of an element to make it possible to
+position it near a given reference element.
+
+#### vue-popper.js
+
+vue integrate popper.js, export as vue mixins,used by **
+color-picker,cascader,date-picker,dropdown,menu,popover,select,tooltip,table(filter-panel)** .etc positioning related
+components
+
+#### `utils/popup/index.js`
+
+index.js 中**默认**导出了 popup mixin(整合了PopupManager), 它的作用是用来管理弹出框用的，在**drawer,dialog,message-box**
+组件中均有应用;
+
+此外还导出了 `PopupManager`
+对象,在 **loading,message,notification,table(filter-panel)** 组件中均有应用，用于管理弹出层
+
+### resize-event.js
+
+使用了 `resize-observer-polyfill` npm包来兼容 `ResizeObserver` 浏览器对象, 当被监听的 dom 元素 resize 事件触发的时候, 执行相应的 handler
+
+```js
+// 使用
+addResizeListener(this.$el, this.handleResize);
+if (this.$el && this.handleResize) removeResizeListener(this.$el, this.handleResize);
+```
+
+### scrollbar-width.js
+
+由于各个浏览器的滚动条宽度不一致，这个函数是用来获取当前浏览器滚动条宽度的，通过在 body 上创建一个不可见 div 元素，通过设置样式使其出现滚动条，计算滚动条宽度后移除该 div 元素,这个主要用于 element-ui
+内置组件 **scrollbar** 中，它是一个模拟了横竖滚动条的容器组件
+
+### scroll-into-view.js
+
+在 **select,date-picker(time-select)** 中有应用，当 select 组件展开的时候，选中项应该展示在可视区域中
+
+获取选中子元素相对于 **container** 的所有 **offsetParents**，处于可视区域上半部分的，当前选中元素的 **selected.offsetTop** 值必然小于 **container.scrollTop**(
+offsetTop相对于父元素的左上角计算);处于可视区域下半部分的, 当前选中元素的 **selected.offsetTop + selected.offsetHeight** 值必然大于 **container.scrollTop +
+container.clientHeight**
+
+```js
+import Vue from 'vue';
+
+export default function scrollIntoView(container, selected) {
+    if (Vue.prototype.$isServer) return;
+
+    if (!selected) {
+        container.scrollTop = 0;
+        return;
+    }
+
+    const offsetParents = [];
+    let pointer = selected.offsetParent;
+    // 获取 container 元素中某个子元素相对于 container 的所有 offsetParents
+    while (pointer && container !== pointer && container.contains(pointer)) {
+        offsetParents.push(pointer);
+        pointer = pointer.offsetParent;
+    }
+    // 累加当前元素距离container元素的 top 值
+    const top = selected.offsetTop + offsetParents.reduce((prev, curr) => (prev + curr.offsetTop), 0);
+    const bottom = top + selected.offsetHeight;
+    const viewRectTop = container.scrollTop;
+    const viewRectBottom = viewRectTop + container.clientHeight;
+
+    if (top < viewRectTop) { // seleted dom is hidden in upper scroll section
+        container.scrollTop = top;
+    } else if (bottom > viewRectBottom) { // seleted dom is hidden in bottom scroll section
+        container.scrollTop = bottom - container.clientHeight;
+    } else {
+        // do nothing cause seleted dom is in view
+    }
+}
+
+```
+
+### util.js && types.js
