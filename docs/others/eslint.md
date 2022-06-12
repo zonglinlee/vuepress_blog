@@ -42,6 +42,7 @@ tried to install eslint globally and restart your IDE : `npm install --g eslint`
 
 https://xudany.github.io/eslint/2021/09/24/Error-while-loading-rule-'prettierprettier'/
 https://stackoverflow.com/questions/69069719/error-while-loading-rule-prettier-prettier-context-getphysicalfilename-is-not
+https://juejin.cn/post/6844904069304156168
 ## Reference
 
 https://juejin.cn/post/6990929456382607374
