@@ -13,7 +13,6 @@ plugins插件 ESLint虽然可以定义很多的
 rules，以及通过extends来引入更多的规则，但是说到底只是检查JS语法。如果需要检查Vue中的template或者React中的jsx，就束手无策了。所以引入插件的目的就是为了增强ESLint的检查能力和范围。
 在配置文件里配置插件时，可以使用 `plugins` 关键字来存放插件名字的列表。插件名称可以省略 `eslint-plugin-` 前缀。
 
-
 - [@vue/cli-plugin-eslint](https://www.npmjs.com/package/@vue/cli-plugin-eslint)
 
 eslint plugin for vue-cli, Injected Commands: `vue-cli-service lint`
@@ -36,13 +35,121 @@ Runs Prettier as an ESLint rule and reports differences as individual ESLint iss
 Turns off all rules that are unnecessary or might conflict with Prettier.
 
 ## webstorm eslint error
+
 > ESLint: Please specify path to 'eslint' package
 
 tried to install eslint globally and restart your IDE : `npm install --g eslint`
 
-https://xudany.github.io/eslint/2021/09/24/Error-while-loading-rule-'prettierprettier'/
-https://stackoverflow.com/questions/69069719/error-while-loading-rule-prettier-prettier-context-getphysicalfilename-is-not
-https://juejin.cn/post/6844904069304156168
+> Error while loading rule 'prettier/prettier'
+
+try upgrade eslint
+
+> Why do I keep getting Delete 'cr' `[prettier/prettier]`?
+
+Try setting the `"endOfLine":"auto"` in your `.prettierrc` (or `.prettierrc.json`) file (inside the
+object) [stackoverflow](https://stackoverflow.com/questions/53516594/why-do-i-keep-getting-delete-cr-prettier-prettier)
+
+## [prettier](https://www.jetbrains.com/help/webstorm/prettier.html)
+
+- webstorm plugins market: install prettier
+- workspace: `npm install --save-dev --save-exact prettier` or `npm install --global prettier`
+- Settings/Preferences dialog (Ctrl+Alt+S), go to Languages & Frameworks | JavaScript | Prettier, select `prettier`
+  installation
+- Reformat code with Prettier:  press `Ctrl+Alt+Shift+P`
+- Set Prettier as default formatter : go to Languages & Frameworks | JavaScript | Prettier, and select
+  the `On code reformat` checkbox.
+
+## git integration
+
+- [husky-哈士奇](https://github.com/typicode/husky)
+
+Modern native Git hooks made easy, `npm install husky -D`
+
+- [lint-staged](https://github.com/okonet/lint-staged)
+
+Run linters against **staged git files** and don't let 💩 slip into your code base
+
+`npm install -D lint-staged`
+
+```shell
+# package.json
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+```
+
+## files related to prettier && eslint
+
+eslintrc.js
+
+```js
+module.exports = {
+    env: {
+        browser: true,
+        node: true,
+        es6: true,
+    },
+    extends: [
+        'eslint:recommended',
+        'plugin:vue/essential',
+        'plugin:prettier/recommended',
+    ],
+    globals: {
+        Atomics: 'readonly',
+        SharedArrayBuffer: 'readonly',
+    },
+    parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+    },
+    plugins: ['vue'],
+    rules: {
+        'vue/multi-word-component-names': ['warn'],
+    },
+}
+```
+
+.eslintignore
+
+```text
+src/views/pureHtml/**
+```
+
+.prettierignore
+
+```text
+.github
+public
+dist
+```
+
+prettier.config.js
+
+```js
+module.exports = {
+    trailingComma: 'es5',
+    tabWidth: 4,
+    semi: false,
+    singleQuote: true,
+    endOfLine: 'auto',
+}
+
+```
+
 ## Reference
 
-https://juejin.cn/post/6990929456382607374
+[eslint和prettier](https://juejin.cn/post/6990929456382607374)
+[github-example](https://github.com/zonglinlee/vue2-practice)
