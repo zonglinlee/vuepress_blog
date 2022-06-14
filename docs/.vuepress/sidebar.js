@@ -99,6 +99,7 @@ const SidebarConfig = {
             text: 'Vue2',
             children: [
                 '/vue2/vue_question.md',
+                '/vue2/vue_transition_animation.md',
                 '/vue2/vue_1.md',
             ],
         },
