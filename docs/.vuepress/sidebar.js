@@ -44,6 +44,7 @@ const SidebarConfig = {
                 '/others/vim.md',
                 '/others/windows-cmd.md',
                 '/others/eslint.md',
+                '/others/jest.md',
             ],
         },
     ],
