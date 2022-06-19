@@ -11,7 +11,7 @@ character encoding processing, and error handling.
 ## 插件机制
 
 umi-request 基于插件实现，内部的洋葱模型 `onion.js` 参考自 [koa](https://github.com/koajs/koa)
-的 [`koa-compose`](https://github.com/koajs/compose,
+的 [koa-compose](https://github.com/koajs/compose)
 
 ### 用户自定义中间件
 
@@ -26,11 +26,11 @@ request.use(async (ctx, next) => {
 })
 ```
 
-中间件执行顺序从左到右，首先执行自定义中间件，在依次执行 **simplePost**(对请求body，即data做处理),**simpleGet**(对请求params做处理，实现 query 简化、 post 简化)，**
-parseResponseMiddleware**(解析json,gbk数据)，最后执行 **fetchMiddleware** ,最终发送http请求.
+中间件执行顺序从左到右，首先执行自定义中间件，在依次执行 **simplePost**(对请求body，即data做处理),**simpleGet**(对请求params做处理，实现 query 简化、 post 简化)，
+**parseResponseMiddleware**(解析json,gbk数据)，最后执行 **fetchMiddleware** ,最终发送http请求.
 
-这里会有疑惑，为什么不是先发送请求，再 **parseResponse**, 其实在 `parseResponseMiddleware` 中直接先掉用了 `next()`,即先执行了 `fetchMiddleware`,实际的parse
-response过程还是在http请求结果返回值后执行的
+这里会有疑惑，为什么不是先发送请求，再 **parseResponse**, 其实在 `parseResponseMiddleware` 中直接先掉用了 `next()`,即先执行了 `fetchMiddleware`,实际的 parse
+response 过程还是在http请求结果返回值后执行的
 
 这里用户定义的中间件默认为 `this.middlewares`, `this.defaultMiddlewares`默认为 `[]`,`Onion.globalMiddlewares`和`Onion.coreMiddlewares`如下
 
@@ -89,6 +89,7 @@ export default function compose(middlewares) {
 }
 ```
 调用栈分析
+
 ![调用栈分析](../images/library/umi-request-middleware.jpg)
 
 
