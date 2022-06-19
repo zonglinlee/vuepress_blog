@@ -1,8 +1,8 @@
 const navbarConfig = [
-    {
-        text: '阿里云',
-        link: '/aliyun/domain.md',
-    },
+    // {
+    //     text: '阿里云',
+    //     link: '/aliyun/domain.md',
+    // },
     //   {
     //     text: '参考',
     //     children: [

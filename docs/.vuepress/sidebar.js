@@ -29,7 +29,8 @@ const SidebarConfig = {
             children: [
                 '/library/tailwindcss.md',
                 '/library/vueRouter4.md',
-                '/library/layui.md'
+                '/library/layui.md',
+                '/library/umi-request.md'
             ],
         },
     ],
