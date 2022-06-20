@@ -149,6 +149,13 @@ module.exports = {
 
 ```
 
+### [git 规范 commitizen](https://github.com/commitizen/cz-cli)
+使用 `cz` 命令代替 `git commi`t 
+```shell
+npm install -g commitizen
+commitizen init cz-conventional-changelog --save-dev --save-exact
+```
+
 ## Reference
 
 [eslint和prettier](https://juejin.cn/post/6990929456382607374)
