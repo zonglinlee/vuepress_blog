@@ -30,7 +30,8 @@ const SidebarConfig = {
                 '/library/tailwindcss.md',
                 '/library/vueRouter4.md',
                 '/library/layui.md',
-                '/library/umi-request.md'
+                '/library/umi-request.md',
+                '/library/Miscellaneous.md'
             ],
         },
     ],
