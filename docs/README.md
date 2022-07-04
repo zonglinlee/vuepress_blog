@@ -58,6 +58,7 @@ footer: Hello-world!
 - [css-animation-101](https://cssanimation.rocks/css-animation-101/#welcome)
 - [interview](https://vue3js.cn/interview/vue/lifecycle.html#%E4%B8%80%E3%80%81%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%98%AF%E4%BB%80%E4%B9%88)
 - [how-to-create-a-real-world-node-cli-app-with-node](https://www.freecodecamp.org/news/how-to-create-a-real-world-node-cli-app-with-node-391b727bbed3)
+- [regex-lookarounds](https://www.rexegg.com/regex-lookarounds.html)
 
 ### websites you should visit
 - [openbase](https://openbase.com/)
