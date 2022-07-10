@@ -1,0 +1,21 @@
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '0.0.0.0:9090'
+dns:
+  enable: true
+  ipv6: false
+  default-nameserver: []
+  enhanced-mode: redir-host
+  fake-ip-range: 198.18.0.1/16
+  use-hosts: true
+  nameserver: ['', '']
+  fallback: ['', '']
+  fallback-filter: { geoip: true, ipcidr: [240.0.0.0/4, 0.0.0.0/32] }
+proxies:
+  - { name: '🇸🇬 新加坡|04|OC北京双线中转', type: trojan, server: '', port: 36635, password: '', udp: true, sni: '', skip-cert-verify: true }
+proxy-groups:
+rules:
+  - 'DOMAIN,feiniaoyun.tk,DIRECT'
