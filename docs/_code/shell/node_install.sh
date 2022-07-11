@@ -20,5 +20,6 @@ function install_node() {
 
   ##查看npm源地址
   npm config get registry
+  exit 0
 }
 install_node

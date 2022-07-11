@@ -125,6 +125,15 @@ const SidebarConfig = {
                 '/algorithms/algorithms.md',
             ],
         },
+    ],
+    '/shell/': [
+        {
+            text: 'Shell',
+            children: [
+                '/shell/shell.md',
+                '/shell/clash_install.md',
+            ],
+        },
     ]
 }
 
