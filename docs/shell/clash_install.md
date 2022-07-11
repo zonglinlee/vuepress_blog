@@ -3,6 +3,12 @@ title: clash_install
 ---
 腾讯云不可访问GitHub，安装代理clash, 本地下载clash传到云服务器
 
+使用systemd管理clash服务时候注意配置项 **User** 和 **ExecStart**
+
+> User=root
+> ExecStart=/root/software/clash
+
+
 @[code js](../_code/shell/install_clash.sh)
 
 clash提供了 web api 管理端，访问网址 `http://clash.razord.top`, 输入服务器 ip 地址即可查询 clash 日志

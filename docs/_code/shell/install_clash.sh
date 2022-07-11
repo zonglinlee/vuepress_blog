@@ -13,7 +13,7 @@ chmod +x clash
 
 # Clash 自启动及后台运行 /etc/systemd/system/clash.service
 touch /etc/systemd/system/clash.service
-chmod 755 clash.service
+chmod 755 /etc/systemd/system/clash.service
 # https://linuxtect.com/how-to-cat-eof-for-multi-line-string-in-linux-bash/
 cat << EOF > /etc/systemd/system/clash.service
 [Unit]
@@ -26,8 +26,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=ubuntu
-ExecStart=/home/ubuntu/software/clash
+User=root
+ExecStart=/root/software/clash
 Restart=on-failure
 RestartPreventExitStatus=23
 

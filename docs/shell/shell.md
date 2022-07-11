@@ -2,6 +2,30 @@
 title: shell basic
 ---
 
+## 远程登录 SSH
+
+ssh 配置文件 `/etc/ssh/sshd.config`
+
+### ssh启用root登录
+
+修改配置文件之后重启ssh，`sudo service ssh restart`
+
+```shell
+# 修改配置文件
+PermitRootLogin yes ##允许root登陆
+PasswordAuthentication yes ##允许用密码方式登陆
+```
+
+## [Windows上的shell脚本在Linux上执行不了](https://stackoverflow.com/questions/14219092/bash-script-and-bin-bashm-bad-interpreter-no-such-file-or-directory)
+
+problem is with dos line ending. Following will convert it for unix
+
+`dos2unix file_name` NB: you may need to install dos2unix first with **apt install dos2unix**
+
+another way to do it is using sed command to search and replace the dos line ending characters to unix format:
+
+**$sed -i -e 's/\r$//' your_script.sh**
+
 ## ubuntu 软件包管理
 
 `apt` 命令是 `Debian Linux `发行版中的 APT 软件包管理工具,使用 apt-get 命令的第一步就是引入必需的软件库,`/etc/apt/sources.list` 是存放这些地址列表的配置文件
