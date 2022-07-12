@@ -51,5 +51,7 @@ echo 'export https_proxy="http://127.0.0.1:1081/"' >>~/.bashrc
 echo 'export HTTPS_PROXY="http://127.0.0.1:1081/"' >>~/.bashrc
 echo 'export all_proxy="http://127.0.0.1:1081/"' >>~/.bashrc
 echo 'export ALL_PROXY="http://127.0.0.1:1081/"' >>~/.bashrc
+echo 'export no_proxy="127.0.0.1,localhost,mirrors.tencentyun.com"' >>~/.bashrc
+echo 'export NO_PROXY="127.0.0.1,localhost,mirrors.tencentyun.com' >>~/.bashrc
 
 source ~/.bashrc
