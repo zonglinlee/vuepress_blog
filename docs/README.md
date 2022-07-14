@@ -46,6 +46,8 @@ actions:
   - text: Shell
     link: /shell/shell.html
     type: primary
+  - text: Database
+    link: /database/mysql/mysql.html
   - text: 杂项
     link: /others/github.html
     type: primary

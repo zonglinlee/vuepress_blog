@@ -134,6 +134,14 @@ const SidebarConfig = {
                 '/shell/clash_install.md',
             ],
         },
+    ],
+    '/database/': [
+        {
+            text: 'Database',
+            children: [
+                '/database/mysql/mysql.md',
+            ],
+        },
     ]
 }
 

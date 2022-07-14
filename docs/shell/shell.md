@@ -69,6 +69,7 @@ retrieve/download files from remote repositories, nor can it figure out dependen
 
 ## Reference
 
+- [linux command](https://wangchujiang.com/linux-command/)
 - [https://dunwu.github.io/linux-tutorial/](https://dunwu.github.io/linux-tutorial/)
 - [kjyw 快捷运维](https://github.com/aqzt/kjyw)
 - [Ubuntu Post Install Scripts](https://github.com/snwh/ubuntu-post-install)
@@ -76,3 +77,8 @@ retrieve/download files from remote repositories, nor can it figure out dependen
 - [ 运维外挂小工具](https://github.com/eryajf/magic-of-sysuse-scripts)
 - [The-art-of-command-line](https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md)
 - [explain-shell](https://explainshell.com/)
+- [devops-exercises](https://github.com/bregman-arie/devops-exercises)
+- [devops-resources | bash](https://github.com/bregman-arie/devops-resources/blob/master/resources/bash.md)
+- [devops-exercises | bash](https://github.com/bregman-arie/devops-exercises/blob/master/exercises/shell/README.md)
+- [devops-resources | linux](https://github.com/bregman-arie/devops-resources/blob/master/resources/linux.md)
+- [devops-exercises | linux](https://github.com/bregman-arie/devops-exercises/blob/master/exercises/linux/README.md)
