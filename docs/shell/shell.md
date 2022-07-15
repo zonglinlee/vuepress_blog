@@ -67,6 +67,33 @@ retrieve/download files from remote repositories, nor can it figure out dependen
  make install
 ```
 
+## Syntax
+
+### [Array](https://wiki.bash-hackers.org/syntax/arrays)
+
+### [Expansions and substitutions](https://wiki.bash-hackers.org/syntax/expansion/intro)
+
+## man 命令
+
+### [Man doesn't work on Ubuntu 18.04](https://askubuntu.com/questions/1228660/man-doesnt-work-on-ubuntu-18-04)
+
+## Bash 中的任务管理工具
+
+- `Ctrl+Z和Ctrl+C`:Ctrl C是强制终止程序的执行并结束进程。而Ctrl Z则只是中断任务的执行，但该任务并没有结束，它只是在进程中维持挂起的状态，用户可以使用`fg/bg`操作来继续前台/后台执行该任务
+- `&`
+- `fg` 将后台作业移动到前台终端运行
+- `bg`  将前台终端作业移动到后台运行
+- `kill` 发送信号到进程, `kill -l`列出所有信号名称,
+```shell
+vim 1.txt
+# 按 Ctrl + Z 挂起任务
+vim 2.txt
+# 按 Ctrl + Z 挂起任务
+jobs -l # 显示当前任务以及 pid
+fg %1 # 恢复编辑1.txt
+jobs -l 
+kill -9 vim-pid
+```
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)

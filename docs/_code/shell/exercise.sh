@@ -9,7 +9,7 @@ done
 read -r name -p "Enter your name:"
 echo "Welcome $name"
 
-
+# Read in an Array
 while read -r line
 do
     my_array=("${my_array[@]}" $line)
