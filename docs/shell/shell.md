@@ -84,6 +84,7 @@ retrieve/download files from remote repositories, nor can it figure out dependen
 - `fg` 将后台作业移动到前台终端运行
 - `bg`  将前台终端作业移动到后台运行
 - `kill` 发送信号到进程, `kill -l`列出所有信号名称,
+
 ```shell
 vim 1.txt
 # 按 Ctrl + Z 挂起任务
@@ -94,6 +95,11 @@ fg %1 # 恢复编辑1.txt
 jobs -l 
 kill -9 vim-pid
 ```
+
+## debug Bash
+
+`bash -x scriptName`
+
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)

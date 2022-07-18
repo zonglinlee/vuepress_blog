@@ -48,7 +48,7 @@ actions:
     type: primary
   - text: Database
     link: /database/mysql/mysql.html
-  - text: 杂项
+  - text: Miscellaneous
     link: /others/github.html
     type: primary
 footer: Hello-world!
@@ -82,3 +82,4 @@ footer: Hello-world!
 - [javascript-algorithms](https://github.com/trekhleb/javascript-algorithms)
 - [Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
 - [CS-Notes](https://github.com/CyC2018/CS-Notes)
+- [regular-expression](https://www.rexegg.com/)
