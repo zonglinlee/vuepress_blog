@@ -1,5 +1,5 @@
 ---
-title: samba
+title: samba(文件共享)
 ---
 ## 远程服务器(ubuntu)
 ```shell
@@ -13,7 +13,7 @@ netstat -antp | grep <smb pid>
 
 ```
 
-## 本地 window10 
+## 本地 window 10 系统
 添加端口映射
 
 ```shell
@@ -24,6 +24,6 @@ netsh interface portproxy show all
 
 ## Reference
 
-https://dunwu.github.io/linux-tutorial/linux/ops/samba.html#_1-3-%E9%85%8D%E7%BD%AE-samba
-https://blog.csdn.net/Think88666/article/details/118438465
-https://www.zhihu.com/question/59814912
+- [Samba 应用](https://dunwu.github.io/linux-tutorial/linux/ops/samba.html)
+- [samba更改端口后用windows访问](https://blog.csdn.net/Think88666/article/details/118438465)
+- [Windows 10 下如何修改 smb 连接的默认端口(445)](https://www.zhihu.com/question/59814912)
