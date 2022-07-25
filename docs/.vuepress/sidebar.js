@@ -132,6 +132,8 @@ const SidebarConfig = {
             children: [
                 '/shell/shell.md',
                 '/shell/clash_install.md',
+                '/shell/mysql_install.md',
+                '/shell/samba_install.md',
             ],
         },
     ],

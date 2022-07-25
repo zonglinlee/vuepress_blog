@@ -83,3 +83,5 @@ footer: Hello-world!
 - [Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
 - [CS-Notes](https://github.com/CyC2018/CS-Notes)
 - [regular-expression](https://www.rexegg.com/)
+- [sql1](https://www.wiseowl.co.uk/sql/exercises/standard/triggers/4275/)
+- [sql2](https://www.w3resource.com/sql/tutorials.php)
