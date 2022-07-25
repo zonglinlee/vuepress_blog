@@ -134,6 +134,7 @@ const SidebarConfig = {
                 '/shell/clash_install.md',
                 '/shell/mysql_install.md',
                 '/shell/samba_install.md',
+                '/shell/sqlite3.md',
             ],
         },
     ],
