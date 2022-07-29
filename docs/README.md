@@ -85,3 +85,5 @@ footer: Hello-world!
 - [regular-expression](https://www.rexegg.com/)
 - [sql1](https://www.wiseowl.co.uk/sql/exercises/standard/triggers/4275/)
 - [sql2](https://www.w3resource.com/sql/tutorials.php)
+- [编程大佬的自学笔记](https://github.com/jwasham/coding-interview-university/blob/main/translations/README-cn.md)
+- [Awesome-GitHub-Repo](https://github.com/Wechat-ggGitHub/Awesome-GitHub-Repo)
