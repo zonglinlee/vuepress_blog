@@ -1,0 +1,1 @@
+const e={key:"v-6ade7be8",path:"/shell/clash_install.html",title:"clash_install",lang:"zh-CN",frontmatter:{title:"clash_install"},excerpt:"",headers:[{level:2,title:"Reference",slug:"reference",children:[]}],git:{updatedTime:165755768e4,contributors:[{name:"zonglinlee",email:"173389705@qq.com",commits:2}]},filePathRelative:"shell/clash_install.md"};export{e as data};

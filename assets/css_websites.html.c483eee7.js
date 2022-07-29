@@ -1,0 +1,6 @@
+import{r as t,o as n,c as r,b as e,a as o,F as a,e as c,d as i}from"./app.92cfecb8.js";import{_ as l}from"./plugin-vue_export-helper.21dcd24c.js";const p={},m={href:"https://csstriggers.com",target:"_blank",rel:"noopener noreferrer"},u=c("csstriggers.com"),d=i(`<p>During a CSS animation, this process repeats every frame. However, CSS properties that never affect geometry or position, such as color, may skip the Layout step. If a color changes, the browser doesn\u2019t calculate any new geometry, it goes to Paint \u2192 Composite. And there are few properties that directly go to Composite.</p><div class="language-text ext-text line-numbers-mode"><pre class="language-text"><code>Layout: re-compute the geometry and position of each element, then
+
+Paint: re-compute how everything should look like at their places, including background, colors,
+
+Composite: render the final results into pixels on screen, apply CSS transforms if they exist.
+</code></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div>`,2);function h(g,_){const s=t("ExternalLinkIcon");return n(),r(a,null,[e("ul",null,[e("li",null,[e("a",m,[u,o(s)])])]),d],64)}var x=l(p,[["render",h]]);export{x as default};

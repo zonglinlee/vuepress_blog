@@ -1,0 +1,1 @@
+const t={key:"v-690d0894",path:"/html/html_basic.html",title:"html\u8865\u6F0F",lang:"zh-CN",frontmatter:{title:"html\u8865\u6F0F"},excerpt:"",headers:[{level:2,title:"<base>",slug:"base",children:[]}],git:{updatedTime:1647251863e3,contributors:[{name:"zonglinlee",email:"173389705@qq.com",commits:1}]},filePathRelative:"html/html_basic.md"};export{t as data};

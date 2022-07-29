@@ -1,0 +1,1 @@
+const e={key:"v-311736c0",path:"/element-ui/dialog.html",title:"el-dialog",lang:"zh-CN",frontmatter:{title:"el-dialog"},excerpt:"",headers:[{level:2,title:"PopupManager",slug:"popupmanager",children:[]}],git:{updatedTime:1630937462e3,contributors:[{name:"zonglinlee",email:"173389705@qq.com",commits:1}]},filePathRelative:"element-ui/dialog.md"};export{e as data};

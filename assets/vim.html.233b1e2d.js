@@ -1,0 +1,1 @@
+const e={key:"v-ad019bdc",path:"/others/vim.html",title:"vim\u5FEB\u6377\u952E",lang:"zh-CN",frontmatter:{title:"vim\u5FEB\u6377\u952E"},excerpt:"",headers:[{level:3,title:"vim \u547D\u4EE4",slug:"vim-\u547D\u4EE4",children:[]}],git:{updatedTime:1644661201e3,contributors:[{name:"zonglinlee",email:"173389705@qq.com",commits:1}]},filePathRelative:"others/vim.md"};export{e as data};

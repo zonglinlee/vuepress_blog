@@ -1,0 +1,1 @@
+const e={key:"v-4fea1897",path:"/_code/aliyun/oss-playground/",title:"\u542F\u52A8\u670D\u52A1",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1630937462e3,contributors:[{name:"zonglinlee",email:"173389705@qq.com",commits:1}]},filePathRelative:"_code/aliyun/oss-playground/README.md"};export{e as data};
