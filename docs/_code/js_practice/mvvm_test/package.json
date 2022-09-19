@@ -1,0 +1,23 @@
+{
+  "name": "htmlTemplates",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "mfrachet <marvin.frachet@zenika.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf  build && parcel build index.js -d build/",
+    "start": "rimraf  .cache && rimraf  dist && parcel serve index.html"
+  },
+  "dependencies": {
+    "parcel-bundler": "^1.12.4",
+    "rimraf": "^3.0.2",
+    "sa": "^0.2.50",
+    "snabbdom": "^0.7.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "vuepress": "^0.13.1"
+  }
+}
