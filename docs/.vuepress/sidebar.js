@@ -96,6 +96,7 @@ const SidebarConfig = {
             text: 'Typescript',
             children: [
                 '/typescript/typescript.md',
+                '/typescript/ts_practice.md',
             ],
         },
     ],
