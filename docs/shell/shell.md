@@ -115,3 +115,4 @@ kill -9 vim-pid
 - [devops-exercises | bash](https://github.com/bregman-arie/devops-exercises/blob/master/exercises/shell/README.md)
 - [devops-resources | linux](https://github.com/bregman-arie/devops-resources/blob/master/resources/linux.md)
 - [devops-exercises | linux](https://github.com/bregman-arie/devops-exercises/blob/master/exercises/linux/README.md)
+- [在 Windows 中使用 Cygwin](https://wxsm.space/2021/windows-idea-cygwin/)
