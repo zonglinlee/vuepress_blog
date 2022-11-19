@@ -48,6 +48,8 @@ actions:
     type: primary
   - text: Database
     link: /database/mysql/mysql.html
+  - text: java
+    link: /java/java_practice.html
   - text: Miscellaneous
     link: /others/github.html
     type: primary

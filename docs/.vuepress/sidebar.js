@@ -148,6 +148,15 @@ const SidebarConfig = {
                 '/database/mysql/mysql.md',
             ],
         },
+    ],
+    '/java/': [
+        {
+            text: 'Java',
+            children: [
+                '/java/java_practice.md',
+                '/java/java_web.md',
+            ],
+        },
     ]
 }
 
