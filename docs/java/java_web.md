@@ -13,9 +13,11 @@ Socket:一个应用程序通过一个Socket来建立一个远程连接，而Sock
 使用Socket进行网络编程时，本质上就是两个进程之间的网络通信。其中一个进程必须充当服务器端，它会主动监听某个指定的端口，另一个进程必须充当客户端，它必须主动连接服务器的IP地址和指定端口，如果连接成功，服务器端和客户端就成功地建立了一个TCP连接，双方后续就可以随时发送和接收数据。
 
 ### http
+
 HTTP是HyperText Transfer Protocol的缩写，翻译为超文本传输协议，它是基于TCP协议之上的一种请求-响应协议。
 
-浏览器也是一种HTTP客户端，所以，客户端的HTTP编程，它的行为本质上和浏览器是一样的，即发送一个HTTP请求，接收服务器响应后，获得响应内容。只不过浏览器进一步把响应内容解析后渲染并展示给了用户，而我们使用Java进行HTTP客户端编程仅限于获得响应内容。Java标准库提供了基于HTTP的包，但是要注意，早期的JDK版本是通过HttpURLConnection访问HTTP,代码编写比较繁琐，并且需要手动处理InputStream，所以用起来很麻烦。从Java 11开始，引入了新的HttpClient，它使用链式调用的API，能大大简化HTTP的处理。
+浏览器也是一种HTTP客户端，所以，客户端的HTTP编程，它的行为本质上和浏览器是一样的，即发送一个HTTP请求，接收服务器响应后，获得响应内容。只不过浏览器进一步把响应内容解析后渲染并展示给了用户，而我们使用Java进行HTTP客户端编程仅限于获得响应内容。Java标准库提供了基于HTTP的包，但是要注意，早期的JDK版本是通过HttpURLConnection访问HTTP,代码编写比较繁琐，并且需要手动处理InputStream，所以用起来很麻烦。从Java
+11开始，引入了新的HttpClient，它使用链式调用的API，能大大简化HTTP的处理。
 
 ## [Servlet](https://www.liaoxuefeng.com/wiki/1252599548343744/1304265949708322)
 
@@ -222,24 +224,43 @@ Servlet容器为每个Web应用程序自动创建一个唯一的ServletContext�
 - springMVC的controller方法中如果参数需要传入HttpServletRequest、HttpServletResponse或者HttpSession，直接添加这个类型的参数即可，Spring MVC会自动按类型传入
 
 - 处理CORS：在WebMvcConfigurer中定义一个全局CORS配置
-- 异步处理：在Servlet模型中，每个请求都是由某个线程处理，然后，将响应写入IO流，发送给客户端。从开始处理请求，到写入响应完成，都是在同一个线程中处理的。这种线程模型非常重要，因为Spring的JDBC事务是基于ThreadLocal实现的，如果在处理过程中，一会由线程A处理，一会又由线程B处理，那事务就全乱套了。此外，很多安全认证，也是基于ThreadLocal实现的，可以保证在处理请求的过程中，各个线程互不影响。但是，如果一个请求处理的时间较长，例如几秒钟甚至更长，那么，这种基于线程池的同步模型很快就会把所有线程耗尽，导致服务器无法响应新的请求。如果把长时间处理的请求改为异步处理，那么线程池的利用率就会大大提高。Servlet从3.0规范开始添加了异步支持，允许对一个请求进行异步处理。第一种async处理方式是返回一个Callable，Spring MVC自动把返回的Callable放入线程池执行，等待结果返回后再写入响应。第二种async处理方式是返回一个DeferredResult对象，然后在另一个线程中，设置此对象的值并写入响应。 在实际使用时，经常用到的就是DeferredResult，因为返回DeferredResult时，可以设置超时、正常结果和错误结果，易于编写比较灵活的逻辑。 使用async异步处理响应时，要时刻牢记，在另一个异步线程中的事务和Controller方法中执行的事务不是同一个事务，在Controller中绑定的ThreadLocal信息也无法在异步线程中获取。
-- Servlet 3.0规范添加的异步支持是针对同步模型打了一个“补丁”，虽然可以异步处理请求，但高并发异步请求时，它的处理效率并不高，因为这种异步模型并没有用到真正的“原生”异步。Java标准库提供了封装操作系统的异步IO包java.nio，是真正的多路复用IO模型，可以用少量线程支持大量并发。使用NIO编程复杂度比同步IO高很多，因此我们很少直接使用NIO。相反，大部分需要高性能异步IO的应用程序会选择Netty这样的框架，它基于NIO提供了更易于使用的API，方便开发异步应用程序。
-- WebSocket：WebSocket是一种基于HTTP的长链接技术。传统的HTTP协议是一种请求-响应模型，如果浏览器不发送请求，那么服务器无法主动给浏览器推送数据。HTTP本身是基于TCP连接的，所以，WebSocket在HTTP协议的基础上做了一个简单的升级，即建立TCP连接后，浏览器发送请求时，附带几个头：`Upgrade: websocket`,就表示客户端希望升级连接，变成长连接的WebSocket，服务器返回升级成功的响应。收到成功响应后表示WebSocket“握手”成功，这样，代表WebSocket的这个TCP连接将不会被服务器关闭，而是一直保持，服务器可随时向浏览器推送消息，浏览器也可随时向服务器推送消息。双方推送的消息既可以是文本消息，也可以是二进制消息，一般来说，绝大部分应用程序会推送基于JSON的文本消息。
+-
 
+异步处理：在Servlet模型中，每个请求都是由某个线程处理，然后，将响应写入IO流，发送给客户端。从开始处理请求，到写入响应完成，都是在同一个线程中处理的。这种线程模型非常重要，因为Spring的JDBC事务是基于ThreadLocal实现的，如果在处理过程中，一会由线程A处理，一会又由线程B处理，那事务就全乱套了。此外，很多安全认证，也是基于ThreadLocal实现的，可以保证在处理请求的过程中，各个线程互不影响。但是，如果一个请求处理的时间较长，例如几秒钟甚至更长，那么，这种基于线程池的同步模型很快就会把所有线程耗尽，导致服务器无法响应新的请求。如果把长时间处理的请求改为异步处理，那么线程池的利用率就会大大提高。Servlet从3.0规范开始添加了异步支持，允许对一个请求进行异步处理。第一种async处理方式是返回一个Callable，Spring
+MVC自动把返回的Callable放入线程池执行，等待结果返回后再写入响应。第二种async处理方式是返回一个DeferredResult对象，然后在另一个线程中，设置此对象的值并写入响应。
+在实际使用时，经常用到的就是DeferredResult，因为返回DeferredResult时，可以设置超时、正常结果和错误结果，易于编写比较灵活的逻辑。
+使用async异步处理响应时，要时刻牢记，在另一个异步线程中的事务和Controller方法中执行的事务不是同一个事务，在Controller中绑定的ThreadLocal信息也无法在异步线程中获取。
+
+- Servlet
+  3.0规范添加的异步支持是针对同步模型打了一个“补丁”，虽然可以异步处理请求，但高并发异步请求时，它的处理效率并不高，因为这种异步模型并没有用到真正的“原生”异步。Java标准库提供了封装操作系统的异步IO包java.nio，是真正的多路复用IO模型，可以用少量线程支持大量并发。使用NIO编程复杂度比同步IO高很多，因此我们很少直接使用NIO。相反，大部分需要高性能异步IO的应用程序会选择Netty这样的框架，它基于NIO提供了更易于使用的API，方便开发异步应用程序。
+-
+
+WebSocket：WebSocket是一种基于HTTP的长链接技术。传统的HTTP协议是一种请求-响应模型，如果浏览器不发送请求，那么服务器无法主动给浏览器推送数据。HTTP本身是基于TCP连接的，所以，WebSocket在HTTP协议的基础上做了一个简单的升级，即建立TCP连接后，浏览器发送请求时，附带几个头：`Upgrade: websocket`
+,就表示客户端希望升级连接，变成长连接的WebSocket，服务器返回升级成功的响应。收到成功响应后表示WebSocket“握手”成功，这样，代表WebSocket的这个TCP连接将不会被服务器关闭，而是一直保持，服务器可随时向浏览器推送消息，浏览器也可随时向服务器推送消息。双方推送的消息既可以是文本消息，也可以是二进制消息，一般来说，绝大部分应用程序会推送基于JSON的文本消息。
 
 ## springBoot
 
 - `application.yml` : 这是Spring Boot默认的配置文件，它采用YAML格式而不是.properties格式，文件名必须是application.yml而不是其他名称。
-    
+
 - `logback-spring.xml`:这是Spring Boot的logback配置文件名称。
 
-- 使用Spring Boot时，强烈推荐从spring-boot-starter-parent继承，因为这样就可以引入Spring Boot的预置配置。 紧接着，我们引入了依赖spring-boot-starter-web和spring-boot-starter-jdbc，它们分别引入了Spring MVC相关依赖和Spring JDBC相关依赖，无需指定版本号，因为引入的`<parent>`内已经指定了，只有我们自己引入的某些第三方jar包需要指定版本号。
+- 使用Spring Boot时，强烈推荐从spring-boot-starter-parent继承，因为这样就可以引入Spring Boot的预置配置。
+  紧接着，我们引入了依赖spring-boot-starter-web和spring-boot-starter-jdbc，它们分别引入了Spring MVC相关依赖和Spring
+  JDBC相关依赖，无需指定版本号，因为引入的`<parent>`内已经指定了，只有我们自己引入的某些第三方jar包需要指定版本号。
 
-- springMvc中我们定义的数据源、声明式事务、JdbcTemplate在哪创建的？这些自动创建的Bean就是Spring Boot的特色：AutoConfiguration。 当我们引入spring-boot-starter-jdbc时，启动时会自动扫描所有的XxxAutoConfiguration。`DataSourceAutoConfiguration`：自动创建一个DataSource，其中配置项从application.yml的spring.datasource读取；`DataSourceTransactionManagerAutoConfiguration`：自动创建了一个基于JDBC的事务管理器；`JdbcTemplateAutoConfiguration`：自动创建了一个JdbcTemplate。 因此，我们自动得到了一个 DataSource、一个DataSourceTransactionManager和一个JdbcTemplate。Spring Boot大量使用XxxAutoConfiguration来使得许多组件被自动化配置并创建，而这些创建过程又大量使用了Spring的Conditional功能。
+- springMvc中我们定义的数据源、声明式事务、JdbcTemplate在哪创建的？这些自动创建的Bean就是Spring Boot的特色：AutoConfiguration。
+  当我们引入spring-boot-starter-jdbc时，启动时会自动扫描所有的XxxAutoConfiguration。`DataSourceAutoConfiguration`
+  ：自动创建一个DataSource，其中配置项从application.yml的spring.datasource读取；`DataSourceTransactionManagerAutoConfiguration`
+  ：自动创建了一个基于JDBC的事务管理器；`JdbcTemplateAutoConfiguration`：自动创建了一个JdbcTemplate。 因此，我们自动得到了一个
+  DataSource、一个DataSourceTransactionManager和一个JdbcTemplate。Spring
+  Boot大量使用XxxAutoConfiguration来使得许多组件被自动化配置并创建，而这些创建过程又大量使用了Spring的Conditional功能。
 
-- Spring Boot自动装配功能是通过自动扫描+条件装配实现的，这一套机制在默认情况下工作得很好，但是，如果我们要手动控制某个Bean的创建，就需要详细地了解Spring Boot自动创建的原理，很多时候还要跟踪XxxAutoConfiguration，以便设定条件使得某个Bean不会被自动创建。
+- Spring Boot自动装配功能是通过自动扫描+条件装配实现的，这一套机制在默认情况下工作得很好，但是，如果我们要手动控制某个Bean的创建，就需要详细地了解Spring
+  Boot自动创建的原理，很多时候还要跟踪XxxAutoConfiguration，以便设定条件使得某个Bean不会被自动创建。
 
-- 禁用自动配置：Spring Boot大量使用自动配置和默认配置，极大地减少了代码，通常只需要加上几个注解，并按照默认规则设定一下必要的配置即可。例如，配置JDBC，默认情况下，只需要配置一个spring.datasource。有时候，我们又必须要禁用某些自动配置。例如，系统有主从两个数据库，而Spring Boot的自动配置只能配一个，怎么办？ 这个时候，针对DataSource相关的自动配置，就必须关掉。我们需要用exclude指定需要关掉的自动配置
+- 禁用自动配置：Spring
+  Boot大量使用自动配置和默认配置，极大地减少了代码，通常只需要加上几个注解，并按照默认规则设定一下必要的配置即可。例如，配置JDBC，默认情况下，只需要配置一个spring.datasource。有时候，我们又必须要禁用某些自动配置。例如，系统有主从两个数据库，而Spring
+  Boot的自动配置只能配一个，怎么办？ 这个时候，针对DataSource相关的自动配置，就必须关掉。我们需要用exclude指定需要关掉的自动配置
 
 ```java
 @SpringBootApplication
@@ -250,4 +271,127 @@ public class Application {
 }
 ```
 
-- 添加Filter:我们在Spring中已经学过了集成Filter，本质上就是通过代理，把Spring管理的Bean注册到Servlet容器中，不过步骤比较繁琐，需要配置web.xml。在Spring Boot中，添加一个Filter更简单了，可以做到零配置.Spring Boot会自动扫描所有的FilterRegistrationBean类型的Bean，然后，将它们返回的Filter自动注册到Servlet容器中，无需任何配置。
+- 添加Filter:我们在Spring中已经学过了集成Filter，本质上就是通过代理，把Spring管理的Bean注册到Servlet容器中，不过步骤比较繁琐，需要配置web.xml。在Spring
+  Boot中，添加一个Filter更简单了，可以做到零配置.Spring Boot会自动扫描所有的FilterRegistrationBean类型的Bean，然后，将它们返回的Filter自动注册到Servlet容器中，无需任何配置。
+
+### [RedisAutoConfiguration 类](https://blog.csdn.net/weixin_48420669/article/details/108087306)
+
+```java
+
+@Configuration // 表明这是一个配置类
+// 表明类路径下有RedisOperations这个类的时候该类才会被加载到容器中（RedisTemplate extends RedisOperations）
+@ConditionalOnClass(RedisOperations.class)
+@EnableConfigurationProperties(RedisProperties.class) // 表示让RedisProperties配置类生效
+@Import({ LettuceConnectionConfiguration.class, JedisConnectionConfiguration.class }) // 最后又导入了两个redis连接类
+public class RedisAutoConfiguration {
+    // // 定义 bean RedisTemplate redisTemplate (仅在该 bean 不存在的情况下才定义)
+	@Bean
+	@ConditionalOnMissingBean(name = "redisTemplate")
+	public RedisTemplate<Object, Object> redisTemplate(
+			RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
+		RedisTemplate<Object, Object> template = new RedisTemplate<>();
+		template.setConnectionFactory(redisConnectionFactory);
+		return template;
+	}
+    // 定义 bean StringRedisTemplate  stringRedisTemplate (仅在该 bean 不存在的情况下才定义)
+	@Bean
+	@ConditionalOnMissingBean
+	public StringRedisTemplate stringRedisTemplate(
+			RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
+		StringRedisTemplate template = new StringRedisTemplate();
+		template.setConnectionFactory(redisConnectionFactory);
+		return template;
+	}
+
+}
+
+```
+
+### [@Autowired和@Resource](https://juejin.cn/post/7022507865701089317)
+
+- @Resource和@Autowired都可以作为注入属性的修饰，在接口仅有单一实现类时，两个注解的修饰效果相同，可以互相替换，不影响使用
+- @Resource是JDK原生的注解，@Autowired是Spring2.5 引入的注解
+-
+
+@Resource有两个属性name和type。Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。
+
+- @Autowired只根据type进行注入，不会去匹配name。如果涉及到type无法辨别注入对象时，那需要依赖@Qualifier或@Primary注解一起来修饰。
+
+### [springBoot cache](https://zhuanlan.zhihu.com/p/266804094?utm_id=0)
+
+- java项目添加 maven 依赖 `spring-boot-starter-cache`
+- 在启动类加上 @EnableCaching 注解即可开启使用缓存
+- 在要缓存的方法上面添加 @Cacheable 注解，即可缓存这个方法的返回值
+- Spring Cache有几个常用注解，分别为 @Cacheable、@CachePut、@CacheEvict、@Caching、 @CacheConfig。除了最后一个 @CacheConfig
+  外，其余四个都可以用在类上或者方法级别上，如果用在类上，就是对该类的所有 public 方法生效
+- @Cacheable
+  @Cacheble注解表示这个方法有了缓存的功能，方法的返回值会被缓存下来，下一次调用该方法前，会去检查是否缓存中已经有值，如果有就直接返回，不调用方法。如果没有，就调用方法，然后把结果缓存起来。这个注解一般用在查询方法上
+- @CachePut 加了@CachePut注解的方法，会把方法的返回值put到缓存里面缓存起来，供其它地方使用。它通常用在新增方法上
+- @CacheEvict 使用了 CacheEvict 注解的方法，会清空指定缓存。一般用在更新或者删除的方法上。
+- @CacheConfig 前面提到的四个注解，都是Spring
+  Cache常用的注解。但这几个注解通常都是作用在方法上的，而有些配置可能又是一个类通用的，这种情况就可以使用@CacheConfig了，它是一个类级别的注解，可以在类级别上配置cacheNames、keyGenerator、cacheManager、cacheResolver等。
+- SpringBoot 默认使用基于ConcurrentHashMap的缓存， 如果要使用其它的缓存框架，我们只需要重新定义好CacheManager和CacheResolver这两个Bean就行了。
+  事实上，Spring会自动检测我们是否引入了相应的缓存框架，如果我们引入了spring-data-redis，Spring就会自动使用spring-data-redis提供的RedisCacheManager，RedisCache
+
+### @EnableWebMvc 注解
+
+- @EnableWebMvc的意义: Adding this annotation to an @Configuration class imports the Spring MVC configuration
+  from `WebMvcConfigurationSupport`, 在 WebMvcConfigurationSupport 中注册了许多的 `HandlerMappings`(映射相应的 request 到相应的 handler
+  methods)
+- `org.springframework.web.servlet.config.annotation.WebMvcConfigurer`: spring webMvc 配置类，如果要自定义 webMvc,需要 override
+  这个类的方法
+
+### CommandLineRunner 接口
+
+Spring boot的CommandLineRunner接口主要用于实现在应用初始化后，去执行一段代码块逻辑，这段初始化代码在整个应用生命周期内只会执行一次,我们可以在run()方法里使用任何依赖，因为它们已经初始化好了
+
+### springBoot 自定义错误处理
+
+- @RestControllerAdvice ：@ControllerAdvice 和 @ResponseBody 的组合
+- @ControllerAdvice :  Specialization of @Component for classes that declare @ExceptionHandler, @InitBinder, or
+  @ModelAttribute methods to be shared across multiple @Controller classes
+- ExceptionHandler : Annotation for handling exceptions in specific handler classes and/or handler methods.
+
+```java
+@RestControllerAdvice
+public class BusinessExceptionHandler {
+
+    @ExceptionHandler(NullPointerException.class)
+    public RestResponse handleNullPointerException(HttpServletRequest request, NullPointerException e) {
+        e.printStackTrace();
+        return RestResponse.error("NullPointerException");
+    }
+    
+}
+```
+
+### ApplicationContextAware 接口
+
+Aware 是一个标记接口，没有方法，ApplicationContextAware 接口扩展了该标记接口，定义了 setApplicationContext 回调方法，并传入 ApplicationContext 作为参数，以便获取应用上下文，实现 ApplicationContextAware 的类，spring 会回调 setApplicationContext 方法，暴露出上下文环境 
+
+- Aware：A marker superinterface indicating that a bean is eligible to be notified by the Spring container of a
+  particular framework object through a callback-style method. The actual method signature is determined by individual
+  subinterfaces but should typically consist of just one void-returning method that accepts a single argument.
+
+- 上下文环境中可以获取 BeanFactory , 用以获取所有由 spring 管理的 Bean
+
+```java
+@Component
+public class SpringUtils implements ApplicationContextAware {
+
+    private static ApplicationContext applicationContext;
+    // 这个 setApplicationContext 方法会被自主调用
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        SpringUtils.applicationContext = applicationContext;
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public static <T> T getBean(Class<T> clazz) {
+        return getApplicationContext().getBean(clazz);
+    }
+}
+```

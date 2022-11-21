@@ -49,7 +49,7 @@ actions:
   - text: Database
     link: /database/mysql/mysql.html
   - text: java
-    link: /java/java_practice.html
+    link: /java/java_web.html
   - text: Miscellaneous
     link: /others/github.html
     type: primary

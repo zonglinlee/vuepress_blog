@@ -153,8 +153,10 @@ const SidebarConfig = {
         {
             text: 'Java',
             children: [
-                '/java/java_practice.md',
                 '/java/java_web.md',
+                '/java/log.md',
+                '/java/myBatis.md',
+                '/java/mybatis-spring.md',
             ],
         },
     ]
