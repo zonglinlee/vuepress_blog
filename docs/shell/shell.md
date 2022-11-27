@@ -106,6 +106,8 @@ kill -9 vim-pid
 - [explain-shell](https://explainshell.com/)
 - [https://dunwu.github.io/linux-tutorial/](https://dunwu.github.io/linux-tutorial/)
 - [kjyw 快捷运维](https://github.com/aqzt/kjyw)
+- [magic-of-sysuse-scripts](https://github.com/eryajf/magic-of-sysuse-scripts)
+- [18个Linux Shell脚本经典案例(bilibili)](https://blog.51cto.com/lizhenliang/classify)
 - [Ubuntu Post Install Scripts](https://github.com/snwh/ubuntu-post-install)
 - [shell_scripts](https://github.com/mritd/shell_scripts)
 - [ 运维外挂小工具](https://github.com/eryajf/magic-of-sysuse-scripts)
