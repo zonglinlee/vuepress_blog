@@ -117,4 +117,5 @@ FINER)。所以，只要将日志级别调整为 DEBUG 即可达到目的。
 ## reference
 
 - [myBatis](https://mybatis.org/mybatis-3/)
+- [MyBatis笔记](https://blog.csdn.net/qq_19387933/article/details/123256034)
 - [myBatisPlus](https://baomidou.com/pages/24112f/)
