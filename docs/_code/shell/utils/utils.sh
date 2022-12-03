@@ -72,8 +72,26 @@ function utils_tcpStatus() {
 function utils_sourceUtils() {
   source ~/.bashrc
 }
+# 软件卸载之后配置文件还在，需要清除配置文件
+# 软件卸载之后相应的进程还在 需要 kill -9 pid
+function utils_removeLeftOverConfigFile() {
+  dpkg -l | grep "^rc" | awk '{print $2}' | xargs apt -y purge
+}
+
+# test echo command
+function utils_echoCommonCommand() {
+  echo 'apt-get remove packageName | apt-get autoremove packageName'
+  echo '卸载所有配置文件: apt-get --purge remove packageName'
+  echo '添加 PPA(私人Ubuntu仓库) 源: sudo add-apt-repository ppa:user/ppa-name | sudo apt-get update'
+  echo '查看nginx相关历史记录: history | grep nginx'
+  echo '重新执行nginx相关历史记录中第258步操作: !258 '
+  echo '查看9000端口占用情况：lsof -i:9000'
+  echo '查看某个pid 为 2356的进程 打开的相关文件：lsof -p 2356'
+  echo '查看fpm服务文件名称：systemctl list-unit-files |grep fpm'
+  echo '解压zip文件 ：unzip -o -d ./wordpress wordpress.latest.zip'
+}
 
 # ssh
 function utils_sshGenKey() {
-    ssh-keygen
+  ssh-keygen
 }
