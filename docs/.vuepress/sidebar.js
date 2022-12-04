@@ -138,6 +138,7 @@ const SidebarConfig = {
                 '/shell/mysql_install.md',
                 '/shell/samba_install.md',
                 '/shell/sqlite3.md',
+                '/shell/wordpress_install.md',
             ],
         },
     ],
