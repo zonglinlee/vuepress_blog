@@ -89,6 +89,7 @@ function utils_echoCommonCommand() {
   echo '查看某个pid 为 2356的进程 打开的相关文件：lsof -p 2356'
   echo '查看fpm服务文件名称：systemctl list-unit-files |grep fpm'
   echo '解压zip文件 ：unzip -o -d ./wordpress wordpress.latest.zip'
+  echo '按文件名查找文件 ：find /etc/ -name my.cnf'
 }
 
 # ssh

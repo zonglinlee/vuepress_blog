@@ -130,6 +130,8 @@ flush privileges;
 
 - [中文支持](https://cpury.com/2861.html)
 - [主题安装 ftp 验证问题](https://blog.csdn.net/weixin_43059285/article/details/108013067)
+- [使用WordPress站点健康工具](https://www.wbolt.com/installation-failed-could-not-create-directory.html)
+- [Wordpress站点基本设置1——主题安装及配置](https://blog.csdn.net/weixin_46062398/article/details/116566840)
 
 ## reference
 
