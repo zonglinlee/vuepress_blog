@@ -77,6 +77,35 @@ add_action('after_setup_theme', 'registerMenu');
 <?php } wp_reset_postdata(); ?>
 ```
 
+- wordpress 自定义post type,在主题文件夹上一级目录(wp-content)目录下，新建文件夹 `mu-plugins`
+  ,这个目录里面的php文件WordPress都会执行，与主题无关.添加如下代码，添加一个event类型的文章类型，后台管理页面就会出现 `Events`的面板
+- 新建 `archive-event.php` `single-event.php` 作为归档和文章页面的模板框架，注意文件命名 `archive-postType.php  single-postType.php`
+
+```php 
+<?php
+function add_custom_post_type(){
+    // 新增一个 type 为 event 的 post，wordpress 默认 postType 为 page 和 post
+    register_post_type('event', array(
+        'show_in_rest' => true,
+        'public' => true,
+        'menu_icon' => 'dashicons-calendar',
+        'has_archive' => true, // 开启归档
+        'rewrite' => array('slug' => 'events'),// 定义 url 为 /events
+        'supports' => array('title','editor','excerpt'),
+        'labels' => array( // 设置后台管理页面显示
+            'name' => 'Events',
+            'add_new_item' => 'Add new Events',
+            'edit_item' => 'Edit event',
+            'all_items' => 'All Events',
+            'singular_name' => 'Event',
+        )
+    ));
+}
+- 如果需要给文章添加 自定义 字段，可以使用 `advanced custom fields`这个插件，添加完自定义字段后，在php文件中通过 the_field(fieldName) 或者 get_field(fieldName) 来使用
+
+add_action('init', 'add_custom_post_type');
+```
+
 ## 常见问题
 
 - wordpress更改固定链接,id 形式改成 post_name 形式后页面刷新报 404
