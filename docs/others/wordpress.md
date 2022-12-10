@@ -79,6 +79,7 @@ add_action('after_setup_theme', 'registerMenu');
 
 - wordpress 自定义post type,在主题文件夹上一级目录(wp-content)目录下，新建文件夹 `mu-plugins`
   ,这个目录里面的php文件WordPress都会执行，与主题无关.添加如下代码，添加一个event类型的文章类型，后台管理页面就会出现 `Events`的面板
+- 自定义postType后页面找不见情况时候，需要在后台固定链接页面刷新一下 `固定链接结构`,即重新点击一下 **保存更改** 按钮
 - 新建 `archive-event.php` `single-event.php` 作为归档和文章页面的模板框架，注意文件命名 `archive-postType.php  single-postType.php`
 
 ```php 
@@ -104,6 +105,31 @@ function add_custom_post_type(){
 - 如果需要给文章添加 自定义 字段，可以使用 `advanced custom fields`这个插件，添加完自定义字段后，在php文件中通过 the_field(fieldName) 或者 get_field(fieldName) 来使用
 
 add_action('init', 'add_custom_post_type');
+```
+
+- wordpress 自定义查询分页会失效，需要稍作调整自定义查询参数
+- 在functions.php中添加钩子函数，可以拦截默认查询，并修改相应的查询参数
+
+```php
+function adjust_default_query($query){
+    // 非后台管理页面 && 自定义event类型的post && 是默认查询（非自定义query）
+    if (!is_admin() and is_post_type_archive('event') and $query->is_main_query()) {
+        $today = date('Ymd');
+        $query->set('meta_key', 'event_date');
+        $query->set('orderby', 'meta_value_num');
+        $query->set('order', 'ASC');
+        $query->set('meta_query', array(
+            array(
+                'key' => 'event_date',
+                'compare' => '>=',
+                'value' => $today,
+                'type' => 'numeric',
+            )
+        ));
+    }
+
+}
+add_action('pre_get_posts', 'adjust_default_query');
 ```
 
 ## 常见问题
