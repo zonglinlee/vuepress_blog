@@ -87,9 +87,11 @@ function utils_echoCommonCommand() {
   echo '重新执行nginx相关历史记录中第258步操作: !258 '
   echo '查看9000端口占用情况：lsof -i:9000'
   echo '查看某个pid 为 2356的进程 打开的相关文件：lsof -p 2356'
+  echo '显示 tcp，udp 的端口和进程等相关情况,查看9000端口占用情况：netstat -tunlp | grep 9000'
   echo '查看fpm服务文件名称：systemctl list-unit-files |grep fpm'
   echo '解压zip文件 ：unzip -o -d ./wordpress wordpress.latest.zip'
   echo '按文件名查找文件 ：find /etc/ -name my.cnf'
+  echo 'zip 命令压缩文件：将 /home/html/ 下所有文件和文件夹打包为当前目录下的 html.zip ：zip -q -r html.zip /home/html'
 }
 
 # ssh
