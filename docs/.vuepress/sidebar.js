@@ -47,6 +47,7 @@ const SidebarConfig = {
                 '/others/windows-cmd.md',
                 '/others/eslint.md',
                 '/others/jest.md',
+                '/others/wordpress.md',
             ],
         },
     ],
