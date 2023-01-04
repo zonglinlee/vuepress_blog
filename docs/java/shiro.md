@@ -1,3 +1,7 @@
+---
+title: shiro
+---
+
 ## Apache Shiro Terminology
 
 Apache Shiro is a powerful and flexible open-source security framework that cleanly handles **authentication**, **
@@ -47,7 +51,7 @@ Subject, SecurityManager and Realms
 
 ## Shiro api
 
-```text
+```java
 Subject currentUser = SecurityUtils.getSubject(); // 获取当前用户
 Session session = currentUser.getSession(); // 获取当前会话
 currentUser.isAuthenticated() // 当前用户是否已经认证过
@@ -65,7 +69,7 @@ currentUser.logout(); //removes all identifying information and invalidates thei
 - step2: Submit the principals and credentials to an authentication system.
 - step3: Allow access, retry authentication, or block access
 
-```text
+```java
 UsernamePasswordToken token = new UsernamePasswordToken(username, password); // step1
 // step2: Authenticate the subject by passing the user name and password token into the login method
 Subject currentUser = SecurityUtils.getSubject();

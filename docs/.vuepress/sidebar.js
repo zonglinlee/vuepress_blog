@@ -159,6 +159,8 @@ const SidebarConfig = {
                 '/java/log.md',
                 '/java/myBatis.md',
                 '/java/mybatis-spring.md',
+                '/java/shiro.md',
+                '/java/java_web_packages.md',
             ],
         },
     ]

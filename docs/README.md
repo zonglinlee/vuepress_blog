@@ -81,7 +81,6 @@ footer: Hello-world!
 - [awesome-courses](https://github.com/prakhar1989/awesome-courses)
 - [computer-science](https://github.com/ossu/computer-science)
 - [build-your-own-x](https://github.com/codecrafters-io/build-your-own-x)
-- [javascript-algorithms](https://github.com/trekhleb/javascript-algorithms)
 - [Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
 - [CS-Notes](https://github.com/CyC2018/CS-Notes)
 - [regular-expression](https://www.rexegg.com/)
@@ -91,3 +90,5 @@ footer: Hello-world!
 - [Awesome-GitHub-Repo](https://github.com/Wechat-ggGitHub/Awesome-GitHub-Repo)
 - [understand-nodejs](https://theanarkh.github.io/understand-nodejs/)
 - [animista](https://animista.net/)
+- [java: TheAlgorithms](https://github.com/TheAlgorithms/Java)
+- [javascript: TheAlgorithms](https://github.com/trekhleb/javascript-algorithms)
