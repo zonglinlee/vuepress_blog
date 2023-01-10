@@ -7,7 +7,7 @@ function utils_scpFile() {
 }
 
 # 找出CPU/内存过高的进程
-function utils_checkCup() {
+function utils_checkCpu() {
   #  sort 默认对第一列排序
   echo ------------------------- cpu top 5 ----------------
   ps aux | awk '{print $3,$1,$2,$11}' | sort -r | head -n 5
