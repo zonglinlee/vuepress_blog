@@ -40,6 +40,16 @@ servlet程序打包类型不是jar，而是war，表示Java Web Application Arch
 在Servlet中定义的实例变量会被多个线程同时访问，要注意线程安全； HttpServletRequest和HttpServletResponse实例是由Servlet容器传入的局部变量，它们只能被当前线程访问，不存在多个线程访问的问题；
 在doGet()或doPost()方法中，如果使用了ThreadLocal，但没有清理，那么它的状态很可能会影响到下次的某个请求，因为Servlet容器很可能用线程池实现线程复用。
 
+![servletMapping](../images/java/servlet-mapping.png)
+
+一个Web App就是由一个或多个Servlet组成的，每个Servlet通过注解说明自己能处理的路径。浏览器发出的HTTP请求总是由Web
+Server先接收，然后，根据Servlet配置的映射，不同的路径转发到不同的Servlet。这种根据路径转发的功能我们一般称为Dispatch。映射到 `/` 的IndexServlet比较特殊，它实际上会接收所有未匹配的路径，相当于/*
+
+有了HttpServletRequest和HttpServletResponse这两个高级接口，我们就不需要直接处理HTTP协议。注意到具体的实现类是由各服务器提供的，而我们编写的Web应用程序只关心接口方法，并不需要关心具体实现的子类
+
+- 通过 HttpServletRequest 提供的接口方法可以拿到 HTTP 请求的几乎全部信息
+- HttpServletResponse封装了一个HTTP响应。由于HTTP响应必须先发送Header，再发送Body，所以，操作HttpServletResponse对象时，必须先调用设置Header的方法，最后调用发送Body的方法
+
 ### Servlet多线程模型
 
 一个Servlet类在服务器中只有一个实例，但对于每个HTTP请求，Web服务器会使用多线程执行请求。因此，一个Servlet的doGet()、doPost()
@@ -61,21 +71,118 @@ public class HelloServlet extends HttpServlet {
 
 为了把一些公用逻辑从各个Servlet中抽离出来，JavaEE的Servlet规范还提供了一种Filter组件，即过滤器，它的作用是，在HTTP请求到达Servlet之前，可以被一个或多个Filter预处理，类似打印日志、登录检查等逻辑，完全可以放到Filter中。
 
+![servletFilter](../images/java/servlet-filter.png)
+
+编写一个最简单的EncodingFilter，它强制把输入和输出的编码设置为UTF-8。编写Filter时，必须实现Filter接口，在doFilter()方法内部，要继续处理请求，必须调用chain.doFilter()
+。最后，用@WebFilter注解标注该Filter需要过滤的URL。这里的/*表示所有路径。
+
+```java
+@WebFilter(urlPatterns = "/*")
+public class EncodingFilter implements Filter {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        System.out.println("EncodingFilter:doFilter");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        chain.doFilter(request, response);
+    }
+}
+```
+
+还可以继续添加其他Filter， 多个Filter会组成一个链，每个请求都被链上的Filter依次处理，
+Servlet规范并没有对@WebFilter注解标注的Filter规定顺序。如果一定要给每个Filter指定顺序，就必须在web.xml文件中对这些Filter再配置一遍
+
+## [为什么HttpServletRequest的输入流只能读一次](https://developer.aliyun.com/article/830227)
+
+当我们调用 getInputStream() 方法获取输入流时得到的是一个 InputStream 对象，而实际类型是 ServletInputStream，它继承于 InputStream。 InputStream 的 read()
+方法内部有一个 position，标志当前流被读取到的位置，每读取一次，该标志就会移动一次，如果读到最后，read()会返回 -1，表示已经读取完了。如果想要重新读取则需要调用 reset()
+方法，position 就会移动到上次调用 mark 的位置，mark 默认是0，所以就能从头再读了。调用 reset() 方法的前提是已经重写了 reset() 方法，当然能否 reset 也是有条件的，它取决于
+markSupported()
+方法是否返回true。 InputStream 默认不实现 reset 的相关方法，而 ServletInputStream 也没有重写 reset 的相关方法，这样就无法重复读取流，这就是我们从 request
+对象中获取的输入流就只能读取一次的原因。
+
+## [修改请求 HttpServletRequestWrapper](https://www.liaoxuefeng.com/wiki/1252599548343744/1328976435871777)
+
+## [修改响应 HttpServletResponseWrapper](https://www.liaoxuefeng.com/wiki/1252599548343744/1328976456843298)
+
 ## [使用Listener](https://www.liaoxuefeng.com/wiki/1252599548343744/1304266123771937)
 
 Listener顾名思义就是监听器，有好几种Listener，其中最常用的是ServletContextListener,通过Listener我们可以监听Web应用程序的生命周期
 
 任何标注为@WebListener，且实现了特定接口的类会被Web服务器自动初始化,它会在整个Web应用程序初始化完成后，以及Web应用程序关闭后获得回调通知。
 
-## spring MVC
+## ioc 容器
 
-- @ComponentScan，它告诉容器，自动搜索当前类所在的包以及子包，把所有标注为@Component的Bean自动创建出来，并根据@Autowired进行装配。
+在 application.xml 中配置 bean 依赖关系
+
+```xml
+
+<beans xmlns="http://www.springframework.org/schema/beans">
+    <bean id="userService" class="com.learnJava.service.UserService">
+        <property name="mailService" ref="mailService"/>
+    </bean>
+    <bean id="mailService" class="com.learnJava.service.MailService"/>
+</beans>
+```
+
+在入口函数中加载 application.xml， Spring容器会为我们创建并装配好配置文件中指定的所有Bean， 接下来就可以从Spring容器中“取出”装配好的Bean然后使用它
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
+        UserService userService = context.getBean(UserService.class);
+        User user = userService.login("bob@example.com", "password");
+        System.out.println(user.getName());
+    }
+}
+```
+
+Spring容器就是 ApplicationContext，它是一个接口，有很多实现类，这里我们选择 ClassPathXmlApplicationContext，表示它会自动从 classpath 中查找指定的XML配置文件
+
+Spring还提供另一种IoC容器叫BeanFactory，使用方式和ApplicationContext类似：
+
+```java
+BeanFactory factory = new XmlBeanFactory(new ClassPathResource("application.xml"));
+MailService mailService = factory.getBean(MailService.class);
+```
+
+BeanFactory 和 ApplicationContext 的区别在于，BeanFactory 的实现是按需创建，即第一次获取 Bean 时才创建这个Bean，而 ApplicationContext 会一次性创建所有的 Bean
+
+## Annotation配置
+
+使用Spring的IoC容器，实际上就是通过类似XML这样的配置文件，把我们自己的Bean的依赖关系描述出来，然后让容器来创建并装配Bean。一旦容器初始化完毕，我们就直接从容器中获取Bean使用它们。 使用 XML
+配置的优点是所有的Bean都能一目了然地列出来，并通过配置注入能直观地看到每个Bean的依赖。它的缺点是写起来非常繁琐，每增加一个组件，就必须把新的Bean配置到XML中.
+
+**为了解决这个问题，我们可以使用Annotation配置，可以完全不需要XML，让Spring自动扫描Bean并组装它们。**
+
+- 每个Bean被标注为@Component并正确使用@Autowired注入；
+- 配置类被标注为@Configuration和@ComponentScan；
+- 所有Bean均在指定包以及子包内
+
+## [定制bean](https://www.liaoxuefeng.com/wiki/1252599548343744/1308043627200545)
 
 - 对于Spring容器来说，当我们把一个Bean标记为@Component后，它就会自动为我们创建一个单例（Singleton），即容器初始化时创建Bean，容器关闭前销毁Bean。在容器运行期间，我们调用getBean(Class)
   获取到的Bean总是同一个实例。
 
 - 还有一种Bean，我们每次调用getBean(Class)
   ，容器都返回一个新的实例，这种Bean称为Prototype（原型），它的生命周期显然和Singleton不同。声明一个Prototype的Bean时，需要添加一个额外的@Scope注解
+- 注入List ： 有些时候，我们会有一系列接口相同，不同实现的 Bean, 比如我们有一个 Validator 接口，它有3个实现类，分别是 EmailValidator、PasswordValidator、NameValidator。
+  Spring会自动把所有类型为Validator的Bean装配为一个List注入进来，这样一来，我们每新增一个Validator类型，就自动被Spring装配到Validators中了，非常方便
+
+```java
+@Component
+public class Validators {
+    @Autowired
+    List<Validator> validators;
+
+    public void validate(String email, String password, String name) {
+        for (var validator : this.validators) {
+            validator.validate(email, password, name);
+        }
+    }
+}
+```
 
 - 创建第三方Bean ，如果一个Bean不在我们自己的package管理之内，我们自己在@Configuration类中编写一个Java方法创建并返回它，注意给方法标记一个@Bean注解
   ，Spring对标记为@Bean的方法只调用一次，因此返回的Bean仍然是单例。
@@ -83,6 +190,27 @@ Listener顾名思义就是监听器，有好几种Listener，其中最常用的�
 - 初始化和销毁 有些时候，一个Bean在注入必要的依赖后，需要进行初始化（监听消息等）。在容器关闭时，有时候还需要清理资源（关闭连接池等）。我们通常会定义一个init()方法进行初始化，定义一个shutdown()
   方法进行清理，然后，引入JSR-250定义的Annotation(一个jar包)，在Bean的初始化和清理方法上标记@PostConstruct和@PreDestroy，Spring容器会对上述Bean做如下初始化流程：
   调用构造方法创建实例； 根据@Autowired进行注入； 调用标记有@PostConstruct的init()方法进行初始化。 而销毁时，容器会首先调用标记有@PreDestroy的shutdown()方法
+
+```java
+@Component
+public class MailService {
+    @Autowired(required = false)
+    ZoneId zoneId = ZoneId.systemDefault();
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Init mail service with zoneId = " + this.zoneId);
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        System.out.println("Shutdown mail service");
+    }
+}
+```
+
+- 使用别名:
+  默认情况下，对一种类型的Bean，容器只创建一个实例。但有些时候，我们需要对一种类型的Bean创建多个实例。例如，同时连接多个数据库，就必须创建多个DataSource实例。这个时候，需要给每个Bean添加不同的名字,或者把其中某个Bean指定为@Primary，这样，在注入时，如果没有指出Bean的名字，Spring会注入标记有@Primary的Bean
 
 -
 
@@ -193,6 +321,13 @@ XML配置 :
 
 使用MyBatis最大的问题是所有SQL都需要全部手写，优点是执行的SQL就是我们自己写的SQL，对SQL进行优化非常简单，也可以编写任意复杂的SQL，或者使用数据库的特定语法，但切换数据库可能就不太容易。好消息是大部分项目并没有切换数据库的需求，完全可以针对某个数据库编写尽可能优化的SQL。
 
+## springMVC 项目结构
+
+![spring mvc项目结构](../images/java/spring-mvc-project.png)
+
+其中，src/main/webapp是标准web目录，WEB-INF存放web.xml，编译的class，第三方jar，以及不允许浏览器直接访问的View模版，static目录存放所有静态文件。
+在src/main/resources目录中存放的是Java程序读取的classpath资源文件
+
 ## [使用Spring MVC](https://www.liaoxuefeng.com/wiki/1252599548343744/1282383921807393)
 
 Servlet容器为每个Web应用程序自动创建一个唯一的ServletContext实例，这个实例就代表了Web应用程序本身.
@@ -207,26 +342,15 @@ Servlet容器为每个Web应用程序自动创建一个唯一的ServletContext�
 
 - 使用@RestController可以方便地编写REST服务，Spring默认使用JSON作为输入和输出。 要控制序列化和反序列化，可以使用Jackson提供的@JsonIgnore和@JsonProperty注解。
 
-
-- 在Spring MVC中，DispatcherServlet只需要固定配置到web.xml中，剩下的工作主要是专注于编写Controller。 但是，在Servlet规范中，我们还可以使用Filter。如果要在Spring
-  MVC中使用Filter，应该怎么做？通过一种方式，让Servlet容器实例化的Filter，间接引用Spring容器实例化的AuthFilter。Spring
-  MVC提供了一个DelegatingFilterProxy，专门来干这个事情。Servlet容器从web.xml中读取配置，实例化DelegatingFilterProxy，注意命名是authFilter；
-  Spring容器通过扫描@Component实例化AuthFilter。
-  当DelegatingFilterProxy生效后，它会自动查找注册在ServletContext上的Spring容器，再试图从容器中查找名为authFilter的Bean，也就是我们用@Component声明的AuthFilter
-
-- 如果只基于Spring MVC开发应用程序，还可以使用Spring
-  MVC提供的一种功能类似Filter的拦截器：Interceptor。和Filter相比，Interceptor拦截范围不是后续整个处理流程，而是仅针对Controller拦截，所以，Interceptor的拦截范围其实就是Controller方法，它实际上就相当于基于AOP的方法拦截。使用Interceptor的好处是Interceptor本身是Spring管理的Bean，因此注入任意Bean都非常简单。此外，可以应用多个Interceptor，并通过简单的@Order指定顺序。一个Interceptor必须实现HandlerInterceptor接口，可以选择实现preHandle()
-  、postHandle()和afterCompletion()方法。preHandle()是Controller方法调用前执行，postHandle()是Controller方法正常返回后执行，而afterCompletion()
-  无论Controller方法是否抛异常都会执行，参数ex就是Controller方法抛出的异常（未抛出异常是null）。 在preHandle()
-  中，也可以直接处理响应，然后返回false表示无需调用Controller方法继续处理了，通常在认证或者安全检查失败时直接返回错误响应。在postHandle()
-  中，因为捕获了Controller方法返回的ModelAndView，所以可以继续往ModelAndView里添加一些通用数据，很多页面需要的全局数据如Copyright信息等都可以放到这里，无需在每个Controller方法中重复添加。最后，要让拦截器生效，我们在WebMvcConfigurer中注册所有的Interceptor
-
 - springMVC的controller方法中如果参数需要传入HttpServletRequest、HttpServletResponse或者HttpSession，直接添加这个类型的参数即可，Spring MVC会自动按类型传入
 
 - 处理CORS：在WebMvcConfigurer中定义一个全局CORS配置
+
+
 -
 
-异步处理：在Servlet模型中，每个请求都是由某个线程处理，然后，将响应写入IO流，发送给客户端。从开始处理请求，到写入响应完成，都是在同一个线程中处理的。这种线程模型非常重要，因为Spring的JDBC事务是基于ThreadLocal实现的，如果在处理过程中，一会由线程A处理，一会又由线程B处理，那事务就全乱套了。此外，很多安全认证，也是基于ThreadLocal实现的，可以保证在处理请求的过程中，各个线程互不影响。但是，如果一个请求处理的时间较长，例如几秒钟甚至更长，那么，这种基于线程池的同步模型很快就会把所有线程耗尽，导致服务器无法响应新的请求。如果把长时间处理的请求改为异步处理，那么线程池的利用率就会大大提高。Servlet从3.0规范开始添加了异步支持，允许对一个请求进行异步处理。第一种async处理方式是返回一个Callable，Spring
+异步处理：在Servlet模型中，每个请求都是由某个线程处理，然后，将响应写入IO流，发送给客户端。从开始处理请求，到写入响应完成，都是在同一个线程中处理的。这种线程模型非常重要，因为Spring的JDBC事务是基于ThreadLocal实现的，
+如果在处理过程中，一会由线程A处理，一会又由线程B处理，那事务就全乱套了。此外，很多安全认证，也是基于ThreadLocal实现的，可以保证在处理请求的过程中，各个线程互不影响。但是，如果一个请求处理的时间较长，例如几秒钟甚至更长，那么，这种基于线程池的同步模型很快就会把所有线程耗尽，导致服务器无法响应新的请求。如果把长时间处理的请求改为异步处理，那么线程池的利用率就会大大提高。Servlet从3.0规范开始添加了异步支持，允许对一个请求进行异步处理。第一种async处理方式是返回一个Callable，Spring
 MVC自动把返回的Callable放入线程池执行，等待结果返回后再写入响应。第二种async处理方式是返回一个DeferredResult对象，然后在另一个线程中，设置此对象的值并写入响应。
 在实际使用时，经常用到的就是DeferredResult，因为返回DeferredResult时，可以设置超时、正常结果和错误结果，易于编写比较灵活的逻辑。
 使用async异步处理响应时，要时刻牢记，在另一个异步线程中的事务和Controller方法中执行的事务不是同一个事务，在Controller中绑定的ThreadLocal信息也无法在异步线程中获取。
@@ -237,6 +361,48 @@ MVC自动把返回的Callable放入线程池执行，等待结果返回后再写
 
 WebSocket：WebSocket是一种基于HTTP的长链接技术。传统的HTTP协议是一种请求-响应模型，如果浏览器不发送请求，那么服务器无法主动给浏览器推送数据。HTTP本身是基于TCP连接的，所以，WebSocket在HTTP协议的基础上做了一个简单的升级，即建立TCP连接后，浏览器发送请求时，附带几个头：`Upgrade: websocket`
 ,就表示客户端希望升级连接，变成长连接的WebSocket，服务器返回升级成功的响应。收到成功响应后表示WebSocket“握手”成功，这样，代表WebSocket的这个TCP连接将不会被服务器关闭，而是一直保持，服务器可随时向浏览器推送消息，浏览器也可随时向服务器推送消息。双方推送的消息既可以是文本消息，也可以是二进制消息，一般来说，绝大部分应用程序会推送基于JSON的文本消息。
+
+### [SpringMvc中使用 Filter](https://www.liaoxuefeng.com/wiki/1252599548343744/1282384114745378)
+
+Servlet容器实例化的Filter，间接引用Spring容器实例化的AuthFilter。Spring
+MVC提供了一个DelegatingFilterProxy，专门来干这个事情。Servlet容器从web.xml中读取配置，实例化DelegatingFilterProxy，注意命名是authFilter；
+Spring容器通过扫描@Component实例化AuthFilter。
+当DelegatingFilterProxy生效后，它会自动查找注册在ServletContext上的Spring容器，再试图从容器中查找名为authFilter的Bean，也就是我们用@Component声明的AuthFilter
+
+![springMvc filter](../images/java/spring-mvc-filter.png)
+
+### [SpringMvc中使用 Interceptor](https://www.liaoxuefeng.com/wiki/1252599548343744/1347180610715681)
+
+Filter由Servlet容器管理，它在Spring MVC的Web应用程序中作用范围如下
+
+![springMvc filter-range](../images/java/spring-mvc-filter-range.png)
+
+如果只基于Spring MVC开发应用程序，还可以使用Spring
+MVC提供的一种功能类似Filter的拦截器：Interceptor。和Filter相比，Interceptor拦截范围不是后续整个处理流程，而是仅针对Controller拦截，所以，Interceptor
+的拦截范围其实就是Controller方法，它实际上就相当于基于AOP的方法拦截。使用Interceptor的好处是Interceptor本身是Spring管理的Bean，因此注入任意Bean都非常简单。
+
+![springMvc interceptor](../images/java/spring-mvc-interceptor-range.png)
+
+此外，可以应用多个Interceptor，并通过简单的@Order指定顺序。一个Interceptor必须实现HandlerInterceptor接口，可以选择实现preHandle()
+、postHandle()和afterCompletion()方法。preHandle()是Controller方法调用前执行，postHandle()是Controller方法正常返回后执行，而afterCompletion()
+无论Controller方法是否抛异常都会执行，参数ex就是Controller方法抛出的异常（未抛出异常是null）。 在preHandle()
+中，也可以直接处理响应，然后返回false表示无需调用Controller方法继续处理了，通常在认证或者安全检查失败时直接返回错误响应。在postHandle()
+中，因为捕获了Controller方法返回的ModelAndView，所以可以继续往ModelAndView里添加一些通用数据，很多页面需要的全局数据如Copyright信息等都可以放到这里，无需在每个Controller方法中重复添加。
+
+最后，要让拦截器生效，我们在WebMvcConfigurer中注册所有的Interceptor
+
+```java
+@Bean
+WebMvcConfigurer createWebMvcConfigurer(@Autowired HandlerInterceptor[] interceptors) {
+    return new WebMvcConfigurer() {
+        public void addInterceptors(InterceptorRegistry registry) {
+            for (var interceptor : interceptors) {
+                registry.addInterceptor(interceptor);
+            }
+        }
+    };
+}
+```
 
 ## springBoot
 
@@ -270,9 +436,6 @@ public class Application {
     ...
 }
 ```
-
-- 添加Filter:我们在Spring中已经学过了集成Filter，本质上就是通过代理，把Spring管理的Bean注册到Servlet容器中，不过步骤比较繁琐，需要配置web.xml。在Spring
-  Boot中，添加一个Filter更简单了，可以做到零配置.Spring Boot会自动扫描所有的FilterRegistrationBean类型的Bean，然后，将它们返回的Filter自动注册到Servlet容器中，无需任何配置。
 
 ### [RedisAutoConfiguration 类](https://blog.csdn.net/weixin_48420669/article/details/108087306)
 
@@ -367,7 +530,8 @@ public class BusinessExceptionHandler {
 
 ### ApplicationContextAware 接口
 
-Aware 是一个标记接口，没有方法，ApplicationContextAware 接口扩展了该标记接口，定义了 setApplicationContext 回调方法，并传入 ApplicationContext 作为参数，以便获取应用上下文，实现 ApplicationContextAware 的类，spring 会回调 setApplicationContext 方法，暴露出上下文环境 
+Aware 是一个标记接口，没有方法，ApplicationContextAware 接口扩展了该标记接口，定义了 setApplicationContext 回调方法，并传入 ApplicationContext
+作为参数，以便获取应用上下文，实现 ApplicationContextAware 的类，spring 会回调 setApplicationContext 方法，暴露出上下文环境
 
 - Aware：A marker superinterface indicating that a bean is eligible to be notified by the Spring container of a
   particular framework object through a callback-style method. The actual method signature is determined by individual
@@ -392,6 +556,28 @@ public class SpringUtils implements ApplicationContextAware {
 
     public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
+    }
+}
+```
+### springBoot中使用Filter
+
+添加Filter:我们在Spring中已经学过了集成Filter，本质上就是通过代理，把Spring管理的Bean注册到Servlet容器中，不过步骤比较繁琐，需要配置web.xml。在Spring
+Boot中，添加一个Filter更简单了，可以做到零配置.Spring Boot会自动扫描所有的FilterRegistrationBean类型的Bean，然后，将它们返回的Filter自动注册到Servlet容器中，无需任何配置。
+
+```java
+@Component
+public class AuthFilterRegistrationBean extends FilterRegistrationBean<Filter> {
+    @Autowired
+    UserService userService;
+
+    @Override
+    public Filter getFilter() {
+        setOrder(10);
+        return new AuthFilter();
+    }
+
+    class AuthFilter implements Filter {
+        ...
     }
 }
 ```
