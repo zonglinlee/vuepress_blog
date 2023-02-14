@@ -152,3 +152,7 @@ set global general_log = 1;
 set global log_output = 'TABLE';
 select *
 from mysql.general_log;
+
+
+show procedure status where db='bigData';
+show create procedure bigData.insert_dept;

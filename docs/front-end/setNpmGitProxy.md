@@ -35,6 +35,11 @@ ieda中插件市场下载太慢，v2rayN全局代理不生效，需要给idea配
 - .env files support
 - statistic (统计项目代码)
 
+#### IDEA 常用插件
+
+- maven helper: 用来分析 pom.xml 文件中的依赖关系
+
+
 #### webstorm常见问题
 
 - `tailwindcss` 不能智能提示

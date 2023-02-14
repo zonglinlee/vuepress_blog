@@ -2,6 +2,9 @@
 title: shell basic
 ---
 
+## Terminology
+- gcc: 是 GNU compiler collection 的缩写，它是 Linux 下一个编译器集合( 相当于 javac )， 是 c 或 c++程序的编译器
+
 ## 远程登录 SSH
 
 ssh 配置文件 `/etc/ssh/sshd.config`
