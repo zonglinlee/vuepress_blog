@@ -3,7 +3,8 @@ const SidebarConfig = {
         {
             text: '前端环境配置',
             children: [
-                '/front-end/setNpmGitProxy.md'
+                '/front-end/setNpmGitProxy.md',
+                '/front-end/nginx.md'
             ],
         },
     ],
@@ -31,6 +32,7 @@ const SidebarConfig = {
                 '/library/vueRouter4.md',
                 '/library/layui.md',
                 '/library/umi-request.md',
+                '/library/echarts.md',
                 '/library/Miscellaneous.md'
             ],
         },
