@@ -70,6 +70,7 @@ const SidebarConfig = {
             children: [
                 '/css/css补漏.md',
                 '/css/css_transition_animation.md',
+                '/css/vue_group_transition_flip.md',
                 '/css/scss.md',
                 '/css/css_tricks.md',
                 '/css/css_layout.md',
