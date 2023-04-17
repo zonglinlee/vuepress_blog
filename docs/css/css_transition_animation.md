@@ -119,8 +119,17 @@ and stay invisible until 20% through the animation*/
 }
 ```
 
-- If a keyframe rule doesn't specify the start or end states of the animation (that is, `0%/from` and `100%/to`), browsers
+- If a keyframe rule doesn't specify the start or end states of the animation (that is, `0%/from` and `100%/to`),
+  browsers
   will use the element's existing styles for the start/end states. This can be used to animate an element from its
   initial state and back.
 
 ## Multiple animations
+
+## FQ
+
+- [CSS transition not working](https://weekendprojects.dev/posts/css-transition-not-working/)
+    - The transition can only be applied to animatable properties.
+    - Check that the animating property is not set to auto. Transitions can not animate CSS properties that are **not
+      explicitly set** and **auto**
+
