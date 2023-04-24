@@ -33,6 +33,7 @@ const SidebarConfig = {
                 '/library/layui.md',
                 '/library/umi-request.md',
                 '/library/echarts.md',
+                '/library/Pdf.js.md',
                 '/library/Miscellaneous.md'
             ],
         },
