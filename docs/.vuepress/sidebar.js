@@ -165,6 +165,7 @@ const SidebarConfig = {
                 '/java/mybatis-spring.md',
                 '/java/shiro.md',
                 '/java/java_web_packages.md',
+                '/java/ItextPdf.md',
             ],
         },
     ]
