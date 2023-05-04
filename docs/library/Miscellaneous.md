@@ -24,3 +24,4 @@ needed. For example, improving startup performance by deferring nonessential ope
 - [stream-handbook](https://github.com/substack/stream-handbook)
 - [NodeSchool](https://nodeschool.io/zh-cn/#workshopper-list)
 - [art-of-node](https://github.com/maxogden/art-of-node/#learn-node-interactively)
+- [Using JavaScript to trap focus in an element](https://hidde.blog/using-javascript-to-trap-focus-in-an-element/)

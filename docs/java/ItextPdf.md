@@ -86,7 +86,7 @@ public class MyXMLWorkerHelper  {
         // XML Worker
         XMLWorker worker = new XMLWorker(cssPipeline, true);
         XMLParser p = new XMLParser(worker);
-        // fix: ul/ol 中换行会解析为多余 li 标签的问题
+        // fix: ul/ol 中换行会解析为 li标签的问题
         Pattern reg = Pattern.compile("<[ou]l.*>(\\s+)<li|</li>(\\s+)<((li)|(/[ou]l>))",Pattern.CASE_INSENSITIVE|Pattern.MULTILINE);
         Matcher matcher = reg.matcher(html);
         StringBuffer operatorStr=new StringBuffer(html);
@@ -101,8 +101,10 @@ public class MyXMLWorkerHelper  {
             }
             matcher = reg.matcher(operatorStr);
         }
+        // fix: sub sup 标签不生效 添加样式
+        html = operatorStr.toString().replace("<sub>", "<sub style=\"vertical-align: sub;\">").replace("<sup>", "<sup style=\"vertical-align: super;\">");
         // fix: XMLWorker 解析 xml, html 标签中的单标签结构不符合要求
-        html = operatorStr.toString().replace("\n", "<br></br>").replace("<hr>", "<hr></hr>");
+        html = html.replace("<br>", "<br></br>").replace("<hr>", "<hr></hr>");
         p.parse(new ByteArrayInputStream(html.getBytes()));
 
 //        for (int i = 0; i < elements.size(); i++) {

@@ -17,3 +17,8 @@ title: css 补漏
 
 The `caret-color` CSS property sets the color of the **insertion caret**, the visible marker where the next character
 typed will be inserted. This is sometimes referred to as **the text input cursor**.
+
+## CSS key concepts
+- [Layout and the containing block](https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block)
+- [HTMLElement: offsetParent property](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetParent)
+- [Dom element dimensions and css transforms](https://impressivewebs.com/dom-element-dimensions-and-css-transforms/)
