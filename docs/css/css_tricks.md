@@ -32,3 +32,20 @@ title: css tricks
 ```
 
 ### [让CSS flex布局最后一行列表左对齐的N种方法](https://www.zhangxinxu.com/wordpress/2019/08/css-flex-last-align/?shrink=1)
+
+### [set scrollbar style](https://css-tricks.com/almanac/properties/s/scrollbar/)
+
+```css
+body::-webkit-scrollbar {
+    width: 1em;
+}
+
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+```
