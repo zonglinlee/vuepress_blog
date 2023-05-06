@@ -1,5 +1,5 @@
 ---
-title: element-table
+title: el-table
 ---
 
 ## [`<colgroup>`元素](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/colgroup)

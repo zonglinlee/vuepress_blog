@@ -123,6 +123,7 @@ const SidebarConfig = {
                 '/element-ui/element_utils.md',
                 '/element-ui/dialog.md',
                 '/element-ui/table.md',
+                '/element-ui/scrollBar.md',
             ],
         },
     ],
