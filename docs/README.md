@@ -49,7 +49,9 @@ actions:
   - text: Database
     link: /database/mysql/mysql.html
   - text: java
-    link: /java/java_web.html
+    link: /java/java_web.html  
+  - text: Android
+    link: /android/starter.html
   - text: Miscellaneous
     link: /others/github.html
     type: primary

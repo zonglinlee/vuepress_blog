@@ -169,6 +169,14 @@ const SidebarConfig = {
                 '/java/ItextPdf.md',
             ],
         },
+    ],
+    '/android/': [
+        {
+            text: 'Android',
+            children: [
+                '/android/starter.md'
+            ],
+        },
     ]
 }
 
