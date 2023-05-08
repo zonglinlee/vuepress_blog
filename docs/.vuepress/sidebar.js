@@ -51,6 +51,7 @@ const SidebarConfig = {
                 '/others/eslint.md',
                 '/others/jest.md',
                 '/others/wordpress.md',
+                '/others/basicCSknowledge.md',
             ],
         },
     ],
