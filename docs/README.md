@@ -94,3 +94,7 @@ footer: Hello-world!
 - [animista](https://animista.net/)
 - [java: TheAlgorithms](https://github.com/TheAlgorithms/Java)
 - [javascript: TheAlgorithms](https://github.com/trekhleb/javascript-algorithms)
+
+
+### books you should read
+- [HTML Canvas Deep Dive](https://joshondesign.com/p/books/canvasdeepdive/title.html)
