@@ -175,7 +175,8 @@ const SidebarConfig = {
         {
             text: 'Android',
             children: [
-                '/android/starter.md'
+                '/android/starter.md',
+                '/android/react-native.md'
             ],
         },
     ]
