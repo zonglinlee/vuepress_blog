@@ -168,6 +168,7 @@ const SidebarConfig = {
                 '/java/shiro.md',
                 '/java/java_web_packages.md',
                 '/java/ItextPdf.md',
+                '/java/springBoot.md',
             ],
         },
     ],
