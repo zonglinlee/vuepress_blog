@@ -9,6 +9,8 @@ title: echarts
   所以最好在 canvas 显示之后再绘制 Echarts 图表，或者在显示canvas的时候调用 Echarts 的resize 方法，或者用 dispatchEvent 触发一个原生的resize事件。
 - echarts 不显示 title,legend,legendScroll,tooltip等，可能是没引入相应的echarts包
 - vue-echarts 设置 `.echarts{ width:100%;height:100% }` 时，echarts高度为0，可以尝试设置为 `.echarts{ width:100%; }` 试试。
+- echarts 中 geo 是地理坐标系组件，需要 geoJson 数据在 `echarts.registerMap('mapName', geoJson)`
+- bmap 是引入百度地图组件之后，百度地图的地理坐标系组件
 
 ```javascript
 import 'echarts/lib/component/title'
@@ -36,6 +38,7 @@ vue.config.js
 ```
 
 ```vue
+
 <template>
   <v-chart autoresize ref="chart1" :options="titlePieData"/>
 </template>
