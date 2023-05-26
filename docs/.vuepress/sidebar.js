@@ -125,6 +125,7 @@ const SidebarConfig = {
                 '/element-ui/dialog.md',
                 '/element-ui/table.md',
                 '/element-ui/scrollBar.md',
+                '/element-ui/dropdown.md',
             ],
         },
     ],
