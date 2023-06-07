@@ -12,7 +12,7 @@ export default {
   methods: {
     async initWx() {
       let url = window.location.href.split("#")[0]
-      let res = await getWXconfig({url})
+      let res = await getWXconfig({url}) // 获取 appId timestamp nonceStr signature
       this.configWX(res)
     },
     menuClick() {
