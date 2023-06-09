@@ -17,7 +17,7 @@ app.use(bodyParser())
 app.use(cors())
 app.use(router.routes()).use(router.allowedMethods())
 // 测试接口
-router.get('/hello', async (ctx) => {
+router.get('/wechat/hello', async (ctx) => {
   ctx.body = 'Hello World'
 })
 // 微信 SDK 初始化
@@ -50,28 +50,38 @@ router.post('/wechat/sdkInit', async (ctx, next) => {
     const timestamp = createTimeStamp() // 时间戳
     const signature = calcSignature(ticket, nonceStr, timestamp, url) // 通过sha1算法得到签名
     ctx.response.status = 200
-    ctx.response.body = {
-      nonceStr: nonceStr,
-      timestamp: timestamp,
-      signature: signature,
-      appId,
+    const res = {
+      result: {
+        nonceStr: nonceStr,
+        timestamp: timestamp,
+        signature: signature,
+        appId,
+        code: 0,
+      },
       code: 0,
+      message: '签名获取成功',
     }
+    ctx.response.body = res
   } catch (e) {
     console.log(e)
   }
 })
 
 // 微信授权登录接口测试
-router.post('/wechat/authLogin', async (ctx) => {
-  ctx.body = ctx.request.body
-  const code = ctx.body.code
+router.get('/wechat/sendCode', async (ctx) => {
+  const query = ctx.request.query
+  const code = query.code
   try {
     const { data } = await getAccessCodeFromCode(code)
     const { access_token, openid } = data
-    const userInfo = await getUserInfoFromWechat(access_token, openid)
+    const { data: userInfo } = await getUserInfoFromWechat(access_token, openid)
     ctx.response.status = 200
-    ctx.response.body = userInfo
+    const res = {
+      result: userInfo,
+      code: 0,
+      message: '用户信息获取成功',
+    }
+    ctx.response.body = res
   } catch (error) {
     console.error(error)
   }
@@ -79,7 +89,7 @@ router.post('/wechat/authLogin', async (ctx) => {
 
 function getAccessCodeFromCode(CODE) {
   const url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appId}&secret=${appSecret}&code=${CODE}&grant_type=authorization_code`
-  return axios(url)
+  return axios.get(url)
 }
 function validateToken(ACCESS_TOKEN, OPENID) {
   const url = `https://api.weixin.qq.com/sns/auth?access_token=${ACCESS_TOKEN}&openid=${OPENID}`
@@ -94,4 +104,4 @@ function getUserInfoFromWechat(ACCESS_TOKEN, OPENID) {
   return axios.get(url)
 }
 
-app.listen(3000)
+app.listen(5000)
