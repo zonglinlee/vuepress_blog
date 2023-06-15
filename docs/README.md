@@ -94,6 +94,7 @@ footer: Hello-world!
 - [animista](https://animista.net/)
 - [java: TheAlgorithms](https://github.com/TheAlgorithms/Java)
 - [javascript: TheAlgorithms](https://github.com/trekhleb/javascript-algorithms)
+- [Wiki of OI](https://github.com/OI-wiki/OI-wiki)
 
 
 ### books you should read

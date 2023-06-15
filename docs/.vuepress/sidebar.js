@@ -134,6 +134,7 @@ const SidebarConfig = {
             text: 'Algorithms',
             children: [
                 '/algorithms/algorithms.md',
+                '/algorithms/basic_concept.md',
             ],
         },
     ],
