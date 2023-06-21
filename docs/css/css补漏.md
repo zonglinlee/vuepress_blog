@@ -327,6 +327,155 @@ line-height 计算
 - 数值，如 line-height:1.5，其最终的计算值是和当前 font-size 相乘后的值(后代元素继承的是 1.5)
 - 百分比值，如 line-height:150%，其最终的计算值是和当前 font-size 相乘后的值 (后代元素继承的是 150%*fontSize 计算出来的 px 值)
 
+### vertical-align
+
+vertical-align 属性值分为以下 4 类：
+
+- 线类，如 baseline（默认值）、top、middle、bottom。 vertical-align:top 就是垂直上边缘对齐，具体定义如下。
+    - 内联元素：元素底部和当前行框盒子的顶部对齐。
+    - table-cell 元素：元素底 padding 边缘和表格行的顶部对齐
+    - vertical-align:middle 与近似垂直居中
+    - vertical-align 上标下标类属性值指的就是 sub 和 super 两个值，分别表示下标和上标
+- 文本类，如 text-top、text-bottom；
+- 上标下标类，如 sub、super；
+- 数值百分比类，如 20px、2em、20%等
+
+[问题:如下代码中 .box 元素的高度是多少?](https://demo.cssworld.cn/5/3-1.php)
+
+```html
+<!--事实上，高度并不是 32px，而是要大那么几像素，这是受 vertical-align 影响-->
+<!--div 中的 幽灵空白节点 和 span中的 font-size 大小不一致，内外x基线需要对齐-->
+<style>
+    .box {
+        line-height: 32px;
+    }
+
+    .box > span {
+        font-size: 24px;
+    }
+</style>
+<div class="box">
+    x<span>x文字</span>
+</div>
+```
+
+一处是字母 x 构成了一个“匿名内联盒子”，另一处是“文字 x”所在的`<span>`元素，构成了一个“内联盒子”。由于都受 line-height:32px 影响，因此，这两个“内联盒子”的高度都是
+32px。下面关键的来了，对字符而言，font-size
+越大字符的基线位置越往下，因为文字默认全部都是基线对齐，所以当字号大小不一样的两个文字在一起的时候，彼此就会发生上下位移，如果位移距离足够大，就会超过行高的限制，而导致出现意料之外的高度
+
+vertical-align 起作用是有前提条件的，这个前提条件就是：只能应用于内联元素以及 display 值为 `table-cell` 的元素,换句话说，vertical-align 属性只能作用在 display 计算值为
+`inline、inline-block，inline-table 或 table-cell` 的元素上，有一些 CSS 属性值会在背后默默地改变元素 display 属性的计算值，从而导致 vertical-align
+不起作用。比方说，浮动和绝对定位会让元素块状化
+
+对 table-cell 元素而言，vertical-align 起作用的是 table-cell元素自身，其它元素是根据 **行框盒子** 起作用
+
+vertical-align 和 line-height 之间的关系
+
+最明显的就是 vertical-align 的百分比值是相对于 line-height 计算的
+
+#### [div元素中图片底部留白的原因](https://demo.cssworld.cn/5/3-5.php)
+
+如下所示：图片底部会留白，间隙产生的三大元凶就是“幽灵空白节点”、line-height 和 vertical-align 属性。 我们可以在图片前面辅助一个字符 x 代替“幽灵空白节点”，并想办法通过背景色显示其行高范围。
+当前 line-height 计算值是 20px，而 font-size 只有 14px，因此，字母 x 往下一定有至少 3px 的半行间距（具体大小与字体有关），而图片作为替换元素其基线是自身的下边缘。根据定义，默认和基线（也就是这里字母
+x 的下边缘）对齐，字母 x 往下的行高产生的多余的间隙就嫁祸到图片下面，让人以为是图片产生的间隙，实际上，是“幽灵空白节点”、 line-height 和 vertical-align 属性共同作用的结果。
+
+```html
+
+<style>
+    .box {
+        width: 280px;
+        outline: 1px solid #aaa;
+        text-align: center;
+    }
+
+    .box > img {
+        height: 96px;
+    }
+</style>
+<div class="box">
+    <img src="1.jpg">
+</div>
+```
+
+处理方式
+
+- 图片块状化
+- 容器 line-height 足够小，只要半行间距小到字母 x 的下边缘位置或者再往上，自然就没有了撑开底部间隙高度空间了。比方说，容器设置 line-height:0
+- 容器 font-size 足够小
+- 图片设置其他 vertical-align 属性值。间隙的产生原因之一就是基线对齐，所以我们设置 vertical-align 的值为 top、middle、bottom 中的任意一个都是可以的
+
+#### vertical-align 与 inline-block
+
+vertical-align 属性的默认值 baseline 在文本之类的内联元素那里就是字符 x 的下边缘，对于替换元素则是替换元素的下边缘。但是，如果是 inline-block 元素，则规则要复杂了：一个 inline-block
+元素，如果里面没有内联元素，或者 overflow 不是 visible，则该元素的基线就是其 **margin 底边缘**；否则其基线就是元素里面**最后一行内联元素的基线**
+
+### float
+
+浮动的本质就是为了实现文字环绕效果 ,float 都有哪些有意思的特性呢？具体如下：
+
+- 包裹性: 假设浮动元素父元素宽度 200px，浮动元素子元素是一个 128px 宽度的图片，则此时浮动元素宽度表现为“包裹”，就是里面图片的宽度 128px; 如果浮动元素的子元素不只是一张 128px
+  宽度的图片，还有一大波普通的文字,则此时浮动元素宽度就自适应父元素的 200px 宽度，最终的宽度表现也是 200px
+- 块状化并格式化上下文
+- 破坏文档流；
+- 没有任何 margin 合并
+
+内联元素的浮动是基于当前行框盒子进行浮动的 比如 `<div>我是一段测试文字。<a style="float:right">我是浮动a标签</a>我是一段测试文字。</div>`
+
+#### 浮动产生的异常
+
+- [demo1](https://demo.cssworld.cn/6/1-1.php):虽然肉眼看上去容器和图片一样高，内联状态下的图片底部是有间隙的，也就是.float 这个浮动元素的实际高度并不是 64px，而是要比 64px
+  高几像素，带来的问题就是浮动元素的高度超出.father 几像素。 于是，下面的文字就遭殃了。垂直位置有了重叠，尽管就那么几像素。于是，区域被限制，形成了“被环绕”效果。
+
+#### 浮动的清除
+
+clear 属性只有块级元素才有效的，而::after 等伪元素默认都是内联水平，这就是借助伪元素清除浮动影响时需要设置 display 属性值的原因, clear:both 的作用本质是让自己不和 float
+元素在一行显示，并不是真正意义上的清除浮动，因此 float 元素一些不好的特性依然存在，查看 (demo)[https://demo.cssworld.cn/6/2-1.php],这里 div
+左侧不能有浮动元素，所以一直到图片最底下才开始展示文字
+
+```css
+.clear:after {
+    content: '';
+    /*// 也可以是 'block' ，或者是 'list-item'*/
+    display: table;
+    clear: both;
+}
+```
+
+要想彻底清除浮动的影响，最适合的属性不是 clear 而是 overflow。一般使用 overflow:hidden，利用 BFC 的“结界”特性彻底解决浮动对外部或兄弟元素的影响
+
+### BFC
+
+BFC 全称为 block formatting context，中文为“块级格式化上下文”。相对应的还有 IFC，也就是 inline formatting context，中文为“内联格式化上下”
+
+如果一个元素具有 BFC，内部子元素再怎么翻江倒海、翻云覆雨，都不会影响外部的元素。所以，BFC 元素是不可能发生 margin 重叠的，因为 margin重叠是会影响外面的元素的；BFC
+元素也可以用来清除浮动的影响，因为如果不清除，子元素浮动则父元素高度塌陷，必然会影响后面元素布局和定位，这显然有违 BFC 元素的子元素不会影响外部元素的设定
+
+什么时候会触发 BFC 呢？常见的情况如下：
+
+- `<html>`根元素；
+- float 的值不为 none；
+- overflow 的值为 auto、scroll 或 hidden；
+- display 的值为 table-cell、table-caption 和 inline-block 中的任何一个；
+- position 的值不为 relative 和 static
+
+只要元素符合上面任意一个条件，就无须使用 clear:both 属性去清除浮动的影响了
+
+#### overflow
+
+HTML 中有两个标签是默认可以产生滚动条的，一个是根元素`<html>`，另一个是文本域`<textarea>`。之所以可以出现滚动条，是因为这两个标签默认的 overflow 属性值不是visible，都使用 auto 作为默认的属性值
+
+在 PC 端，无论是什么浏览器，默认滚动条均来自`<html>`，而不是`<body>`标签, 在 PC 端，对`<html>`标签设置 overflow:hidden 可以隐藏滚动条禁止滚动，但是在移动端基本上无效。在 PC 端，
+窗体滚动高度可以使用 `document.documentElement.scrollTop` 获取，但是在移动端， 可能就要使用 `document.body.scrollTop` 获取
+
+滚动条自定义
+
+- 整体部分，::-webkit-scrollbar；
+- 两端按钮，::-webkit-scrollbar-button；
+- 外层轨道，::-webkit-scrollbar-track；
+- 内层轨道，::-webkit-scrollbar-track-piece；
+- 滚动滑块，::-webkit-scrollbar-thumb；
+- 边角，::-webkit-scrollbar-corner
+
 
 
 ## CSS key concepts
