@@ -53,6 +53,7 @@ const SidebarConfig = {
                 '/others/wordpress.md',
                 '/others/basicCSknowledge.md',
                 '/others/docker.md',
+                '/others/computerNetwork/basic.md',
             ],
         },
     ],

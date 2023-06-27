@@ -3,6 +3,7 @@ title: shell basic
 ---
 
 ## Terminology
+
 - gcc: 是 GNU compiler collection 的缩写，它是 Linux 下一个编译器集合( 相当于 javac )， 是 c 或 c++程序的编译器
 
 ## 远程登录 SSH
@@ -102,6 +103,20 @@ kill -9 vim-pid
 ## debug Bash
 
 `bash -x scriptName`
+
+## 奇怪的bug
+
+- [telnet命令后无法退出的解决](https://blog.51cto.com/oldboy/588574)
+
+> ctl+] 切换 然后quit退出.
+
+## [linux 防火墙](https://opensource.com/article/18/9/linux-iptables-firewalld)
+
+- firewall: mA firewall is a set of rules. When a data packet moves into or out of a protected network space, its
+  contents (in particular, information about its origin, target, and the protocol it plans to use) are tested against
+  the firewall rules to see if it should be allowed through
+- iptables: is a tool for managing firewall rules on a Linux machine.
+- firewalld: is also a tool for managing firewall rules on a Linux machine.
 
 ## Reference
 
