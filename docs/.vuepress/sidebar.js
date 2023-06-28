@@ -4,7 +4,6 @@ const SidebarConfig = {
             text: '前端环境配置',
             children: [
                 '/front-end/setNpmGitProxy.md',
-                '/front-end/nginx.md'
             ],
         },
     ],
@@ -52,6 +51,7 @@ const SidebarConfig = {
                 '/others/jest.md',
                 '/others/wordpress.md',
                 '/others/basicCSknowledge.md',
+                '/others/nginx.md',
                 '/others/docker.md',
                 '/others/computerNetwork/basic.md',
             ],
