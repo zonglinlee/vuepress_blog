@@ -9,6 +9,22 @@ v2rayN下载地址：<a href='https://github.com/v2ray/v2ray-core'>https://githu
 
 ![v2rayN端口设置](../images/front-end/v2rayN.png)
 
+
+## vscode debug
+```shell
+npm run start # app launch at: http://localhost:8000
+# open Run and debug panel
+# add configuration: Chrome Launch
+{
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}"
+}
+# click 'start debugging' button start debug 
+```
+
 ## webstorm 配置
 
 ### 软件破解

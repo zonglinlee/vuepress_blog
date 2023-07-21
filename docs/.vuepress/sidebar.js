@@ -115,6 +115,7 @@ const SidebarConfig = {
                 '/vue2/vue_question.md',
                 '/vue2/vue_transition_animation.md',
                 '/vue2/vue_1.md',
+                '/vue2/react.md',
             ],
         },
     ],

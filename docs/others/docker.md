@@ -52,7 +52,7 @@ docker-compose logs --tail 1000 service-name
 ```shell
 #查看docker网络
 docker networks ls
-docker run -it --net network-name busybox
+docker run -it --net network-name --name busybox busybox
 # docker run -it --net testApp-boot_mynet busybox
 # ping your-service-name
 ```

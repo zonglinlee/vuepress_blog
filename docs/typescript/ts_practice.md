@@ -6,3 +6,8 @@ title: ts practice
 // https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-constraints
 function invokeHandler<N extends keyof HTMLElementEventMap>(){}
 ```
+
+
+```ts
+const contentTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+```
