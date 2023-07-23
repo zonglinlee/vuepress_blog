@@ -93,6 +93,7 @@ const SidebarConfig = {
         {
             text: 'jsBasic',
             children: [
+                '/js_basic/browser.md',
                 '/js_basic/js基础.md',
                 '/js_basic/js_module.md',
                 '/js_basic/some_detail.md',

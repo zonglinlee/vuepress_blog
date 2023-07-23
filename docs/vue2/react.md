@@ -146,7 +146,72 @@ function ExampleComponent() {
 }
 ```
 
+### [React.useImperativeHandle(ref, createHandle, dependencies?)](https://react.dev/reference/react/useImperativeHandle)
+
+`useImperativeHandle` is a React Hook that lets you customize the handle exposed as a `ref`
+Parameters
+
+- The `ref` you received as the second argument from the `forwardRef` render function.
+- createHandle: A function that takes no arguments and returns the ref handle you want to expose. That ref handle can
+  have any type. Usually, you will return an object with the methods you want to expose.
+
+```tsx
+// expose custom methods that you want to expose to parent components
+// in other words ,parent ref not has full access to dom element
+// forwardref is no longer bind to dom element, instead, create a new ref in MyInput component,bind it to actual dom element
+import {forwardRef, useRef, useImperativeHandle} from 'react';
+
+const MyInput = forwardRef(function MyInput(props, ref) {
+    const inputRef = useRef(null);
+
+    useImperativeHandle(ref, () => {
+        return {
+            focus() {
+                inputRef.current.focus();
+            },
+            scrollIntoView() {
+                inputRef.current.scrollIntoView();
+            },
+        };
+    }, []);
+
+    return <input {...props} ref={inputRef}/>;
+});
+```
+
+### [React.memo(Component, arePropsEqual?)](https://react.dev/reference/react/memo)
+
+- arePropsEqual: A function that accepts two arguments: the component’s previous props, and its new props. It should
+  return true if the old and new props are equal: that is, if the component will render the same output and behave in
+  the same way with the new props as with the old. Otherwise it should return false. Usually, you will not specify this
+  function. By default, React will compare each prop with Object.is
+
+Wrap a component in memo to get a memoized version of that component. This memoized version of your component will
+usually not be re-rendered when its parent component is re-rendered as long as its props have not changed
+
+### [ReactDOM.createPortal(children, domNode, key?)](https://react.dev/reference/react-dom/createPortal)
+
+createPortal lets you render some children into a different part of the DOM. createPortal returns a React node that can
+be included into JSX or returned from a React component
+
+- children: Anything that can be rendered with React, such as a piece of JSX (e.g. `<div />` or `<SomeComponent />`), a
+  Fragment (`<>...</>`), a string or a number, or an array of these
+- domNode: Some DOM node, such as those returned by `document.getElementById()`. The node must already exist. Passing a
+  different DOM node during an update will cause the portal content to be recreated.
+
+- optional key: A unique string or number to be used as the portal’s key.
+
+### setState(nextState, callback?)
+nextState: Either an object or a function.
+
+- If you pass an object as nextState, it will be shallowly merged into this.state.
+- If you pass a function as nextState, it will be treated as an updater function. It must be pure, should take the
+  pending state and props as arguments, and should return the object to be shallowly merged into this.state. React will
+  put your updater function in a queue and re-render your component. During the next render, React will calculate the
+  next state by applying all of the queued updaters to the previous state.
+
 ## react util
 
 - useId: 返回全局的 id,兼容了 `React.useId` api
+- render: 兼容了 react 各个版本的 React.createRoot().render() 方法
 
