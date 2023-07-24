@@ -9,8 +9,8 @@ v2rayN下载地址：<a href='https://github.com/v2ray/v2ray-core'>https://githu
 
 ![v2rayN端口设置](../images/front-end/v2rayN.png)
 
-
 ## vscode debug
+
 ```shell
 npm run start # app launch at: http://localhost:8000
 # open Run and debug panel
@@ -55,7 +55,6 @@ ieda中插件市场下载太慢，v2rayN全局代理不生效，需要给idea配
 
 - maven helper: 用来分析 pom.xml 文件中的依赖关系
 
-
 #### webstorm常见问题
 
 - `tailwindcss` 不能智能提示
@@ -85,6 +84,17 @@ ieda中插件市场下载太慢，v2rayN全局代理不生效，需要给idea配
 - [webstorm 不识别 node 中的 require/process 等](https://blog.csdn.net/KaiSarH/article/details/105035307)
 
   在 WebStorm `Setting -> Language & Framework -> JavaScript -> library` 中 `download - node`
+
+### webstorm debug
+
+webstorm debug 出现： Please ensure that the browser was started successfully with remote debugging port opened. Port
+cannot be opened if Chrome having the same User Data Directory is already launched.
+
+>Settings -> Tools -> Web Browsers and Preview
+![chrome设置](../images/front-end/webstorm_debug.png)
+
+- [webstorm debug](https://juejin.cn/post/7160667398855458853)
+- [debug-angular-app-in-intellij-with-chrome-under-windows](https://stackoverflow.com/questions/64659160/debug-angular-app-in-intellij-with-chrome-under-windows/76039479#76039479)
 
 ## npm代理配置
 
