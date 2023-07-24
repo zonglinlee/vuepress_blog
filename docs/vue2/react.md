@@ -8,6 +8,38 @@ title: react
 
 `React.useCallback(fn, dependencies)` : 缓存传入的 **fn** 函数，并不会调用 **fn**
 
+### [Adding a Ref to a Class Component](https://legacy.reactjs.org/docs/refs-and-the-dom.html#adding-a-ref-to-a-class-component)
+
+using ref to reference a class component instance
+
+```tsx
+// 这里的 ref 引用的是 AutoFocusTextInput 实例
+class AutoFocusTextInput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.textInput = React.createRef();
+    }
+
+    componentDidMount() {
+        this.textInput.current.focusTextInput();
+    }
+
+    render() {
+        return (
+            <CustomTextInput ref={this.textInput}/>
+        );
+    }
+}
+```
+
+But you may not use the ref attribute on function components because they don’t have instances.
+
+If you want to allow people to take a ref to your **function component**, you can use `forwardRef` (possibly in
+conjunction with `useImperativeHandle`), or you can **convert** the component to a **class**.
+
+You can, however, use the ref attribute inside a function component as long as you refer to a **DOM element** or a **
+class component**:
+
 ### forwardRef
 
 `React.forwardRef((props,ref)=>{return ReactComponent})` : lets your component expose a DOM node to parent component
@@ -202,6 +234,7 @@ be included into JSX or returned from a React component
 - optional key: A unique string or number to be used as the portal’s key.
 
 ### setState(nextState, callback?)
+
 nextState: Either an object or a function.
 
 - If you pass an object as nextState, it will be shallowly merged into this.state.
