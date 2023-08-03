@@ -90,7 +90,7 @@ ieda中插件市场下载太慢，v2rayN全局代理不生效，需要给idea配
 webstorm debug 出现： Please ensure that the browser was started successfully with remote debugging port opened. Port
 cannot be opened if Chrome having the same User Data Directory is already launched.
 
->Settings -> Tools -> Web Browsers and Preview
+> Settings -> Tools -> Web Browsers and Preview
 ![chrome设置](../images/front-end/webstorm_debug.png)
 
 - [webstorm debug](https://juejin.cn/post/7160667398855458853)
@@ -141,3 +141,18 @@ git config --global --unset https.proxy
 ## npm和git自动设置代理脚本
 
 需要安装 `shelljs` 依赖 @[code js](../_code/front-end/setNpmGitProxy.js)
+
+## [Cygwin64](https://www.cygwin.com/)
+
+Cygwin is: a large collection of GNU and Open Source tools which provide functionality similar to a Linux distribution
+on Windows.
+
+安装 cygwin ,相当于一个子 Linux 系统,安装完成之后目录如下
+![v2rayN端口设置](../images/front-end/cygwin.png)
+
+windows 下 `make` 环境搭建，将 `react-draggable` 仓库克隆到 Cygwin 安装目录下的 `/home/workspace` 中, 在 webstorm
+中 `settings-Tools-Terminal` 中设置终端路径 `F:\programs\cygwin\Cygwin.bat`, 并配置 Flow
+类型校验，`setting->Languages & Frameworks->JavaScript` 选择语言版本为 `Flow`, 然后就可以在终端执行 `make dev` 命令了
+
+- [react-draggable](https://github.com/react-grid-layout/react-draggable)
+- [在 WebStorm 中配置 React for Flow](https://ajimide.gitbooks.io/reactlearn/content/Question/20171010-Config-flow-in-WebStorm.html)

@@ -155,6 +155,57 @@ everytime when the dependencies changed, the setup function get called, it works
 useEffect will return a **fn** which will automatically get called when the component unmount, it works similarly
 to `componentWillUnmount`
 
+#### [useEffect和useLayoutEffect的区别](https://pengfeixc.com/blog/605af93600f1525af762a725)
+
+`useEffect` 是异步执行，而 `useLayoutEffect` 是同步执行的
+当函数组件刷新（渲染）时，包含useEffect的组件整个运行过程如下
+
+- 触发组件重新渲染（通过改变组件state或者组件的父组件重新渲染，导致子节点渲染）。
+- 组件函数执行。
+- 组件渲染后呈现到屏幕上。
+- useEffect hook 执行。
+
+当函数组件刷新（渲染）时，包含 `useLayoutEffect` 的组件整个运行过程如下：
+
+- 触发组件重新渲染（通过改变组件state或者组件的父组件重新渲染，导致子组件渲染）。
+- 组件函数执行。
+- useLayoutEffect hook 执行, React 等待 useLayoutEffect 的函数执行完毕。
+- 组件渲染后呈现到屏幕上。
+
+`useEffect` 异步执行的优点是，react 渲染组件不必等待 `useEffect` 函数执行完毕，造成阻塞.百分之99的情况，使用 `useEffect` 就可以了，唯一需要用到 `useLayoutEffect`
+的情况就是，在使用
+`useEffect` 的情况下，我们的屏幕会出现闪烁的情况（组件在很短的时间内渲染了两次）
+
+```tsx
+// 下面的代码，组件就会渲染两次
+const OnlyTest = () => {
+    const [value, setValue] = useState(0)
+    const mountedRef = useRef(false)
+    useEffect(() => {
+    // useLayoutEffect(() => {
+        if (!mountedRef.current) {
+            console.log("first mount")
+            mountedRef.current = true
+        }
+        console.log("useEffect_callback_trigger")
+        if (value === 0) {
+            setValue(10 + (+Math.random().toFixed(2)))
+        }
+    }, [value])
+    return (<div onClick={() => {
+        console.log("onClick_trigger")
+        setValue(0)
+    }} style={{
+        width: "100px",
+        background: "green",
+        textAlign: "center",
+        color: "white",
+        padding: "4px",
+        cursor: "pointer"
+    }}>value:{value}</div>)
+}
+```
+
 #### [check components mounted status](https://jasonwatmore.com/post/2021/08/27/react-how-to-check-if-a-component-is-mounted-or-unmounted)
 
 ```tsx

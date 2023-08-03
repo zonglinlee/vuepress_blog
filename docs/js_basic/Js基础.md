@@ -1143,5 +1143,18 @@ Object.defineProperty(user, 'fullName', {
     }
 });
 ```
+
 请注意，一个属性要么是访问器（具有 `get/set` 方法），要么是数据属性（具有 `value`），但不能两者都是
 
+## [创建包含N个空对象的数组](https://juejin.cn/post/6844903764516667405)
+
+```tsx
+// 注意：这种创建出来的 students 共享一个对象
+const students1 = Array(3).fill({})
+// students2 是 [ <3 empty items> ]
+// 对于数组中并不存在的单元, map() 也是束手无策
+const students2 = Array(3).map(() => ({}));
+// 下面这两种写法可以
+const students3 = Array(3).fill(undefined).map(() => ({}));
+const students4 = Array.apply(null, {length: 3}).map(() => ({}))
+```
