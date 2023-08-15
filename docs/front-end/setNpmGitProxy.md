@@ -50,6 +50,8 @@ ieda中插件市场下载太慢，v2rayN全局代理不生效，需要给idea配
 - Database Navigator （数据库连接插件）
 - .env files support
 - statistic (统计项目代码)
+- camelCase (驼峰命名和下划线命名转换 shift + alt + u / ctrl + shift + u)
+- rainbow bracket
 
 #### IDEA 常用插件
 
