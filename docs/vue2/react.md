@@ -182,7 +182,7 @@ const OnlyTest = () => {
     const [value, setValue] = useState(0)
     const mountedRef = useRef(false)
     useEffect(() => {
-    // useLayoutEffect(() => {
+        // useLayoutEffect(() => {
         if (!mountedRef.current) {
             console.log("first mount")
             mountedRef.current = true
@@ -293,6 +293,16 @@ nextState: Either an object or a function.
   pending state and props as arguments, and should return the object to be shallowly merged into this.state. React will
   put your updater function in a queue and re-render your component. During the next render, React will calculate the
   next state by applying all of the queued updaters to the previous state.
+
+### [findDOMNode](https://react.dev/reference/react-dom/findDOMNode)
+
+Call `findDOMNode` to find the browser DOM node for a given React class component instance.
+
+```tsx
+import {findDOMNode} from 'react-dom';
+
+const domNode = findDOMNode(componentInstance);
+```
 
 ## react util
 
