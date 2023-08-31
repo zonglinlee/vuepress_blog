@@ -99,6 +99,7 @@ const SidebarConfig = {
                 '/js_basic/js_module.md',
                 '/js_basic/some_detail.md',
                 '/js_basic/coordinates.md',
+                '/js_basic/passive_event.md',
             ],
         },
     ],
