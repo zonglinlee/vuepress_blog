@@ -1,66 +1,71 @@
 ---
 home: true
 title: 风滚草的个人笔记
+
 # heroImage: /images/hero.png
+
 homeTitle: Hello world!
 actions:
-  - text: 前端环境
-    link: /front-end/setNpmGitProxy.html
-    type: primary
-  - text: 阿里云
-    link: /aliyun/
-    type: primary
-  - text: 微信
-    link: /wechat/wechat_sdk.html
-    type: primary
-  - text: css
-    link: /css/css_transition_animation.html
-    type: primary  
-  - text: Html
-    link: /html/html_basic.html
-    type: primary
-  - text: jsBasic
-    link: /js_basic/js_module.html
-    type: primary  
-  - text: 前端库
-    link: /library/tailwindcss.html
-    type: primary
-  - text: js实践
-    link: /js_practice/h5_image_upload.html
-    type: primary
-  - text: Typescript
-    link: /typescript/typescript.html
-    type: primary  
-  - text: Vue2.0
-    link: /vue2/vue_1.html
-    type: primary  
-  - text: ElementUi
-    link: /element-ui/code_organization.html
-    type: primary
-  - text: Webpack
-    link: /webpack/webpack_question.html
-    type: primary
-  - text: Algorithms
-    link: /algorithms/algorithms.html
-    type: primary
-  - text: Shell
-    link: /shell/shell.html
-    type: primary
-  - text: Database
-    link: /database/mysql/mysql.html
-  - text: java
-    link: /java/java_web.html  
-  - text: Android
-    link: /android/starter.html
-  - text: Miscellaneous
-    link: /others/github.html
-    type: primary
-footer: Hello-world!
+
+- text: 前端环境
+  link: /front-end/setNpmGitProxy.html
+  type: primary
+- text: 阿里云
+  link: /aliyun/
+  type: primary
+- text: 微信
+  link: /wechat/wechat_sdk.html
+  type: primary
+- text: css
+  link: /css/css_transition_animation.html
+  type: primary
+- text: Html
+  link: /html/html_basic.html
+  type: primary
+- text: jsBasic
+  link: /js_basic/js_module.html
+  type: primary
+- text: 前端库
+  link: /library/tailwindcss.html
+  type: primary
+- text: js实践
+  link: /js_practice/h5_image_upload.html
+  type: primary
+- text: Typescript
+  link: /typescript/typescript.html
+  type: primary
+- text: Vue2.0
+  link: /vue2/vue_1.html
+  type: primary
+- text: ElementUi
+  link: /element-ui/code_organization.html
+  type: primary
+- text: Webpack
+  link: /webpack/webpack_question.html
+  type: primary
+- text: Algorithms
+  link: /algorithms/algorithms.html
+  type: primary
+- text: Shell
+  link: /shell/shell.html
+  type: primary
+- text: Database
+  link: /database/mysql/mysql.html
+- text: java
+  link: /java/java_web.html
+- text: Android
+  link: /android/starter.html
+- text: Miscellaneous
+  link: /others/github.html
+  type: primary
+  footer: Hello-world!
+
 ---
-  
+
 <hr/>
 
 ### TodoList
+
 - 更换主题： <a href="http://v2.vuepress-reco.recoluan.com/" target="_blank">vuepress-reco.recoluan</a>
 - [eventloop](https://zh.javascript.info/event-loop) [time-slicing](https://juejin.cn/post/6844903847249330184#heading-0)
 - [坑：移动端100vh](https://juejin.cn/post/6844904017051549703)
@@ -70,6 +75,7 @@ footer: Hello-world!
 - [regex-lookarounds](https://www.rexegg.com/regex-lookarounds.html)
 
 ### websites you should visit
+
 - [openbase](https://openbase.com/)
 - [npms](https://npms.io/)
 - [project-based-learning](https://github.com/practical-tutorials/project-based-learning)
@@ -95,8 +101,12 @@ footer: Hello-world!
 - [java: TheAlgorithms](https://github.com/TheAlgorithms/Java)
 - [javascript: TheAlgorithms](https://github.com/trekhleb/javascript-algorithms)
 - [Wiki of OI](https://github.com/OI-wiki/OI-wiki)
-- [woai3c/Front-end-articles](https://github.com/woai3c/Front-end-articles)
 
+### BLOG
+
+- [woai3c/Front-end-articles](https://github.com/woai3c/Front-end-articles)
+- [进击的java菜鸟](https://fhfirehuo.github.io/Attacking-Java-Rookie/)
 
 ### books you should read
+
 - [HTML Canvas Deep Dive](https://joshondesign.com/p/books/canvasdeepdive/title.html)
