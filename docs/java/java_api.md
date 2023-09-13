@@ -64,3 +64,23 @@ Integer[] boxedArray = Arrays.stream(primitiveArray) // IntStream
                              .toArray(Integer[]::new);
 }
 ```
+
+### 二维数组声明
+
+```java
+public static int[][] directions = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+```
+
+### 二维数组声明
+
+```java
+public static int[][] directions = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+```
+
+### 字符串转为数组
+
+```java
+Arrays.stream(s.split(",")).map(row -> row.split(" ")).toArray(String[][]::new);
+Arrays.stream(s.split(",")).map(row -> row.split(" ")).toArray(size -> new String[size][]);
+Arrays.stream(s.split(",")).mapToInt(Integer::parseInt).toArray();
+```

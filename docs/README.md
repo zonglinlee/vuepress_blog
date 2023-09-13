@@ -85,7 +85,6 @@ actions:
 - [awesome-shell](https://github.com/alebcay/awesome-shell)
 - [awesome-java](https://github.com/akullpp/awesome-java)
 - [frontend-dev-bookmarks](https://github.com/dypsilon/frontend-dev-bookmarks)
-- [algorithm-visualizer](https://github.com/algorithm-visualizer/algorithm-visualizer)
 - [awesome-courses](https://github.com/prakhar1989/awesome-courses)
 - [computer-science](https://github.com/ossu/computer-science)
 - [build-your-own-x](https://github.com/codecrafters-io/build-your-own-x)
@@ -100,6 +99,7 @@ actions:
 - [animista](https://animista.net/)
 - [java: TheAlgorithms](https://github.com/TheAlgorithms/Java)
 - [javascript: TheAlgorithms](https://github.com/trekhleb/javascript-algorithms)
+- [algorithm-visualizer](https://github.com/algorithm-visualizer/algorithm-visualizer)
 - [Wiki of OI](https://github.com/OI-wiki/OI-wiki)
 
 ### BLOG
