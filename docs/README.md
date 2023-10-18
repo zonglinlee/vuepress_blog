@@ -102,6 +102,8 @@ actions:
 - [javascript: TheAlgorithms](https://github.com/trekhleb/javascript-algorithms)
 - [algorithm-visualizer](https://github.com/algorithm-visualizer/algorithm-visualizer)
 - [Wiki of OI](https://github.com/OI-wiki/OI-wiki)
+- [awesome-react-component](https://github.com/brillout/awesome-react-components)
+- [awesome-react](https://github.com/enaqx/awesome-react)
 
 ### BLOG
 
