@@ -6,10 +6,11 @@
   "directories": {
     "doc": "docs"
   },
+  "type": "module",
   "scripts": {
-    "dev": "vuepress dev docs",
-    "build:github": "cross-env NODE_ENV=github vuepress build docs",
-    "build:jdy": "cross-env NODE_ENV=jdy vuepress build docs",
+    "dev": "vuepress dev docs --clean-cache",
+    "build:github": "cross-env NODE_ENV=github vuepress build docs --clean-cache",
+    "build:jdy": "cross-env NODE_ENV=jdy vuepress build docs --clean-cache",
     "commit": "git add --all && git commit -m 'add' && git push",
     "node:commit": "node commit"
   },
@@ -17,12 +18,12 @@
   "license": "ISC",
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "vuepress": "^2.0.0-beta.22",
-    "vuepress-plugin-copy-code2": "^2.0.0-alpha.38"
+    "@vuepress/cli": "^2.0.0-beta.67",
+    "vuepress": "^2.0.0-beta.67",
+    "vuepress-plugin-copy-code2": "^2.0.0-alpha.38",
+    "vuepress-plugin-full-text-search2": "^0.4.0"
   },
   "dependencies": {
-    "@docsearch/js": "3",
-    "@vuepress/plugin-docsearch": "^2.0.0-alpha.1",
     "@vuepress/plugin-register-components": "2.0.0-beta.38"
   }
 }

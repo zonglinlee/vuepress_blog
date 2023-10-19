@@ -1,4 +1,4 @@
-const SidebarConfig = {
+export const SidebarConfig = {
     '/front-end/': [
         {
             text: '前端环境配置',
@@ -192,9 +192,4 @@ const SidebarConfig = {
             ],
         },
     ]
-}
-
-
-module.exports = {
-    SidebarConfig
 }

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      NODE_VERSION: '14'
+      NODE_VERSION: '18.15.0'
 
     steps:
       - uses: actions/checkout@v2
@@ -38,10 +38,10 @@ jobs:
       - name: Install dependencies
         # if: steps.yarn-cache.outputs.cache-hit != 'true'
         # run: yarn --frozen-lockfile
-        run: yarn install
+        run: npm install
 
       - name: Build documentation site
-        run: yarn run build:github
+        run: npm run build:github
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.2.0
