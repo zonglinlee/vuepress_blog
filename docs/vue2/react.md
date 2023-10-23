@@ -15,20 +15,18 @@ using ref to reference a class component instance
 ```tsx
 // 这里的 ref 引用的是 AutoFocusTextInput 实例
 class AutoFocusTextInput extends React.Component {
-    constructor(props) {
-        super(props);
-        this.textInput = React.createRef();
-    }
+  constructor(props) {
+    super(props)
+    this.textInput = React.createRef()
+  }
 
-    componentDidMount() {
-        this.textInput.current.focusTextInput();
-    }
+  componentDidMount() {
+    this.textInput.current.focusTextInput()
+  }
 
-    render() {
-        return (
-            <CustomTextInput ref={this.textInput}/>
-        );
-    }
+  render() {
+    return <CustomTextInput ref={this.textInput} />
+  }
 }
 ```
 
@@ -57,9 +55,9 @@ const myRef = useRef(null);
 
 - ref callback
 
-````tsx
-<div ref={(node) => console.log(node)}/>
-````
+```tsx
+<div ref={(node) => console.log(node)} />
+```
 
 #### [useRef() Hook on a custom component](https://stackoverflow.com/questions/61192450/useref-hook-on-a-custom-component)
 
@@ -69,16 +67,13 @@ you need to be explicit about where the ref should be assigned to.
 
 ```tsx
 const salesRef = useRef(null)
-return (<Sales ref={salesRef}/>)
+return <Sales ref={salesRef} />
 
 // inside Sales.js
 // assigns the ref to an actual DOM element, the div
-const Sales = (props, ref) => (
-    <div ref={ref}></div>
-)
+const Sales = (props, ref) => <div ref={ref}></div>
 
-export default React.forwardRef(Sales);
-
+export default React.forwardRef(Sales)
 ```
 
 When the `<div>` DOM node is added to the screen, React will call your `ref` callback with the DOM node as the argument.
@@ -155,77 +150,84 @@ everytime when the dependencies changed, the setup function get called, it works
 useEffect will return a **fn** which will automatically get called when the component unmount, it works similarly
 to `componentWillUnmount`
 
-#### [useEffect和useLayoutEffect的区别](https://pengfeixc.com/blog/605af93600f1525af762a725)
+#### [useEffect 和 useLayoutEffect 的区别](https://pengfeixc.com/blog/605af93600f1525af762a725)
 
 `useEffect` 是异步执行，而 `useLayoutEffect` 是同步执行的
-当函数组件刷新（渲染）时，包含useEffect的组件整个运行过程如下
+当函数组件刷新（渲染）时，包含 useEffect 的组件整个运行过程如下
 
-- 触发组件重新渲染（通过改变组件state或者组件的父组件重新渲染，导致子节点渲染）。
+- 触发组件重新渲染（通过改变组件 state 或者组件的父组件重新渲染，导致子节点渲染）。
 - 组件函数执行。
 - 组件渲染后呈现到屏幕上。
 - useEffect hook 执行。
 
 当函数组件刷新（渲染）时，包含 `useLayoutEffect` 的组件整个运行过程如下：
 
-- 触发组件重新渲染（通过改变组件state或者组件的父组件重新渲染，导致子组件渲染）。
+- 触发组件重新渲染（通过改变组件 state 或者组件的父组件重新渲染，导致子组件渲染）。
 - 组件函数执行。
 - useLayoutEffect hook 执行, React 等待 useLayoutEffect 的函数执行完毕。
 - 组件渲染后呈现到屏幕上。
 
-`useEffect` 异步执行的优点是，react 渲染组件不必等待 `useEffect` 函数执行完毕，造成阻塞.百分之99的情况，使用 `useEffect` 就可以了，唯一需要用到 `useLayoutEffect`
+`useEffect` 异步执行的优点是，react 渲染组件不必等待 `useEffect` 函数执行完毕，造成阻塞.百分之 99 的情况，使用 `useEffect` 就可以了，唯一需要用到 `useLayoutEffect`
 的情况就是，在使用
 `useEffect` 的情况下，我们的屏幕会出现闪烁的情况（组件在很短的时间内渲染了两次）
 
 ```tsx
 // 下面的代码，组件就会渲染两次
 const OnlyTest = () => {
-    const [value, setValue] = useState(0)
-    const mountedRef = useRef(false)
-    useEffect(() => {
-        // useLayoutEffect(() => {
-        if (!mountedRef.current) {
-            console.log("first mount")
-            mountedRef.current = true
-        }
-        console.log("useEffect_callback_trigger")
-        if (value === 0) {
-            setValue(10 + (+Math.random().toFixed(2)))
-        }
-    }, [value])
-    return (<div onClick={() => {
-        console.log("onClick_trigger")
+  const [value, setValue] = useState(0)
+  const mountedRef = useRef(false)
+  useEffect(() => {
+    // useLayoutEffect(() => {
+    if (!mountedRef.current) {
+      console.log('first mount')
+      mountedRef.current = true
+    }
+    console.log('useEffect_callback_trigger')
+    if (value === 0) {
+      setValue(10 + +Math.random().toFixed(2))
+    }
+  }, [value])
+  return (
+    <div
+      onClick={() => {
+        console.log('onClick_trigger')
         setValue(0)
-    }} style={{
-        width: "100px",
-        background: "green",
-        textAlign: "center",
-        color: "white",
-        padding: "4px",
-        cursor: "pointer"
-    }}>value:{value}</div>)
+      }}
+      style={{
+        width: '100px',
+        background: 'green',
+        textAlign: 'center',
+        color: 'white',
+        padding: '4px',
+        cursor: 'pointer',
+      }}
+    >
+      value:{value}
+    </div>
+  )
 }
 ```
 
 #### [check components mounted status](https://jasonwatmore.com/post/2021/08/27/react-how-to-check-if-a-component-is-mounted-or-unmounted)
 
 ```tsx
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react'
 
-export {ExampleComponent};
+export { ExampleComponent }
 
 function ExampleComponent() {
-    const mounted = useRef(false);
+  const mounted = useRef(false)
 
-    useEffect(() => {
-        // The useEffect() hook is called when the component is mounted and sets the mounted.current value to true
-        mounted.current = true;
-        // clean up
-        return () => {
-            mounted.current = false;
-        };
-    }, []);
+  useEffect(() => {
+    // The useEffect() hook is called when the component is mounted and sets the mounted.current value to true
+    mounted.current = true
+    // clean up
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
-    return (<MyComponent/>);
+  return <MyComponent />
 }
 ```
 
@@ -242,24 +244,28 @@ Parameters
 // expose custom methods that you want to expose to parent components
 // in other words ,parent ref not has full access to dom element
 // forwardref is no longer bind to dom element, instead, create a new ref in MyInput component,bind it to actual dom element
-import {forwardRef, useRef, useImperativeHandle} from 'react';
+import { forwardRef, useRef, useImperativeHandle } from 'react'
 
 const MyInput = forwardRef(function MyInput(props, ref) {
-    const inputRef = useRef(null);
+  const inputRef = useRef(null)
 
-    useImperativeHandle(ref, () => {
-        return {
-            focus() {
-                inputRef.current.focus();
-            },
-            scrollIntoView() {
-                inputRef.current.scrollIntoView();
-            },
-        };
-    }, []);
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        focus() {
+          inputRef.current.focus()
+        },
+        scrollIntoView() {
+          inputRef.current.scrollIntoView()
+        },
+      }
+    },
+    []
+  )
 
-    return <input {...props} ref={inputRef}/>;
-});
+  return <input {...props} ref={inputRef} />
+})
 ```
 
 ### [React.memo(Component, arePropsEqual?)](https://react.dev/reference/react/memo)
@@ -299,9 +305,9 @@ nextState: Either an object or a function.
 Call `findDOMNode` to find the browser DOM node for a given React class component instance.
 
 ```tsx
-import {findDOMNode} from 'react-dom';
+import { findDOMNode } from 'react-dom'
 
-const domNode = findDOMNode(componentInstance);
+const domNode = findDOMNode(componentInstance)
 ```
 
 ## react util
@@ -309,3 +315,51 @@ const domNode = findDOMNode(componentInstance);
 - useId: 返回全局的 id,兼容了 `React.useId` api
 - render: 兼容了 react 各个版本的 React.createRoot().render() 方法
 
+## react transition
+
+### rc-motion (ant-design base component)
+
+如下当切换 `show:true` 的时候，CSSMotion 组件会将 `.fade .fade-appear .fade-enter .fade-enter-active` 等 class 应用于 div 元素;
+如下当切换 `show:false` 的时候，CSSMotion 组件会将 `.fade .fade-leave-active` 等 class 应用于 div 元素;
+
+js 会在浏览器每帧之间添加和移除这些 `class` 类，浏览器会根据相应的 css 样式在两个 css 状态之间展示过渡动画，过渡动画的效果以及时间完全由 css 样式和 `css transition` 属性决定，`CSSMotion`组件只是在适当的时间进行添加和移除 class 类
+
+```jsx
+<CSSMotion motionName="fade" visible={show} removeOnLeave>
+  {({ style, className: motionClassName }) => {
+    return (
+      <div style={{ ...style }} className={classNames('card', motionClassName)}>
+        rc-motion
+      </div>
+    )
+  }}
+</CSSMotion>
+```
+
+```scss
+.card {
+  border: 1px solid green;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 100px;
+  height: 100px;
+  transition: 1s;
+}
+
+.fade {
+  &.fade-appear,
+  &.fade-enter {
+    opacity: 0;
+  }
+
+  &.fade-appear.fade-appear-active,
+  &.fade-enter.fade-enter-active {
+    opacity: 1;
+  }
+
+  &.fade-leave-active {
+    background: green;
+    opacity: 0;
+  }
+}
+```
