@@ -1,4 +1,4 @@
---- 
+---
 title: css transition vs animation
 ---
 
@@ -19,13 +19,13 @@ If we applied the transition property to the hover state only, it would only tra
 
 ```css
 button {
-    background: white;
-    transition: background 0.5s linear;
+  background: white;
+  transition: background 0.5s linear;
 }
 
 button:hover {
-    background: green;
-    /*transition: background 0.5s linear;*/
+  background: green;
+  /*transition: background 0.5s linear;*/
 }
 ```
 
@@ -64,27 +64,27 @@ each keyframe.**
 ```css
 /*animation-timing-function : ease-out;*/
 @keyframes foo {
-    0% {
-        /* Animation starts fast and ease-out makes it slow down before 50% */
-    }
-    50% {
-        /* Again, starts fast and slows toward 100% */
-    }
-    100% {
-        /* fin */
-    }
+  0% {
+    /* Animation starts fast and ease-out makes it slow down before 50% */
+  }
+  50% {
+    /* Again, starts fast and slows toward 100% */
+  }
+  100% {
+    /* fin */
+  }
 }
 
 /*so we usually define animation-timing-function on a per-keyframe basis*/
 @keyframes my-animation {
-    0% {
-        /*...*/
-        animation-timing-function: linear;
-    }
-    50% {
-        /*...*/
-        animation-timing-function: ease-out;
-    }
+  0% {
+    /*...*/
+    animation-timing-function: linear;
+  }
+  50% {
+    /*...*/
+    animation-timing-function: ease-out;
+  }
 }
 ```
 
@@ -98,12 +98,13 @@ each keyframe.**
 /*This example will have the element start with an opacity of 0, 
 and stay invisible until 20% through the animation*/
 @keyframes name {
-    0%, 20% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0%,
+  20% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 ```
 
@@ -113,9 +114,9 @@ and stay invisible until 20% through the animation*/
 
 ```css
 @keyframes name {
-    100% {
-        opacity: 0;
-    }
+  100% {
+    opacity: 0;
+  }
 }
 ```
 
@@ -129,7 +130,39 @@ and stay invisible until 20% through the animation*/
 ## FQ
 
 - [CSS transition not working](https://weekendprojects.dev/posts/css-transition-not-working/)
-    - The transition can only be applied to animatable properties.
-    - Check that the animating property is not set to auto. Transitions can not animate CSS properties that are **not
-      explicitly set** and **auto**
 
+  - The transition can only be applied to animatable properties.
+  - Check that the animating property is not set to auto. Transitions can not animate CSS properties that are **not
+    explicitly set** and **auto**
+
+- Why does switching from display: none to display: block not display a transition animation?
+
+The reason switching from display: none to display: block doesn't display a transition animation is because the display property is not one of the CSS properties that can be smoothly transitioned. Transition animations typically apply to properties that can smoothly transition between different values, such as opacity, width, height, margin, padding, and others.
+
+When you switch the display property from none directly to block, the browser instantly shows or hides the element with no transition. This is because changes in the display property are instantaneous and have no intermediate states, making it unsuitable for transition effects.
+
+If you want to achieve a transition effect from invisible to visible, you can use the opacity property or the visibility property
+instead of the display property. Here's an example using the opacity property:
+
+```css
+.element {
+  opacity: 0;
+  display: block;
+  transition: opacity 0.5s;
+}
+
+.element.visible {
+  opacity: 1;
+}
+```
+
+In this example, we transition the opacity of the element from 0 to 1, creating a transition effect from invisible to visible. You can trigger this transition effect by adding or removing the "visible" class.
+
+- display:none 和 display:block 对元素 animation 的影响
+
+> display: none:当一个元素的 display 属性被设置为 none，该元素会从文档流中移除，它在页面上将不可见，也不占用空间。
+> 任何应用在这个元素上的动画、过渡或其他视觉效果都将被取消，因为该元素已经被隐藏，无法显示任何动画效果。
+
+> display: block:当将一个元素的 display 属性从 none 设置为 block，元素将重新显示在页面上，并按照正常的文档流占用空间。
+> 如果你在元素上应用了动画，这些动画会在元素重新显示时生效。这意味着动画将在元素由不可见变为可见时播放。
+> 总之，display: none 会立即隐藏元素，取消任何与元素相关的动画，而 display: block 会使元素重新显示，同时允许动画在元素显示时生效。如果你希望在显>示和隐藏元素时有过渡效果，通常使用 opacity、visibility 或其他 CSS 属性来实现动画，而不是直接切换 display 属性。
