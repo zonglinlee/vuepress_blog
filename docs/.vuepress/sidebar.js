@@ -20,6 +20,7 @@ export const SidebarConfig = {
             text: '微信',
             children: [
                 '/wechat/wechat_sdk.md',
+                '/wechat/mini_program.md',
             ],
         },
     ],
