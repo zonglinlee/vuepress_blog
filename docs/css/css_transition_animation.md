@@ -127,6 +127,16 @@ and stay invisible until 20% through the animation*/
 
 ## Multiple animations
 
+## 拖拽过渡动画
+
+- [draggable-balls](https://chenglou.me/react-motion/demos/demo2-draggable-balls/)
+
+![draggable-balls](../images/css/draggable-balls.png)
+
+初始状态下维护一个 layout 数组， 用来记录各个 ball 的 `translateX` 和 `translateY`, 再维护一个 order 数组，用来记录各个 ball 的顺序，当鼠标拖拽球进行移动时，计算拖拽移动的距离 `deltaX, deltaY`，并根据整体 width 和 height 对 order 数组进行重排序，对前进行拖拽的 ball 根据鼠标移动的距离进行 translate 变换， 其余的 ball 则变换到重新排序后的 `layout[index]` 位置上去，layout 数组会保证各个 ball 的位置最终结果
+
+比如刚开始 `order=[0, 1, 2, 3, 9, 4, 5, 6, 7, 8, 10]`, 当最后一个球拖拽到第一个球位置上之后,order 进行重排，`order=[10, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]`，所有位置的 DOM 节点都会后移一个位置，translate 参数可以在 layout 中查询出来，剩下的交给浏览器进行位移动画即可
+
 ## FQ
 
 - [CSS transition not working](https://weekendprojects.dev/posts/css-transition-not-working/)
