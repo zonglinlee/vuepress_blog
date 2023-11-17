@@ -12,7 +12,7 @@ actions:
   type: primary
 - text: 阿里云
   link: /aliyun/
-  type: primary
+  type: primarycy
 - text: 微信
   link: /wechat/wechat_sdk.html
   type: primary
@@ -114,3 +114,4 @@ actions:
 
 - [HTML Canvas Deep Dive](https://joshondesign.com/p/books/canvasdeepdive/title.html)
 - [webgl fundamentals](https://webglfundamentals.org/webgl/lessons/zh_cn/)
+- [GLSL 中文手册](https://github.com/wshxbqq/GLSL-Card)
