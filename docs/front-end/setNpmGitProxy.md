@@ -140,6 +140,14 @@ git config --global --unset http.proxy
 git config --global --unset https.proxy
 ```
 
+## [Installing NVM on Ubuntu](https://tecadmin.net/how-to-install-nvm-on-ubuntu-22-04/)
+
+## [Node.js – nvm proxy settings configuration file](https://itecnote.com/tecnote/node-js-nvm-proxy-settings-configuration-file/)
+
+NVM uses curl, so modifying the file` ~/.curlrc` file (or create it if it does not exist)
+
+proxy = <proxy_host>:<proxy_port>
+
 ## npm和git自动设置代理脚本
 
 需要安装 `shelljs` 依赖 @[code js](../_code/front-end/setNpmGitProxy.js)

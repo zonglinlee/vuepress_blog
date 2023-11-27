@@ -2,6 +2,10 @@
 title: shell basic
 ---
 
+## [Rufus](https://rufus.ie/zh/)
+
+轻松创建 USB 启动盘
+
 ## Terminology
 
 - gcc: 是 GNU compiler collection 的缩写，它是 Linux 下一个编译器集合( 相当于 javac )， 是 c 或 c++程序的编译器
@@ -32,7 +36,8 @@ another way to do it is using sed command to search and replace the dos line end
 
 ## ubuntu 软件包管理
 
-`apt` 命令是 `Debian Linux `发行版中的 APT 软件包管理工具,使用 apt-get 命令的第一步就是引入必需的软件库,`/etc/apt/sources.list` 是存放这些地址列表的配置文件
+`apt` 命令是 `Debian Linux `发行版中的 APT 软件包管理工具,使用 apt-get
+命令的第一步就是引入必需的软件库,`/etc/apt/sources.list` 是存放这些地址列表的配置文件
 
 ### [apt-vs-dpkg-debian](https://www.linuxfordevices.com/tutorials/debian/apt-vs-dpkg-debian)
 
@@ -46,13 +51,13 @@ dpkg (Debian Package Manager) works under the hood of APT. While APT manages rem
 dependencies for you, it uses dpkg to actually make the changes of installing/removing packages. dpkg on itself cannot
 retrieve/download files from remote repositories, nor can it figure out dependencies.
 
-|  Functions   | APT  | dpkg |
-|  ----  | ----  |------|
-| Can download packages from remote repositories  | YES | NO   |
-| Can resolve dependencies  | YES | NO   |
-| Install local packages  | YES(using dpkg) | YES  |
-| Install remote package  | YES (using dpkg) | NO (users need to manually download a package if they wish to use dpkg) |
-| List installed packages  | YES | YES |
+| Functions                                      | APT              | dpkg                                                                    |
+|------------------------------------------------|------------------|-------------------------------------------------------------------------|
+| Can download packages from remote repositories | YES              | NO                                                                      |
+| Can resolve dependencies                       | YES              | NO                                                                      |
+| Install local packages                         | YES(using dpkg)  | YES                                                                     |
+| Install remote package                         | YES (using dpkg) | NO (users need to manually download a package if they wish to use dpkg) |
+| List installed packages                        | YES              | YES                                                                     |
 
 ### 安装包格式
 
@@ -83,7 +88,8 @@ retrieve/download files from remote repositories, nor can it figure out dependen
 
 ## Bash 中的任务管理工具
 
-- `Ctrl+Z和Ctrl+C`:Ctrl C是强制终止程序的执行并结束进程。而Ctrl Z则只是中断任务的执行，但该任务并没有结束，它只是在进程中维持挂起的状态，用户可以使用`fg/bg`操作来继续前台/后台执行该任务
+- `Ctrl+Z和Ctrl+C`:Ctrl C是强制终止程序的执行并结束进程。而Ctrl
+  Z则只是中断任务的执行，但该任务并没有结束，它只是在进程中维持挂起的状态，用户可以使用`fg/bg`操作来继续前台/后台执行该任务
 - `&`
 - `fg` 将后台作业移动到前台终端运行
 - `bg`  将前台终端作业移动到后台运行
@@ -118,9 +124,61 @@ kill -9 vim-pid
 - iptables: is a tool for managing firewall rules on a Linux machine.
 - firewalld: is also a tool for managing firewall rules on a Linux machine.
 
+## [ubuntu 不休眠技巧](https://www.5axxw.com/questions/simple/tf1pgm)
+
+```shell
+sudo vim /etc/systemd/logind.conf
+#suspend -> ignore
+#HandleLidSwitch=suspend
+HandleLidSwitch=ignore
+sudo systemctl restart systemd-logind.service
+```
+
+## [ubuntu 静态IP（set static ip）](https://www.freecodecamp.org/news/setting-a-static-ip-in-ubuntu-linux-ip-address-tutorial/)
+
+```shell
+cd /etc/netplan
+vim 00-installer-config-wifi.yaml
+```
+
+wifi config yaml file
+
+```yaml
+network:
+  version: 2
+  wifis:
+    wlp6s0:
+      access-points:
+        CMCC-xiaochenchen:
+          password: t63bu9tn*
+      addresses: [ 192.168.1.5/24 ]
+      # gateway4: 192.168.1.1
+      routes:
+        - to: default
+          via: 192.168.1.1
+      nameservers:
+        addresses: [ 8.8.8.8,8.8.8.4,114.114.114.114 ]
+      dhcp4: no
+
+```
+
+[`gateway4` has been deprecated](https://unix.stackexchange.com/questions/681220/netplan-generate-gateway4-has-been-deprecated-use-default-routes-instead)
+
+## shell 设置变量默认值
+
+test.sh,为`$1` 变量设置默认 tomcat 下载地址
+
+```shell
+#!/usr/bin/env bash
+downloadUrl=${1:-https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz}
+echo "downloadUrl is：${downloadUrl}"
+
+```
+执行 `./test.sh http://example.com`,则输出 `downloadUrl is：http://example.com`
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)
+- [Linux Bash Shell Scripting Tutorial Wiki](https://bash.cyberciti.biz/guide/Main_Page)
 - [explain-shell](https://explainshell.com/)
 - [https://dunwu.github.io/linux-tutorial/](https://dunwu.github.io/linux-tutorial/)
 - [kjyw 快捷运维](https://github.com/aqzt/kjyw)
