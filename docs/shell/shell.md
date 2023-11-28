@@ -174,7 +174,80 @@ downloadUrl=${1:-https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tom
 echo "downloadUrl is：${downloadUrl}"
 
 ```
+
 执行 `./test.sh http://example.com`,则输出 `downloadUrl is：http://example.com`
+
+## echo 叮咚 声音
+
+```shell
+#\a     alert (bell)
+echo -e "\a Ding dong\a"
+```
+
+## 特殊字符
+
+- `\`: You can use the backslash (\) as last character on line to continue command on next line
+- `$IFS`: The Internal Field Separator (IFS)
+
+## [printf vs echo](https://bash.cyberciti.biz/guide/Echo_Command)
+
+## export
+
+By default all user defined variables are local. They are not exported to new processes. Use export command to export
+variables and functions to child processes.
+
+```shell
+export backup="/nas10/mysql"
+echo "Backup dir $backup"
+bash #  start a new shell instance, enter: bash
+echo "Backup dir $backup"
+```
+
+## HERE DOCUMENTS VS HERE STRINGS
+
+here documents:This type of redirection tells the shell to read input from the current source (`HERE`) until a line
+containg only word (`HERE`) is seen. HERE word is not subjected to variable name, parameter expansion, arithmetic
+expansion, pathname expansion, or command substitution. All of the lines read up to that point are then used as the
+standard input for a command. Files are processed in this manner are commonly called here documents. If you do not want
+variable name, parameter expansion, arithmetic expansion, pathname expansion, or command substitution quote `HERE` in a
+**single quote**
+```text
+command <<HERE
+text1
+text2
+testN
+$varName
+HERE
+```
+
+
+Here strings:The `$word` (a shell variable) is expanded and supplied to the command on its standard input
+> command <<<$word
+
+字符串拆分小技巧
+```shell
+# /etc/passwd 
+pwd=zonglinlee:x:1000:1000:zonglinlee:/home/zonglinlee:/bin/bash
+oldIFS="$IFS"
+IFS=:
+read -r login password uid gid info home shell <<< "$pwd"
+printf "Your login name is %s, uid %d, gid %d, home dir set to %s with %s as login shell\n" $login $uid $gid $home $shell
+IFS="$oldIFS"
+```
+## Bash variable existence check
+syntax
+
+```text
+${varName?Error varName is not defined}
+${varName:?Error varName is not defined or is empty}
+```
+例子
+```shell
+#!/usr/bin/env bash
+path=${1:?Error command line argument not passed}
+echo "backup path is $path"
+echo "i am done if \$path is set"
+```
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)
