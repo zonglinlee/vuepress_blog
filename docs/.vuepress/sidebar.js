@@ -165,6 +165,7 @@ export const SidebarConfig = {
             text: 'Database',
             children: [
                 '/database/mysql/mysql.md',
+                '/database/sql_faq.md',
             ],
         },
     ],
