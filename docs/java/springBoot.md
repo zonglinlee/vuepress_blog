@@ -63,6 +63,7 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
   logging.level.org.springframework.jdbc.core.StatementCreatorUtils=TRACE
 ```
 
+- [mybatis mapper xml 字段和表自动提示](https://blog.csdn.net/b452608/article/details/122704798)
 - [spring boot 配置项查看](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.developing-auto-configuration.understanding-auto-configured-beans)
   ![spring boot auto configuration](../images/java/spring-boot-autoconfiguration.png)
 - [spring-boot 文档以及配置项](https://docs.spring.io/spring-boot/docs/2.0.1.RELEASE/reference/htmlsingle/#common-application-properties)

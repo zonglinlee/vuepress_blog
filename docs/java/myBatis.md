@@ -114,9 +114,19 @@ FINER)。所以，只要将日志级别调整为 DEBUG 即可达到目的。
 
 如果项目使用的是 logback 作为日志，则在 logback.xml 文件中调整日志输出级别，达到 mybatis 日志输出级别就可以输出日志了。
 
-
 ## myBatis 批处理
+
 - [基于SqlSession的ExecutorType进行批量操作](https://juejin.cn/post/6844903991147495437)
+
+## [MyBatis中模糊查询LIKE的三种方式](https://blog.51cto.com/u_14479502/3117097)
+
+## [Mybatis一对多查询](https://blog.csdn.net/shuai8624/article/details/116563491)
+
+## [mybatis-plus分页查询三种方法](https://blog.csdn.net/weixin_46146718/article/details/126962110)
+
+## [mybatis-plus 查询传入参数Map，返回List＜Map＞](https://blog.csdn.net/yfx000/article/details/108222312)
+
+## [MyBatis中@MapKey使用详解](https://blog.csdn.net/u012734441/article/details/85861337)
 
 ## reference
 

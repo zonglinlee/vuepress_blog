@@ -6,6 +6,7 @@ import { path } from '@vuepress/utils'
 import fullTextSearchPlugin from 'vuepress-plugin-full-text-search2'
 import { defaultTheme } from '@vuepress/theme-default'
 export default {
+  port: 9527,
   title: 'Hello,tumbleweed!',
   description: '-',
   base: myBase,
