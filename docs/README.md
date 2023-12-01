@@ -12,7 +12,7 @@ actions:
   type: primary
 - text: 阿里云
   link: /aliyun/
-  type: primarycy
+  type: primary
 - text: 微信
   link: /wechat/wechat_sdk.html
   type: primary
