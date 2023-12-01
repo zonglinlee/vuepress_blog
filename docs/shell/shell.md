@@ -211,6 +211,7 @@ expansion, pathname expansion, or command substitution. All of the lines read up
 standard input for a command. Files are processed in this manner are commonly called here documents. If you do not want
 variable name, parameter expansion, arithmetic expansion, pathname expansion, or command substitution quote `HERE` in a
 **single quote**
+
 ```text
 command <<HERE
 text1
@@ -220,11 +221,11 @@ $varName
 HERE
 ```
 
-
 Here strings:The `$word` (a shell variable) is expanded and supplied to the command on its standard input
 > command <<<$word
 
 字符串拆分小技巧
+
 ```shell
 # /etc/passwd 
 pwd=zonglinlee:x:1000:1000:zonglinlee:/home/zonglinlee:/bin/bash
@@ -234,19 +235,38 @@ read -r login password uid gid info home shell <<< "$pwd"
 printf "Your login name is %s, uid %d, gid %d, home dir set to %s with %s as login shell\n" $login $uid $gid $home $shell
 IFS="$oldIFS"
 ```
+
 ## Bash variable existence check
+
 syntax
 
 ```text
 ${varName?Error varName is not defined}
 ${varName:?Error varName is not defined or is empty}
 ```
+
 例子
+
 ```shell
 #!/usr/bin/env bash
 path=${1:?Error command line argument not passed}
 echo "backup path is $path"
 echo "i am done if \$path is set"
+```
+
+## [shell startup Script Execution Order](https://bash.cyberciti.biz/guide/Startup_scripts)
+
+`/etc/profile` - It contains Linux system wide environment and startup programs. This file runs first when a user logs
+in to the system. This file also act as a system-wide profile file for the bash shell.
+`/etc/profile.d - /etc/profile` calls `/etc/profile.d/`. It is a directory and all scripts in this directory are called
+by `/etc/profile` using a `for loop`. This file runs second when a user logs in.
+`~/.bash_profile` or `$HOME/.bash_profile` - Finally, the file `~/.bash_profile` is called in the users home directory (
+$HOME). This file runs third when a user logs in. This file calls `~/.bashrc` in the users home directory.
+
+## [Changing bash prompt](https://bash.cyberciti.biz/guide/Changing_bash_prompt) [参考](https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/)
+```shell
+export PS1="\e[0;31m[\e[m \e[0;33m\u\e[m@\e[0;34m\h\e[m \e[0;34m\w\e[m \e[0;31m]\e[m\$"
+
 ```
 ## Reference
 
@@ -270,3 +290,6 @@ echo "i am done if \$path is set"
 - [devops-exercises | linux](https://github.com/bregman-arie/devops-exercises/blob/master/exercises/linux/README.md)
 - [在 Windows 中使用 Cygwin](https://wxsm.space/2021/windows-idea-cygwin/)
 - [bash-source-command](https://opensource.com/article/20/6/bash-source-command)
+
+
+

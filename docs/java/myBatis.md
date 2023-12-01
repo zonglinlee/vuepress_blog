@@ -118,7 +118,7 @@ FINER)。所以，只要将日志级别调整为 DEBUG 即可达到目的。
 
 - [基于SqlSession的ExecutorType进行批量操作](https://juejin.cn/post/6844903991147495437)
 
-## [MyBatis中模糊查询LIKE的三种方式](https://blog.51cto.com/u_14479502/3117097)
+## [MyBatis中模糊查询LIKE的三种方式](https://blog.csdn.net/wrs120/article/details/82530653)
 
 ## [Mybatis一对多查询](https://blog.csdn.net/shuai8624/article/details/116563491)
 
