@@ -56,6 +56,7 @@ export const SidebarConfig = {
                 '/others/docker.md',
                 '/others/computerNetwork/basic.md',
                 '/others/longmanMddPicEtractor.md',
+                '/others/tomcat.md',
             ],
         },
     ],
