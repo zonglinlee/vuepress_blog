@@ -190,7 +190,8 @@ export const SidebarConfig = {
             text: 'Android',
             children: [
                 '/android/starter.md',
-                '/android/react-native.md'
+                '/android/react-native.md',
+                '/android/jetpack_compose.md'
             ],
         },
     ]
