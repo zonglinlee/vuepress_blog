@@ -266,7 +266,6 @@ by `/etc/profile` using a `for loop`. This file runs second when a user logs in.
 $HOME). This file runs third when a user logs in. This file calls `~/.bashrc` in the users home directory.
 
 ## [Changing bash prompt](https://bash.cyberciti.biz/guide/Changing_bash_prompt) [参考](https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/)
-
 ```shell
 export PS1="\e[0;31m[\e[m \e[0;33m\u\e[m@\e[0;34m\h\e[m \e[0;34m\w\e[m \e[0;31m]\e[m\$"
 
@@ -279,6 +278,9 @@ export PS1="\e[0;31m[\e[m \e[0;33m\u\e[m@\e[0;34m\h\e[m \e[0;34m\w\e[m \e[0;31m]
 Create a random password
 `tr -dc A-Za-z0-9_ < /dev/urandom | head -c12 | xargs`
 
+
+
+## [ssh隧道](https://www.lixueduan.com/posts/linux/07-ssh-tunnel/)
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)
