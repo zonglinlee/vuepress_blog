@@ -162,6 +162,8 @@ network:
 
 ```
 
+应用设置：`sudo netplan try`
+
 [`gateway4` has been deprecated](https://unix.stackexchange.com/questions/681220/netplan-generate-gateway4-has-been-deprecated-use-default-routes-instead)
 
 ## shell 设置变量默认值
@@ -268,6 +270,14 @@ $HOME). This file runs third when a user logs in. This file calls `~/.bashrc` in
 export PS1="\e[0;31m[\e[m \e[0;33m\u\e[m@\e[0;34m\h\e[m \e[0;34m\w\e[m \e[0;31m]\e[m\$"
 
 ```
+
+## [< /dev/null](https://unix.stackexchange.com/questions/27955/the-usage-of-dev-null-in-the-command-line/27958#27958)
+
+## [< /dev/urandom](https://linuxhandbook.com/dev-random-urandom/)
+
+Create a random password
+`tr -dc A-Za-z0-9_ < /dev/urandom | head -c12 | xargs`
+
 
 
 ## [ssh隧道](https://www.lixueduan.com/posts/linux/07-ssh-tunnel/)
