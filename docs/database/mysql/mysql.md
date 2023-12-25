@@ -40,4 +40,5 @@ SELECT JSON_CONTAINS(@j, @j2, '$.a');
 
 ## Reference
 
+- [wiki/Category:Shelf:SQL](https://en.wikibooks.org/wiki/Category:Shelf:SQL)
 - [wiki-sql-exercise](https://github.com/XD-DENG/SQL-exercise)

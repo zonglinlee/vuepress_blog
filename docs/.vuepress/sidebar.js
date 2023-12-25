@@ -57,6 +57,7 @@ export const SidebarConfig = {
                 '/others/computerNetwork/basic.md',
                 '/others/longmanMddPicEtractor.md',
                 '/others/tomcat.md',
+                '/others/uniapp.md',
             ],
         },
     ],

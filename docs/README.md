@@ -112,6 +112,7 @@ actions:
 
 ### books you should read
 
+- [wiki/Shelf:Computer_programming_languages](https://en.wikibooks.org/wiki/Shelf:Computer_programming_languages)
 - [HTML Canvas Deep Dive](https://joshondesign.com/p/books/canvasdeepdive/title.html)
 - [webgl fundamentals](https://webglfundamentals.org/webgl/lessons/zh_cn/)
 - [GLSL 中文手册](https://github.com/wshxbqq/GLSL-Card)
