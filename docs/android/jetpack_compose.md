@@ -257,7 +257,8 @@ println(files?.size ?: "empty") // if files is null, this prints "empty"
 - Suspending functions:Suspending functions can be used inside coroutines just like regular
   functions, but their
   additional feature is that they can, in turn, use other suspending functions (like delay in this
-  example) to suspend execution of a coroutine
+  example) to suspend execution of a coroutine. Suspending functions treat the thread fairly and don't block it for "**
+  waiting**". However, this doesn't yet bring any **concurrency** into the picture.
 
 - `runBlocking` and `coroutineScope` builders may look similar because they both wait for their body
   and
