@@ -13,8 +13,8 @@ Components架构缩写）中的组件也被 合并到AndroidX中，所以在使�
 androidx 命名空间包含 Android Jetpack 库。与支持库一样，androidx 命名空间中的库与 Android
 平台分开提供，并向后兼容各个 Android 版本。
 
-
 gradle proxy
+
 ```yaml
 # gradle.properties 文件
 systemProp.http.proxyHost=127.0.0.1
@@ -34,7 +34,21 @@ systemProp.https.proxyPort=1081
 - The spring-based animation:spring spec does not take any time-related parameters. Instead it
   relies on physical properties (damping and stiffness) to make animations more natural.
 
+
 ## kotlin
+- [Kotlin File vs Class](https://stackoverflow.com/questions/42769873/kotlin-file-vs-class-whats-the-difference): idea
+  中新建 kotlin Class 不能直接运行 ?? kotlin file可以
+`class Point {init{}}` <br/><br/>curly braces can be omitted <br/> <br/>init block<br/> <br/>Kotlin does not have a new keyword <br/>[class](https://kotlinlang.org/docs/classes.html)
+
+|            |              casts              |                spread operator                |   ternary operator    |       
+|:----------:|:-------------------------------:|:---------------------------------------------:|:---------------------:|
+| typescript |              `as`               |                   ...array                    |      `x ? y : z`      |                                   
+|    java    |               ()                |                       无                       |     `x ? y : z `      |                               
+|   kotlin   |          `as` 或 `as?`           |                    *array                     | `if (a > b) a else b` |         
+|            |       **default import**        |             **String templates**              |    **switch case**    |                                               
+| typescript |                                 |          \`` his name is ${name}`\`           |    switch ... case    |                                  
+|    java    |                无                |                                               |    switch ... case    |                                
+|   kotlin   | kotlin.* kotlin.collections.* 等 | `"${s1.replace("is", "was")}, but now is $a"` |        `when`         |                               
 
 - 变量
 
@@ -48,11 +62,6 @@ c = 3       // deferred assignment
 var x = 5 // `Int` type is inferred
 ```
 
-- 模板字符串： String templates
-
-```kotlin
-val s2 = "${s1.replace("is", "was")}, but now is $a"
-```
 
 - for 循环
 
@@ -70,19 +79,6 @@ for (i in 1..3) {
 for (i in 6 downTo 0 step 2) {
     println(i)
 }
-```
-
-- when expression(类似switch case 语句)
-
-```kotlin
-fun describe(obj: Any): String =
-    when (obj) {
-        1 -> "One"
-        "Hello" -> "Greeting"
-        is Long -> "Long"
-        !is String -> "Not a string"
-        else -> "Unknown"
-    }
 ```
 
 - Ranges

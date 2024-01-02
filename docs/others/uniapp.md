@@ -12,8 +12,11 @@ title: uniapp
 
 ## uniapp 插件开发
 
+- uniapp 离线打包 配置app签名
+  ![申请appKey](../images/uniapp/uniapp_offline_build_signature_sha1.png)
+- uniapp 离线打包 申请appKey
+  ![申请appKey](../images/uniapp/uniapp_offline_build_appkey.png)
 - uniapp appkey 配置错误
-
   ![uniapp appkey 配置错误](../images/uniapp/uniapp_appkey_error1.png)
 - uniapp plugin 开发
   ![uniapp_custom_plugin开发](../images/uniapp/uniapp_custom_plugin.png)
