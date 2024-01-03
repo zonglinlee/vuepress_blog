@@ -1,44 +1,11 @@
 ---
-title: jetpackCompose
+title: kotlin_basic
 ---
-
-
-https://cloud.tencent.com/developer/article/1763740
-
-AndroidX是谷歌在 2018 I/O 大会上推出的用于替换android.support.library的
-Android扩展库，按照官方文档说明，android.support.library在Android
-28版本之后就不再更新，未来的版本更新都在AndroidX中进行。不仅如此，AAC（Android Architecture
-Components架构缩写）中的组件也被 合并到AndroidX中，所以在使用JetPack组件时经常会看到AndroidX相关的包。
-
-androidx 命名空间包含 Android Jetpack 库。与支持库一样，androidx 命名空间中的库与 Android
-平台分开提供，并向后兼容各个 Android 版本。
-
-gradle proxy
-
-```yaml
-# gradle.properties 文件
-systemProp.http.proxyHost=127.0.0.1
-systemProp.http.proxyPort=1081
-systemProp.https.proxyHost=127.0.0.1
-systemProp.https.proxyPort=1081
-```
-
-## 名词解释
-
-- 重新生成整个屏幕所面临的一个难题是，在时间、计算能力和电池用量方面可能成本高昂。为了减少在这方面耗费的资源，Compose
-  会智能地选择在任何给定时间需要重新绘制界面的哪些部分
-- @Composable 注释。所有可组合函数都必须带有此注释；此注释可告知 Compose 编译器：此函数旨在将数据转换为界面
-- To display a scrollable column we use a `LazyColumn`. `LazyColumn` renders only the visible items
-  on screen, allowing performance gains when rendering a big list.`LazyColumn` and `LazyRow` are
-  equivalent to `RecyclerView` in Android Views.
-- The spring-based animation:spring spec does not take any time-related parameters. Instead it
-  relies on physical properties (damping and stiffness) to make animations more natural.
-
 
 ## kotlin
 - [Kotlin File vs Class](https://stackoverflow.com/questions/42769873/kotlin-file-vs-class-whats-the-difference): idea
   中新建 kotlin Class 不能直接运行 ?? kotlin file可以
-`class Point {init{}}` <br/><br/>curly braces can be omitted <br/> <br/>init block<br/> <br/>Kotlin does not have a new keyword <br/>[class](https://kotlinlang.org/docs/classes.html)
+  `class Point {init{}}` <br/><br/>curly braces can be omitted <br/> <br/>init block<br/> <br/>Kotlin does not have a new keyword <br/>[class](https://kotlinlang.org/docs/classes.html)
 
 |            |              casts              |                spread operator                |   ternary operator    |       
 |:----------:|:-------------------------------:|:---------------------------------------------:|:---------------------:|

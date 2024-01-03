@@ -20,3 +20,12 @@ title: uniapp
   ![uniapp appkey 配置错误](../images/uniapp/uniapp_appkey_error1.png)
 - uniapp plugin 开发
   ![uniapp_custom_plugin开发](../images/uniapp/uniapp_custom_plugin.png)
+
+## uniapp 开发注意事项
+
+- `uni.getSystemInfoSync`: 这个接口必须在 `onReady` 中调用，不能在 app 的 `onLaunch` 中调用,否则会导致高度计算不准确
+    - `屏幕高度` = `原生NavigationBar高度（含状态栏高度）` + `可使用窗口高度` + `原生TabBar高度`
+    - `windowHeight` 不包含 `NavigationBar` 和 `TabBar` 的高度
+    - Web端，`windowTop` 等于 `NavigationBar` 高度，`windowBottom` 等于 `TabBar` 高度
+    - App端，`windowTop` 等于透明状态 `NavigationBar` 高度，`windowBottom` 等于透明状态 `TabBar` 高度
+    - 高度相关信息，要放在 `onReady` 里获取。太早取不到
