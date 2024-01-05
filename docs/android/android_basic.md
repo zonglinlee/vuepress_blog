@@ -20,6 +20,17 @@ androidx 命名空间包含 Android Jetpack 库。与支持库一样，androidx 
   equivalent to `RecyclerView` in Android Views.
 - The spring-based animation:spring spec does not take any time-related parameters. Instead it
   relies on physical properties (damping and stiffness) to make animations more natural.
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata?hl=zh-cn)
+  是一种可观察的数据存储器类。与常规的可观察类不同，`LiveData` 具有生命周期感知能力，意指它遵循其他应用组件（如 activity、fragment 或 service）的生命周期。这种感知能力可确保
+  LiveData 仅更新处于活跃生命周期状态的应用组件观察者
+- [Android Navigation](https://blog.csdn.net/JMW1407/article/details/125714708):传统的应用开发，一般都是采用一个界面一个 Activity
+  的形式，但是大家都知道， Activity 在 Android 中是属于重量级的组件，从而导致程序资源消耗大，用户体验不佳。而导航组件
+  Navigation 采用的是 Fragment 轻量级的组件实现的，可以节省资源，提高用户体验。
+  采用**单个Activity嵌套多个Fragment的UI**架构模式，已经被大多数的Android工程师所接受，需要通过FragmentManager和FragmentTransaction来管理Fragment之间的切换。
+  在Android中，页面的切换和管理包括应用程序Appbar的管理、Fragment的动画切换以及Fragment之间的参数传递等内容。并且，纯代码的方式使用起来不是特别友好，并且Appbar在管理和使用的过程中显得很混乱。因此，Jetpack提供了一个名为Navigation的组件，旨在方便开发者管理Fragment页面和Appbar。
+
+- `Fragment` 表示应用界面中可重复使用的一部分。fragment 定义和管理自己的布局，具有自己的生命周期，并且可以处理自己的输入事件。fragment 不能独立存在。它们必须由 activity 或其他 fragment
+  托管。fragment 的视图层次结构会成为宿主的视图层次结构的一部分，或附加到宿主的视图层次结构。
 
 ## 开发须知
 

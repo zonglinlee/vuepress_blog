@@ -172,9 +172,17 @@ ints.filter { it > 0 }
     - Grouping function calls on an object: `with`
 
 
-- Object expressions:Object expressions create objects of anonymous classes, that is, classes that
+- **Object expressions**:Object expressions create objects of anonymous classes, that is, classes that
   aren't explicitly declared with the class declaration. Such classes are useful for one-time use.
-
+- **Data classes** in Kotlin are classes whose main purpose is to hold data. Data classes come automatically with
+  additional
+  member functions that allow you to print an instance to readable output, compare instances, copy instances, and more.
+  Data classes are marked with `data` ,The compiler automatically derives the following members from all properties
+  declared in the primary constructor:`.equals()`,`.hashCode()`,`.toString()`,`.componentN()`,`.copy()`
+- **Data objects**:Just like data classes, you can mark an object declaration with the `data` modifier. This instructs
+  the
+  compiler to generate a number of functions for your object: `toString()`,`equals()/hashCode()` pair
+- **Companion objects**: An object declaration inside a class can be marked with the `companion` keyword
 ```kotlin
 val helloWorld = object {
     val hello = "Hello"
@@ -186,6 +194,11 @@ val helloWorld = object {
 
 print(helloWorld)
 ```
+
+- **Object expressions** create objects of anonymous classes, that is, classes that aren't explicitly declared with the
+  class declaration. Such classes are useful for one-time use. You can define them from scratch, inherit from existing
+  classes, or implement interfaces. Instances of anonymous classes are also called anonymous objects because they are
+  defined by an expression, not a name.
 
 - [常用函数][https://kotlinlang.org/docs/idioms.html]
 
@@ -236,3 +249,7 @@ println(files?.size ?: "empty") // if files is null, this prints "empty"
   is
   a
   **suspending function**.
+
+
+- [async vs launch](https://www.geeksforgeeks.org/launch-vs-async-in-kotlin-coroutines/)
+  ![kotlin_async_launch](F:\workspace\Demo\vuepress_blog\docs\images\android\kotlin_async_launch.png)
