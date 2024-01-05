@@ -252,4 +252,4 @@ println(files?.size ?: "empty") // if files is null, this prints "empty"
 
 
 - [async vs launch](https://www.geeksforgeeks.org/launch-vs-async-in-kotlin-coroutines/)
-  ![kotlin_async_launch](F:\workspace\Demo\vuepress_blog\docs\images\android\kotlin_async_launch.png)
+  ![kotlin_async_launch](../images/android/kotlin_async_launch.png)
