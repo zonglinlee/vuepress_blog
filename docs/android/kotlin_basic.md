@@ -253,3 +253,18 @@ println(files?.size ?: "empty") // if files is null, this prints "empty"
 
 - [async vs launch](https://www.geeksforgeeks.org/launch-vs-async-in-kotlin-coroutines/)
   ![kotlin_async_launch](../images/android/kotlin_async_launch.png)
+
+### trick
+
+- lambda extension
+  ![kotlin_extension_lambda](../images/android/kotlin_extension_lambda.png)
+- [by](https://stackoverflow.com/questions/38250022/what-does-by-keyword-do-in-kotlin):In simple words, you can
+  understand `by` keyword as **provided by**. From the perspective of property consumer, `val` is something that
+  has `getter` (
+  get) and `var` is something that has `getter`
+  and `setter` (get, set). For each var property there is a default provider of get and set methods that we don't need
+  to
+  specify explicitly. But, when using by keyword, you are stating that this `getter/getter&setter` is provided
+  elsewhere (
+  i.e. it's been
+  delegated). It's provided by the function that comes after `by`.

@@ -20,6 +20,9 @@ title: uniapp
   ![uniapp appkey 配置错误](../images/uniapp/uniapp_appkey_error1.png)
 - uniapp plugin 开发
   ![uniapp_custom_plugin开发](../images/uniapp/uniapp_custom_plugin.png)
+- [微信开放平台Android平台应用签名怎么填写](https://www.yimenapp.com/kb-yimen/1716/):
+  我们可以拿到MD5为：`24:D2:CA:F6:3A:1A:13:ED:8D:B6:8E:19:82:E1:F3:F5`,
+  但是微信开放平台输入这个格式则是错误的，我们需要去掉中间的间隔“：”冒号，最终我们输入：`24D2CAF63A1A13ED8DB68E1982E1F3F5`，这个就是微信开放平台需要的安卓 APP 签名的 MD5，也就是平台所需的应用签名。
 
 ## uniapp 开发注意事项
 

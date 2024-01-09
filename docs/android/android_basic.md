@@ -110,3 +110,7 @@ findViewById<TextView>(R.id.sample_text).apply {
         put("age", 17)
     }
 ```
+
+### android navigation
+没有同时包含抽屉式导航栏和底部导航栏的布局，这是因为 Material Design 指南不允许出现这种情况。
+![android_actionbar_toolbar](../images/android/android_actionbar_toolbar.png)
