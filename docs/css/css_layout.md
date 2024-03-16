@@ -112,3 +112,8 @@ relative并分别配合right和left属性，以便左右两栏div移动后不遮
 [What's the difference between align-content and align-items?](https://stackoverflow.com/questions/27539262/whats-the-difference-between-align-content-and-align-items)
 
 <css-center />
+
+
+## css sticky position
+- [sticky-js](https://github.com/rgalus/sticky-js/tree/master)
+- [position:sticky](https://www.zhangxinxu.com/wordpress/2018/12/css-position-sticky/)

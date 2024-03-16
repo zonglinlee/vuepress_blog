@@ -58,6 +58,7 @@ export const SidebarConfig = {
                 '/others/longmanMddPicEtractor.md',
                 '/others/tomcat.md',
                 '/others/uniapp.md',
+                '/others/gradle_basic.md',
             ],
         },
     ],
@@ -193,7 +194,8 @@ export const SidebarConfig = {
             children: [
                 '/android/starter.md',
                 '/android/react-native.md',
-                '/android/jetpack_compose.md'
+                '/android/android_basic.md',
+                '/android/kotlin_basic.md',
             ],
         },
     ]
