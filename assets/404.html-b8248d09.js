@@ -1,0 +1,1 @@
+import{_ as e,o as r,c as s}from"./app-4d1d3ef4.js";const o={};function _(c,t){return r(),s("div")}const a=e(o,[["render",_],["__file","/home/runner/work/vuepress_blog/vuepress_blog/docs/.vuepress/.temp/pages/404.html.vue"]]);export{a as default};
