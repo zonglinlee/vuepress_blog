@@ -10,6 +10,11 @@ title: mysql
     - 只要其中一方为 null， 则结果肯定为 null
 
 ## [mysql 索引失效](https://segmentfault.com/a/1190000021464570)
+## [mysql 重置自增id](https://blog.51cto.com/u_16213366/7941068)
+```shell
+select MAX(id) from tableName;
+ALTER TABLE tableName AUTO_INCREMENT = max_id_value + 1;
+```
 
 ## [mysql 内置函数](https://dev.mysql.com/doc/refman/5.7/en/built-in-function-reference.html)
 

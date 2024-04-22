@@ -26,7 +26,7 @@ function start()
 	if [ x"$PID" != x"" ]; then
 	    echo "$AppName is running..."
 	else
-		nohup java -jar $AppName --spring.profiles.active=test2 > /$APP_HOME/stdout.log 2>&1 &
+		nohup java -jar $AppName --spring.profiles.active=prod > /$APP_HOME/stdout.log 2>&1 &
 		echo "Start $AppName success..."
 	fi
 }

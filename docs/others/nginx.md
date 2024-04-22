@@ -14,6 +14,21 @@ user  nginx;
 ## You need to know
 
 - windows 下 nginx 更改配置不生效原因（可能运行了多个nginx进程，杀掉后重启nginx）
+- [`alias` vs `root`](https://blog.csdn.net/a760352276/article/details/106774599)
+
+```shell
+#如果配置文件使用root，那么nginx最终得到的路径就是  配置的文件路径 + 匹配的路径   简单的说就是root旁边的路径在加上location的路径就是nginx要访问的静态资源
+#当访问 /download/1.jpg 时候， nginx 会去 /home/download/ 目录下去寻找静态资源(需要拼上 location 中的后缀)
+location /download/ {
+  root /home/;
+}
+
+#如果配置文件使用alias ，nginx 最终得到的路径就是  配置文件的路径，比root少一个location的路径。
+#当访问 /download/1.jpg 时候， nginx 会去 /home/download/ 目录下去寻找静态资源
+location /download/ {
+  alias /home/download/;
+}
+```
 
 ## reference
 
