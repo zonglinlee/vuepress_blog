@@ -10,3 +10,4 @@ node_modules/
 yarn-error.log
 zonglinlee
 shell
+docs/_code/python/.venv

@@ -55,6 +55,8 @@ actions:
   link: /java/java_web.html
 - text: Android
   link: /android/starter.html
+- text: Python
+  link: /python/starter.html
 - text: Miscellaneous
   link: /others/github.html
   type: primary
