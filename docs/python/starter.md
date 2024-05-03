@@ -10,7 +10,7 @@ title: python starter
 - `Ctrl+Shift+P`, start typing the `Python: Select Interpreter`
 
 
-## [python 项目依赖文件导出](https://www.cnblogs.com/yoyo008/p/9923092.html
+## [python 项目依赖文件导出](https://www.cnblogs.com/yoyo008/p/9923092.html)
 
 ```shell
 # 导出依赖

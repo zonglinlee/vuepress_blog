@@ -198,5 +198,13 @@ export const SidebarConfig = {
                 '/android/kotlin_basic.md',
             ],
         },
+    ],
+    '/python/': [
+        {
+            text: 'Python',
+            children: [
+                '/python/starter.md',
+            ],
+        },
     ]
 }
