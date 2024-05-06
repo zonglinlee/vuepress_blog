@@ -1,0 +1,1 @@
+item.find('a').find('img').get('lay-src')
