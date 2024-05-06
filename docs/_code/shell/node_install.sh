@@ -2,6 +2,7 @@
 
 function install_node() {
   ##访问https://github.com/creationix/nvm查看
+#  curl --proxy http://192.168.10.146:1081  -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
   ##指定版本v16.15.1 node
   #  https://unix.stackexchange.com/questions/184508/nvm-command-not-available-in-bash-script

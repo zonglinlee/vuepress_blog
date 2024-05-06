@@ -141,6 +141,14 @@ server {
 
 ```
 
+## [docker image 移除不掉](https://blog.csdn.net/jiangbb8686/article/details/98652842)
+
+```shell
+docker ps -a
+docker ps -a|awk '{print $1}'|xargs docker rm
+docker rmi imageId
+```
+
 参考
 
 - [Check connection between nodes if there is no 'ping' command](https://superuser.com/questions/1270370/check-connection-between-nodes-if-there-is-no-ping-command)

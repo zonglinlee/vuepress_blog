@@ -26,7 +26,7 @@ yarn run build:test
 
 ```yaml
 # docker-compose.yml
-services:
+services: # 集合
   docker_jenkins:
     user: root                                 # 为了避免一些权限问题 在这我使用了root
     restart: always                            # 重启方式
@@ -39,22 +39,26 @@ services:
       - /var/vol_dockers/jenkins_home/:/var/jenkins_home  # 这是我们一开始创建的目录挂载到容器内的jenkins_home目录
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker                # 这是为了我们可以在容器内使用docker命令
-      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose # 这是为了我们可以在容器内使用docker-compose命令
+      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
       - /root/.ssh:/root/.ssh
-      - /home/jenkins/policy_settings.xml:/home/maven_settings.xml # maven 配置文件
-      - /home/jdk/jdk-17.0.10/:/home/jdk/jdk-17.0.10 # 映射jdk
+      - /home/jenkins/policy_settings.xml:/home/maven_settings.xml
+      - /home/jdk/jdk-17.0.10/:/home/jdk/jdk-17.0.10
       - /etc/profile:/etc/profile
-      - /usr/local/apache-maven-3.8.8:/usr/local/apache-maven-3.8.8 # 映射mvn
-      - /home/mvn_repo:/home/mvn_repo # 映射 mvn 仓库目录
+      - /usr/local/apache-maven-3.8.8:/usr/local/apache-maven-3.8.8
+      - /usr/bin/docker:/usr/bin/docker
+      - /home/mvn_repo:/home/mvn_repo # maven 仓库
+      - /root/.nvm:/root/.nvm # node 映射
 ```
 
-## jenkins build 脚本
+## jenkins build 脚本(后端)
 
 ```shell
 . /etc/profile
 cd /var/jenkins_home/workspace/common_services/zxxdykt-upload-video/zxxdykt-upload-video
 #mvn clean package
-mvn --settings /home/maven_settings.xml package
+java --version
+mvn -v
+mvn -X --settings /home/maven_settings.xml package
 
 cd target
 rm -rf ./app.jar
@@ -75,3 +79,18 @@ EOF
 
 docker build -t upload-video:v1 .
 ```
+
+## jenkins build 脚本(前端)
+
+```shell
+export PATH="/root/.nvm/versions/node/v18.19.0/bin:$PATH"
+. /etc/profile
+node -v
+cd /var/jenkins_home/workspace/smenx_platform-usercenter-ui/smenx-user-center-ui
+npm config set proxy=http://192.168.10.146:1081
+npm install -g yarn 
+yarn install
+npm run build
+```
+
+## [docker上安装的jenkins容器内访问不了外网](https://juejin.cn/post/7301496834231615527)
