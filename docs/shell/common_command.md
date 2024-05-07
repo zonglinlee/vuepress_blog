@@ -28,3 +28,16 @@ the `/etc/sysctl.d` directory
 sysctl -a
 sysctl -a | grep net.ipv4
 ```
+
+## [zip unzip](https://blog.csdn.net/libing_zeng/article/details/73268032)
+
+```shell
+# 将当前目录下的所有文件和文件夹全部压缩成myfile.zip文件,－r表示递归压缩子目录下所有文件.
+zip -r myfile.zip ./*
+# unzip命令 （ 把 myfile.zip 文件解压到 /home/sunny/ ）
+unzip -o -d /home/sunny myfile.zip
+# tar 解压 (将 dist.tar 解压 到 /home/vue/html/dist 目录下，会生成一个 dist 文件夹)
+tar -xvf  /home/vue/html/dist.tar -C /home/vue/html/
+# tar 压缩 （当前目录下的 dist 文件夹归档为 dist.tar）
+tar -cvf dist.tar  ./dist
+```

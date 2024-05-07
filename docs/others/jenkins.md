@@ -86,11 +86,27 @@ docker build -t upload-video:v1 .
 export PATH="/root/.nvm/versions/node/v18.19.0/bin:$PATH"
 . /etc/profile
 node -v
-cd /var/jenkins_home/workspace/smenx_platform-usercenter-ui/smenx-user-center-ui
+cd /var/jenkins_home/workspace/smenx_platform-policy-ui-prod/smenx-policy-ui
 npm config set proxy=http://192.168.10.146:1081
 npm install -g yarn 
 yarn install
 npm run build
+
+tar -cvf dist.tar  ./dist
+```
+
+构建完成后脚本(Publish Over SSH)
+
+```shell
+tar -xvf  /home/vue/policy/dist.tar -C /home/vue/policy/
+cd /home/vue/policy/
+cp -R  ./dist/* ./
+rm -rf dist.tar
+rm -rf  ./dist
 ```
 
 ## [docker上安装的jenkins容器内访问不了外网](https://juejin.cn/post/7301496834231615527)
+
+## [Jenkins使用Publish Over SSH插件实现部署](https://www.cnblogs.com/iXiAo9/p/16282260.html)
+
+## [jenkins使用SSH Publishers远程发送文件成功但在服务器找不到对应文件](https://blog.csdn.net/mqq2502513332/article/details/127214288)
