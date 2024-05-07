@@ -170,3 +170,12 @@ windows 下 `make` 环境搭建，将 `react-draggable` 仓库克隆到 Cygwin �
 
 - [react-draggable](https://github.com/react-grid-layout/react-draggable)
 - [在 WebStorm 中配置 React for Flow](https://ajimide.gitbooks.io/reactlearn/content/Question/20171010-Config-flow-in-WebStorm.html)
+
+
+
+
+## [How are "mvn clean package" and "mvn clean install" different?](https://stackoverflow.com/questions/16602017/how-are-mvn-clean-package-and-mvn-clean-install-different)
+
+- package will compile your code and also package it. For example, if your pom says the project is a jar, it will create a jar for you when you package it and put it somewhere in the target directory (by default).
+
+- install will compile and package, but it will also **put the package in your local repository**. This will make it so other projects can refer to it and grab it from your local repository.
