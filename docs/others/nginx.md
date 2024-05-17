@@ -37,3 +37,4 @@ location /download/ {
 - [nginx location 规则(优先级)](https://www.cnblogs.com/xiongzaiqiren/p/16968651.html)
 - [nginx 负载均衡](https://www.jb51.net/article/246881.htm)
 - [nginx core module](https://nginx.org/en/docs/http/ngx_http_core_module.html#var_server_port)
+- [nginx 代理转发 传递真实 ip 地址](https://learnku.com/articles/69306)
