@@ -59,6 +59,7 @@ export const SidebarConfig = {
                 '/others/tomcat.md',
                 '/others/uniapp.md',
                 '/others/gradle_basic.md',
+                '/others/tools.md',
             ],
         },
     ],

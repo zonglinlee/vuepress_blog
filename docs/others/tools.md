@@ -1,0 +1,27 @@
+---
+title: 常用工具
+---
+
+## 装机/启动盘制作工具/USB 启动盘
+
+[Rufus](https://rufus.ie/zh/)
+
+## 下载工具
+
+[Motrix](https://github.com/agalwood/Motrix)
+
+## ssh 工具
+
+[mobaxterm](https://mobaxterm.mobatek.net/)
+
+## 复制粘贴工具
+
+[ditto](https://ditto-cp.sourceforge.io/)
+
+## gif 制作工具
+
+[licecap](https://github.com/justinfrankel/licecap)
+
+## 截图/拾取颜色/屏幕录制
+
+[picPick](https://picpick.app/en/)

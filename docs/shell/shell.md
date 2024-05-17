@@ -2,9 +2,6 @@
 title: shell basic
 ---
 
-## [Rufus](https://rufus.ie/zh/)
-
-轻松创建 USB 启动盘
 
 ## Terminology
 
