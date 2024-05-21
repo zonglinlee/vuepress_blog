@@ -11,6 +11,16 @@ title: shell basic
 
 ssh 配置文件 `/etc/ssh/sshd.config`
 
+## 使用 ssh public key 登录系统
+
+```shell
+#方法一
+cat ~/.ssh/id_rsa.pub | ssh root@192.168.10.213  'cat >> .ssh/authorized_keys && echo "Key copied"'
+#方法二
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.10.213
+```
+
+
 ### ssh启用root登录
 
 修改配置文件之后重启ssh，`sudo service ssh restart`

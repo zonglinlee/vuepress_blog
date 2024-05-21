@@ -29,7 +29,15 @@ location /download/ {
   alias /home/download/;
 }
 ```
+- 匹配规则
+```shell
+# proxy_pass的url后边 带"/"会把 /system 给替换掉，新的url里面 /system不存在,
+# proxy_pass的url后边 不带"/"则不会把 /system 给替换掉， 新的url里面 /system路径还存在
+ location /system {
+ 	proxy_pass http://127.0.0.1:9000/;
+ }
 
+```
 ## reference
 
 - [nginx跨域配置1](https://www.cnblogs.com/fnz0/p/15803011.html)

@@ -118,6 +118,9 @@ npm config set proxy=http://127.0.0.1:1081
 npm config get proxy
 ```
 
+npm 设置代理后 400 BadRequest, [查看解决方案](https://blog.csdn.net/m0_54890506/article/details/135257913) 
+
+
 ## git 代理配置
 
 ```shell
