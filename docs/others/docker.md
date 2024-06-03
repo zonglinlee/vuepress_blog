@@ -149,6 +149,13 @@ docker ps -a|awk '{print $1}'|xargs docker rm
 docker rmi imageId
 ```
 
+## [docker 安装-国内镜像](https://blog.csdn.net/qq_35794202/article/details/131016299)
+
+阿里云安装完毕docker之后,在`/usr/libexec/docker/cli-plugins`目录下默认有 `docker-compose` 文件，但是需要软链接到 bin
+目录,如果没有参考 [github_docker-compose](https://github.com/docker/compose) 安装
+
+[docker 配置镜像加速](https://yeasy.gitbook.io/docker_practice/install/mirror)
+
 参考
 
 - [Check connection between nodes if there is no 'ping' command](https://superuser.com/questions/1270370/check-connection-between-nodes-if-there-is-no-ping-command)
