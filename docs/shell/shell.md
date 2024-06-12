@@ -287,7 +287,11 @@ Create a random password
 
 
 
-## [ssh隧道](https://www.lixueduan.com/posts/linux/07-ssh-tunnel/)
+## [ssh隧道1](https://www.lixueduan.com/posts/linux/07-ssh-tunnel/)
+## [ssh隧道2](https://jeremyxu2010.github.io/2018/12/ssh%E7%9A%84%E4%B8%89%E7%A7%8D%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/)
+## [ssh隧道3](https://wangdoc.com/ssh/port-forwarding)
+
+
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)

@@ -60,6 +60,7 @@ export const SidebarConfig = {
                 '/others/uniapp.md',
                 '/others/gradle_basic.md',
                 '/others/tools.md',
+                '/others/messageDigest.md',
             ],
         },
     ],

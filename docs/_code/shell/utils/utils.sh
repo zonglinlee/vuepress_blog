@@ -98,3 +98,16 @@ function utils_echoCommonCommand() {
 function utils_sshGenKey() {
   ssh-keygen
 }
+
+# 判断一个命令是否存在 program_exists(redis-server)
+program_exists() {
+    local ret='0'
+    command -v $1 >/dev/null 2>&1 || { local ret='1'; }
+
+    # fail on non-zero return value
+    if [ "$ret" -ne 0 ]; then
+        return 1
+    fi
+
+    return 0
+}
