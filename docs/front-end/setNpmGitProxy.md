@@ -176,6 +176,12 @@ windows 下 `make` 环境搭建，将 `react-draggable` 仓库克隆到 Cygwin �
 
 
 
+## chrome disable cors
+```shell
+chrome.exe --user-data-dir="C:/Chrome dev session" --disable-web-security
+```
+
+
 
 ## [How are "mvn clean package" and "mvn clean install" different?](https://stackoverflow.com/questions/16602017/how-are-mvn-clean-package-and-mvn-clean-install-different)
 
