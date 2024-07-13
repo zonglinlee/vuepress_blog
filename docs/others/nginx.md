@@ -38,6 +38,74 @@ location /download/ {
  }
 
 ```
+## nginx forward proxy （[nginx正向代理模块](https://github.com/chobits/ngx_http_proxy_connect_module?tab=readme-ov-file#install)）
+
+此模块需要额外编译,先下载 `nginx` 源码和 `ngx_http_proxy_connect_module` 源码
+
+```shell
+cd /home/download
+wget https://nginx.org/download/nginx-1.24.0.tar.gz
+tar zxvf nginx-1.24.0.tar.gz
+git clone git@github.com:chobits/ngx_http_proxy_connect_module.git
+```
+打补丁，然后将模块添加后源码编译安装 nginx,注意这个过程需要一次成功，如果报错则移除 nginx源码目录，重新解压nginx源码后再尝试安装
+@[code shell](../_code/shell/install_nginx1.24_from_source.sh)
+
+nginx正向代理配置 conf 文件
+```shell
+server {
+    listen                         3127;
+    server_name 127.0.0.1;	
+    # dns resolver used by forward proxying
+    resolver                       114.114.114.114;
+
+    # forward proxy for CONNECT requests
+    proxy_connect;
+    proxy_connect_allow            443 563;
+    proxy_connect_connect_timeout  10s;
+    proxy_connect_data_timeout     10s;
+
+    # defined by yourself for non-CONNECT requests
+    # Example: reverse proxy for non-CONNECT requests
+    location / {
+        proxy_pass http://$host;
+        proxy_set_header Host $host;
+    }
+}
+
+
+server {
+    listen                         3128 default;
+    server_name 127.0.0.1;	
+    # self signed certificate generated via openssl command
+    ssl_certificate_key            /etc/nginx/cert/default.key;
+    ssl_certificate                /etc/nginx/cert/default.crt;
+    ssl_session_cache              shared:SSL:1m;
+
+    # dns resolver used by forward proxying
+    resolver                       114.114.114.114;
+
+    # forward proxy for CONNECT request
+    proxy_connect;
+    proxy_connect_allow            443 563;
+    proxy_connect_connect_timeout  10s;
+    proxy_connect_data_timeout     10s;
+
+    # defined by yourself for non-CONNECT request
+    # Example: reverse proxy for non-CONNECT requests
+    location / {
+        proxy_pass http://$host;
+        proxy_set_header Host $host;
+    }
+}
+
+```
+
+正向代理测试命令
+```shell
+curl http://www.baidu.com  -v -x 127.0.0.1:3127
+curl https://github.com/ -v -x 127.0.0.1:3128
+```
 ## reference
 
 - [nginx跨域配置1](https://www.cnblogs.com/fnz0/p/15803011.html)
@@ -46,3 +114,4 @@ location /download/ {
 - [nginx 负载均衡](https://www.jb51.net/article/246881.htm)
 - [nginx core module](https://nginx.org/en/docs/http/ngx_http_core_module.html#var_server_port)
 - [nginx 代理转发 传递真实 ip 地址](https://learnku.com/articles/69306)
+- [How to Build NGINX from Source on Ubuntu 20.04 LTS](https://www.alibabacloud.com/blog/how-to-build-nginx-from-source-on-ubuntu-20-04-lts_597793)

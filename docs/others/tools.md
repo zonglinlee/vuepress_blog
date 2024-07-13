@@ -25,3 +25,8 @@ title: 常用工具
 ## 截图/拾取颜色/屏幕录制
 
 [picPick](https://picpick.app/en/)
+
+## windows激活工具
+
+[Microsoft-Activation-Scripts](https://github.com/massgravel/Microsoft-Activation-Scripts/tree/master)
+用法：下载[这个cmd文件](https://github.com/massgravel/Microsoft-Activation-Scripts/tree/master/MAS/All-In-One-Version)，运行即可

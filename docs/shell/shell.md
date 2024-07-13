@@ -19,6 +19,14 @@ cat ~/.ssh/id_rsa.pub | ssh root@192.168.10.213  'cat >> .ssh/authorized_keys &&
 #方法二
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.10.213
 ```
+## [ssh 生成ssl证书](https://stackoverflow.com/questions/10175812/how-to-generate-a-self-signed-ssl-certificate-using-openssl)
+```shell
+# interactive
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
+
+# non-interactive and 10 years expiration
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
+```
 
 
 ### ssh启用root登录
@@ -30,6 +38,11 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.10.213
 PermitRootLogin yes ##允许root登陆
 PasswordAuthentication yes ##允许用密码方式登陆
 ```
+
+
+## [linux 修改 dns](https://blog.csdn.net/zhuan_long/article/details/104835368)
+
+
 
 ## [Windows上的shell脚本在Linux上执行不了](https://stackoverflow.com/questions/14219092/bash-script-and-bin-bashm-bad-interpreter-no-such-file-or-directory)
 
