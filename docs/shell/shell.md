@@ -301,10 +301,40 @@ Create a random password
 
 
 ## [ssh隧道1](https://www.lixueduan.com/posts/linux/07-ssh-tunnel/)
+```shell
+# ssh本地转发  将远程 remote-host-ip:8848 端口转发到 localhost:8848,浏览器直接访问8848即可
+ssh -N -L 8848:localhost:8848 root@remote-host-ip
+```
 ## [ssh隧道2](https://jeremyxu2010.github.io/2018/12/ssh%E7%9A%84%E4%B8%89%E7%A7%8D%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/)
 ## [ssh隧道3](https://wangdoc.com/ssh/port-forwarding)
 
 
+
+## 中间件初始化注意事项
+### redis
+```shell
+daemonize yes # 可以后台运行 默认 no
+port 6379   # 默认端口
+requirepass 123456 #默认没有密码
+bind 127.0.0.1 #修改绑定IP
+```
+
+修改端口后测试 `redis-cli -p 63791 ping`
+指定配置文件启动redis `./redis-server /usr/local/redis/etc/redis.conf &`
+
+### [nacos](https://nacos.io/zh-cn/docs/auth.html)
+启动命令 `sh startup.sh -m standalone`
+```shell
+nacos.core.auth.system.type=nacos
+nacos.core.auth.enabled=true
+# 自定义密钥时，推荐将配置项设置为Base64编码的字符串，且原始密钥长度不得低于32字符
+nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+```
+### springboot
+### nginx
+```shell
+autoindex off;
+```
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)
