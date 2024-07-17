@@ -323,16 +323,34 @@ bind 127.0.0.1 #修改绑定IP
 指定配置文件启动redis `./redis-server /usr/local/redis/etc/redis.conf &`
 
 ### [nacos](https://nacos.io/zh-cn/docs/auth.html)
-启动命令 `sh startup.sh -m standalone`
+进入 nacos bin目录`/nacosInstallFolder/nacos/bin`，启动命令 `sh startup.sh -m standalone`
 ```shell
+#配置文件路径： /nacosInstallFolder/nacos/conf/application.properties
 nacos.core.auth.system.type=nacos
 nacos.core.auth.enabled=true
 # 自定义密钥时，推荐将配置项设置为Base64编码的字符串，且原始密钥长度不得低于32字符
 nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
-### springboot
+### spring-boot
+- 关闭swagger /api/doc.html
+|![auth.yaml](../images/java/springboot_auth_ignore_file.png)
+- 关闭 Actuator
+```yaml
+# 关闭 Actuator 
+management:
+  server:
+    port: -1  # 修改端口，跳过安全漏洞扫描
+  endpoints:
+    enabled: false
+    enabled-by-default: false
+    web:
+      exposure:
+        include: '*'
+```
+
 ### nginx
 ```shell
+#关闭目录遍历
 autoindex off;
 ```
 ## Reference
