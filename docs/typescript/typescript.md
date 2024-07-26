@@ -747,3 +747,35 @@ class Params {
 const a = new Params(1, 2, 3);
 console.log(a.x);
 ```
+
+
+
+### 常用类型写法
+```ts
+// Index Signatures
+const stuff: { [key: string]: string | number; } = {};
+
+// keyof 用法 https://refine.dev/blog/typescript-keyof/#typescript-keyof-a-remapped-type-example
+
+const account = {
+  username: "",
+  email: "",
+  password: "",
+  role: "",
+};
+
+type TAccount = typeof account; // { username: string; email: string; password: string; role: string; }
+
+type TAccountKeys = keyof TAccount; // Explicitly: "username" | "email" | "password" | "role"
+
+// Mapped Types
+type TEntityPropsMapper<T> = {
+  [Property in keyof T]: {
+    protectedField: boolean;
+    description: string;
+  };
+};
+
+type TAccountProps = TEntityPropsMapper<TAccount>;
+
+```
