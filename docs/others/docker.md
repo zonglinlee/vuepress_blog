@@ -44,7 +44,8 @@ docker-compose up -d
 docker-compose down
 docker-compose restart
 #查看指定服务的最后 1000 行日志
-docker-compose logs --tail 1000 service-name
+docker-compose logs -f --tail 1000 service-name
+docker-compose down && docker-compose up -d && docker-compose logs -f --tail 1000
 ```
 
 ## 使用 busybox 测试网络
@@ -156,7 +157,9 @@ docker rmi imageId
 
 [docker 配置镜像加速](https://yeasy.gitbook.io/docker_practice/install/mirror)
 
-参考
+
+
+## 参考
 
 - [Check connection between nodes if there is no 'ping' command](https://superuser.com/questions/1270370/check-connection-between-nodes-if-there-is-no-ping-command)
 - [How to NGINX Reverse Proxy outside of Docker to proxy_pass to docker containers](https://stackoverflow.com/questions/52823279/how-to-nginx-reverse-proxy-outside-of-docker-to-proxy-pass-to-docker-containers)

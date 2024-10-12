@@ -353,6 +353,11 @@ management:
 #关闭目录遍历
 autoindex off;
 ```
+
+
+### java jar包 utf8启动
+`java -Dfile.encoding=UTF-8 -jar  app.jar`
+
 ## Reference
 
 - [linux command](https://wangchujiang.com/linux-command/)
