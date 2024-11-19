@@ -208,5 +208,13 @@ export const SidebarConfig = {
                 '/python/starter.md',
             ],
         },
+    ],
+    '/english/': [
+        {
+            text: 'English',
+            children: [
+                '/english/english2024_11.md',
+            ],
+        },
     ]
 }
