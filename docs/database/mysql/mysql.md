@@ -24,7 +24,7 @@ ALTER TABLE tableName AUTO_INCREMENT = max_id_value + 1;
 - `HEX()`:	Hexadecimal representation of decimal or string value
 - `AES_ENCRYPT(str,key_str)`:	Encrypt using AES
 - `AES_DECRYPT(crypt_str,key_str)`: Decrypt using AES
-- `GROUP_CONCAT()`:	Return a concatenated string
+- `GROUP_CONCAT()`:	Return a concatenated string, `GROUP_CONCAT(t2.name ORDER BY t2.project_step SEPARATOR  '@@@')`
 ```sql
 -- 以下 GROUP_CONCAT 查询会得到： A;B;C
 USE testdb;
@@ -42,6 +42,8 @@ SET @j = '{"a": 1, "b": 2, "c": {"d": 4}}';
 SET @j2 = '1';
 SELECT JSON_CONTAINS(@j, @j2, '$.a');
 ```
+
+
 
 ## Reference
 

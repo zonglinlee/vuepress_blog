@@ -106,6 +106,19 @@ server {
 curl http://www.baidu.com  -v -x 127.0.0.1:3127
 curl https://github.com/ -v -x 127.0.0.1:3128
 ```
+
+
+
+## nginx http 转 https
+
+```shell
+server
+{
+        listen 80;
+        server_name foo.com bar.com servername.com;
+        return 301 https://$host$request_uri;
+}
+```
 ## reference
 
 - [nginx跨域配置1](https://www.cnblogs.com/fnz0/p/15803011.html)
