@@ -60,6 +60,9 @@ actions:
 - text: Miscellaneous
   link: /others/github.html
   type: primary
+- text: Miscellaneous
+  link: /english/english2024_11.html
+  type: primary
   footer: Hello-world!
 
 ---
