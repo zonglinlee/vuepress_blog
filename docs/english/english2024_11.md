@@ -32,18 +32,26 @@ title: english_2024_11
 
 - The morning rush hour was in full swing, with cars honking and people bustling about. As I made my way to school with
   my child, I noticed a man riding an electric scooter just ahead of me. On the backseat sat his son, his small backpack
-  securely fastened to his shoulders. They were on their way to school, just like many of us in the crowd.
+  securely fastened to his shoulders. They were on their way to school, just like many of us in the crowd.As they waited
+  at the pedestrian crossing for the traffic light to turn green, the noise and movement around them filled
+  the air with chaos. The moment the light changed, the man started across the street. But just as he moved forward, the
+  thermos—carefully packed in his son’s backpack—slipped out and fell onto the pavement with a muted thud. Neither the
+  man nor his son noticed it, but someone in the crowd behind them called out to alert him. By the time he
+  turned his head to check, he had already crossed to the other side of the street. He stopped there, glancing back at
+  the
+  thermos lying on the road. For a moment, he seemed to hesitate, perhaps considering whether he could safely return to
+  retrieve it. But as the traffic light turned red and cars began streaming by, the chance was gone. He stood there
+  briefly, then decided to keep moving, leaving the thermos behind. Later, as I retraced my route, I saw the thermos
+  again. It had been flattened by the passing cars, reduced to a broken
+  and unrecognizable piece of metal. It seemed unlikely the man would come back for it, especially now that it was
+  beyond
+  repair.
 
-As they waited at the pedestrian crossing for the traffic light to turn green, the noise and movement around them filled
-the air with chaos. The moment the light changed, the man started across the street. But just as he moved forward, the
-thermos—carefully packed in his son’s backpack—slipped out and fell onto the pavement with a muted thud.
+### 11_26
 
-Neither the man nor his son noticed it, but someone in the crowd behind them called out to alert him. By the time he
-turned his head to check, he had already crossed to the other side of the street. He stopped there, glancing back at the
-thermos lying on the road. For a moment, he seemed to hesitate, perhaps considering whether he could safely return to
-retrieve it. But as the traffic light turned red and cars began streaming by, the chance was gone. He stood there
-briefly, then decided to keep moving, leaving the thermos behind.
-
-Later, as I retraced my route, I saw the thermos again. It had been flattened by the passing cars, reduced to a broken
-and unrecognizable piece of metal. It seemed unlikely the man would come back for it, especially now that it was beyond
-repair.
+- Being a software engineer, I spent a lot of time in front of computers, leading to dry eyes for about two years.
+  Despite numerous hospital visits and various eye check-ups, all results indicated that the eyes were fine, which was
+  frustrating because the discomfort persisted. Eventually, I discovered that taking lutein was helpful. However,
+  after accidentally exposing a bottle of lutein to sunlight, its effectiveness seemed to decrease. To ensure the
+  effectiveness of lutein supplements, it's important to store them in a cool, dark place, away from moisture, follow
+  the recommended dosage
