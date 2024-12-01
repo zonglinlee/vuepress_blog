@@ -55,3 +55,19 @@ title: english_2024_11
   after accidentally exposing a bottle of lutein to sunlight, its effectiveness seemed to decrease. To ensure the
   effectiveness of lutein supplements, it's important to store them in a cool, dark place, away from moisture, follow
   the recommended dosage
+
+### 11_30
+
+- In the same way, if the United States prohibits all trade with China, they will force China to change its
+  export-oriented economy.
+- `all walks of life`: people from various backgrounds
+
+- `sales pitch` is a persuasive message or presentation designed to convince someone to buy a product, service, or idea.
+- `Low-end` is practical and cost-effective but lacks premium quality and features. `High-end` is luxurious and
+  high-quality, aimed at those who value excellence and are willing to pay more for it.
+
+- Countries like China buy these things but if the U.S. puts up `tariff walls` they will just look elsewhere. That’s
+  exactly what happened with `soybeans` - prior to Trump China `sourced` most of it soybeans from the U.S., and since
+  they’ve sourced most of them from Europe.
+
+- if god comes to you and asks for some dirt from your land, don't give it
