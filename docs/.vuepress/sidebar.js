@@ -61,6 +61,7 @@ export const SidebarConfig = {
                 '/others/gradle_basic.md',
                 '/others/tools.md',
                 '/others/messageDigest.md',
+                '/others/messageDigest.md',
             ],
         },
     ],
@@ -157,6 +158,7 @@ export const SidebarConfig = {
             text: 'Shell',
             children: [
                 '/shell/shell.md',
+                '/shell/gcc.md',
                 '/shell/clash_install.md',
                 '/shell/mysql_install.md',
                 '/shell/samba_install.md',

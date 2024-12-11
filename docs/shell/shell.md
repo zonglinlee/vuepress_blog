@@ -380,6 +380,9 @@ autoindex off;
 - [devops-exercises | linux](https://github.com/bregman-arie/devops-exercises/blob/master/exercises/linux/README.md)
 - [在 Windows 中使用 Cygwin](https://wxsm.space/2021/windows-idea-cygwin/)
 - [bash-source-command](https://opensource.com/article/20/6/bash-source-command)
+- [tr command](https://www.baeldung.com/linux/tr-command)
+- [sed command](https://phoenixnap.com/kb/sed-replace)
+- [awk command](https://www.tutorialspoint.com/awk/awk_workflow.htm)
 
 
 
