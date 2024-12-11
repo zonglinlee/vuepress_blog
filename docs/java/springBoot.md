@@ -67,3 +67,31 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 - [spring boot 配置项查看](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.developing-auto-configuration.understanding-auto-configured-beans)
   ![spring boot auto configuration](../images/java/spring-boot-autoconfiguration.png)
 - [spring-boot 文档以及配置项](https://docs.spring.io/spring-boot/docs/2.0.1.RELEASE/reference/htmlsingle/#common-application-properties)
+- [mvn cli options](https://maven.apache.org/ref/3.6.1/maven-embedder/cli.html)
+- [spring-boot-maven-plugin 默认继承参数](https://docs.spring.io/spring-boot/maven-plugin/using.html)
+
+- [spring-boot 项目 lib 包和项目 class 文件分开打包](https://www.cnblogs.com/qdhxhz/p/17477778.html)
+
+```xml
+<!--需要先正常打包，将lib文件夹拷贝出来，然后在使用 ZIP layout 打包，启动的时候需要指定lib包路径  java -Dloader.path=./lib -jar app.jar-->
+        
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <executable>true</executable>
+                <layout>ZIP</layout>
+                <!--这里是填写需要包含进去的jar，必须项目中的某些模块，会经常变动，那么就应该将其坐标写进来,如果没有则 nothing(不一定非要填写nothing，因为项目中没有一个叫nothing的依赖，所以打出来的包中就不包含任何依赖) ，表示不打包依赖 -->
+                <includes>
+                    <include>
+                        <groupId>nothing</groupId>
+                        <artifactId>nothing</artifactId>
+                    </include>
+                </includes>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
