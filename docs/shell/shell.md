@@ -320,7 +320,7 @@ bind 127.0.0.1 #修改绑定IP
 ```
 
 修改端口后测试 `redis-cli -p 63791 ping`
-指定配置文件启动redis `./redis-server /usr/local/redis/etc/redis.conf &`
+指定配置文件启动redis `./redis-server /usr/local/redis/etc/redis.conf`
 
 ### [nacos](https://nacos.io/zh-cn/docs/auth.html)
 进入 nacos bin目录`/nacosInstallFolder/nacos/bin`，启动命令 `sh startup.sh -m standalone`
@@ -357,6 +357,10 @@ autoindex off;
 
 ### java jar包 utf8启动
 `java -Dfile.encoding=UTF-8 -jar  app.jar`
+
+### mvn 指定配置文件
+
+`mvn clean package --settings F:\lzl_workspace\project_setting\mvn_settings.xml`
 
 ## Reference
 
