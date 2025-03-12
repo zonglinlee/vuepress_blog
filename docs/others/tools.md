@@ -26,7 +26,15 @@ title: 常用工具
 
 [picPick](https://picpick.app/en/)
 
+## 免费的磁盘空间分析工具
+
+[spaceSniffer](http://www.uderzo.it/main_products/space_sniffer/)
+
 ## windows激活工具
 
 [Microsoft-Activation-Scripts](https://github.com/massgravel/Microsoft-Activation-Scripts/tree/master)
 用法：下载[这个cmd文件](https://github.com/massgravel/Microsoft-Activation-Scripts/tree/master/MAS/All-In-One-Version)，运行即可
+
+
+## 有用的网站
+- [Libraries.io 包排行网站，npm maven](https://libraries.io)

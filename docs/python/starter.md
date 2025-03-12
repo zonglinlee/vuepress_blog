@@ -13,11 +13,14 @@ title: python starter
 ## [python 项目依赖文件导出](https://www.cnblogs.com/yoyo008/p/9923092.html)
 
 ```shell
-# 导出依赖
-pip3 freeze >requirements.txt
-# 安装依赖
-pip3 install -r requirements.txt
+#创建虚拟环境
+python3 -m venv myenv
+#激活虚拟环境
+source myenv/bin/activate
+#安装依赖
+pip install -r requirements.txt --proxy=192.168.1.5:1081
+#查看已安装的包
+pip list
+#导出依赖项
+pip freeze > requirements.txt
 ```
-
-
-
