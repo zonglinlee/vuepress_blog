@@ -301,9 +301,14 @@ Create a random password
 
 
 ## [ssh隧道1](https://www.lixueduan.com/posts/linux/07-ssh-tunnel/)
+ssh隧道不论远程转发还是本地转发都是在本地执行 ssh 命令创建隧道
 ```shell
+# ssh 本地转发绕开防火墙限制
 # ssh本地转发  将远程 remote-host-ip:8848 端口转发到 localhost:8848,浏览器直接访问8848即可
-ssh -N -L 8848:localhost:8848 root@remote-host-ip
+ssh -v -N -L 8848:localhost:8848 root@remote-host-ip
+
+# ssh本地转发  将远程 remote-host-ip:63780 端口转发到 localhost:63780,然后在本地连接 127.0.0.1:63780,访问 redis 数据库
+ssh -v -N -L 63780:localhost:63780 root@remote-host-ip
 ```
 ## [ssh隧道2](https://jeremyxu2010.github.io/2018/12/ssh%E7%9A%84%E4%B8%89%E7%A7%8D%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/)
 ## [ssh隧道3](https://wangdoc.com/ssh/port-forwarding)
@@ -320,7 +325,7 @@ bind 127.0.0.1 #修改绑定IP
 ```
 
 修改端口后测试 `redis-cli -p 63791 ping`
-指定配置文件启动redis `./redis-server /usr/local/redis/etc/redis.conf &`
+指定配置文件启动redis `./redis-server /usr/local/redis/etc/redis.conf`
 
 ### [nacos](https://nacos.io/zh-cn/docs/auth.html)
 进入 nacos bin目录`/nacosInstallFolder/nacos/bin`，启动命令 `sh startup.sh -m standalone`
@@ -357,6 +362,10 @@ autoindex off;
 
 ### java jar包 utf8启动
 `java -Dfile.encoding=UTF-8 -jar  app.jar`
+
+### mvn 指定配置文件
+
+`mvn clean package --settings F:\lzl_workspace\project_setting\mvn_settings.xml`
 
 ## Reference
 

@@ -18,3 +18,4 @@ clash提供了 web api 管理端，访问网址 `http://clash.razord.top`, 输�
 - [如何在 Clash for Linux 上配置科学上网代理服务](https://xtrojan.vip/client/how-to-configure-scientific-internet-proxy-service-on-clash-for-linux.html)
 - [在 Linux 服务器上安装 Clash，以及开机自动启动](https://www.idcbuy.net/it/linux/2433.html)
 - [clash web-api 外网访问](https://luckyfuture.top/config-clash-on-linux.html#%E5%AE%89%E8%A3%85clash)
+- [Linux 一键安装 Clash](https://github.com/nelvko/clash-for-linux-install)

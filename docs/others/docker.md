@@ -157,7 +157,15 @@ docker rmi imageId
 
 [docker 配置镜像加速](https://yeasy.gitbook.io/docker_practice/install/mirror)
 
+## [docker 代理](https://stackoverflow.com/questions/51571686/ubuntu-18-04-error-response-from-daemon-get-https-registry-1-docker-io-v2/51648635#51648635)
+```shell
+cat /etc/systemd/system/docker.service.d/http-proxy.conf
 
+[Service]
+Environment=http_proxy=http://IP:PORT/
+Environment=no_proxy=localhost,127.0.0.1
+Environment=https_proxy=http://IP:PORT/
+```
 
 ## 参考
 
