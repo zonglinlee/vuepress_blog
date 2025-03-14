@@ -26,7 +26,26 @@ start http://localhost:8888
 
 https://baiyunju.cc/6196
 
+### windows 简单脚本
+```shell
+@echo off
 
+set JAR_PATH_1=D:\smenx\smenx-cloud-system.jar
+set redisPath=G:\Redis-x64-3.0.504\redis-server.exe
+set nacosPath=G:\nacos-server-2.0.3\nacos\bin\startup.cmd
+set nginxPath=E:\nginx-1.23.4\nginx-1.23.4\nginx.exe
+
+REM 执行exe文件
+start "" "%redisPath%"
+start "" "%nacosPath%"
+start "" "%nginxPath%"
+
+REM 启动第一个JAR包
+start "App1" java -Dfile.encoding=UTF-8  -jar %JAR_PATH_1%
+
+REM 可选：保持命令行窗口打开以查看输出
+pause
+```
 ### windows wsl
 ```shell
 # 查看已安装的 WSL 发行版
