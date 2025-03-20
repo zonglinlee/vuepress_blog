@@ -74,7 +74,7 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 ```xml
 <!--需要先正常打包，将lib文件夹拷贝出来，然后在使用 ZIP layout 打包，启动的时候需要指定lib包路径  java -Dloader.path=./lib -jar app.jar-->
-        
+
 <build>
     <plugins>
         <plugin>
@@ -96,15 +96,21 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 </build>
 ```
 
-
-
 ### springBoot 重要的类
+
 - `ApplicationContext`
-- `BeanFactory`
-- `ApplicationContextAware`
+- `BeanFactory` `BeanNameAware`
+- `ApplicationContextAware`：通过实现此接口，Bean 可以直接访问 ApplicationContext，从而能够动态获取其他 Bean、资源文件、环境配置等容器级功能
 - `ApplicationRunner` or `CommandLineRunner`
 - `JsonObjectSerializer` and `JsonObjectDeserializer`
+- `BeanPostProcessor`接口: 用于在 Spring 容器实例化、配置以及初始化 bean 的过程中对 bean 进行自定义处理。它允许开发者在 bean 的生命周期的特定阶段插入自定义逻辑，**
+  BeanPostProcessor** 会作用于容器中的所有 **bean**,：多个 **BeanPostProcessor** 可以通过实现 **Ordered** 接口或使用 **@Order** 注解来指定执行顺序。
+
+- `@Autowired` applies to fields, constructors, and multi-argument methods, allowing for narrowing through `@Qualifier`
+  annotations at the parameter level. In contrast, `@Resource` is supported only for fields and bean property setter
+  methods with a single argument.`@Resource` takes a name attribute. By default, Spring interprets that value as the
+  bean name to be injected
 
 
-
-ApplicationContextAware BeanNameAware
+- @Value is typically used to inject externalized properties
+- @PostConstruct and @PreDestroy: lifecycle annotations
