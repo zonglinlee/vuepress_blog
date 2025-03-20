@@ -98,4 +98,13 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 
 
+### springBoot 重要的类
+- `ApplicationContext`
+- `BeanFactory`
+- `ApplicationContextAware`
+- `ApplicationRunner` or `CommandLineRunner`
+- `JsonObjectSerializer` and `JsonObjectDeserializer`
+
+
+
 ApplicationContextAware BeanNameAware
