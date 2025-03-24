@@ -114,3 +114,13 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 - @Value is typically used to inject externalized properties
 - @PostConstruct and @PreDestroy: lifecycle annotations
+
+- @RequestParam:URL参数：适用于GET请求，参数拼接在URL中,`http://example.com/api?param1=value1&param2=value2`;表单参数：适用于POST请求，Content-Type为`application/x-www-form-urlencoded`，参数在请求体中以键值对形式传递。
+- @RequestBody: 适用于POST、PUT等请求，Content-Type为`application/json`
+- @ModelAttribute 表单参数：与`@RequestParam`类似，适用于Content-Type为`application/x-www-form-urlencoded`的POST请求。 JSON数据：与`@RequestBody`类似，适用于Content-Type为`application/json`的POST请求。
+- @RequestPart 文件上传：适用于`multipart/form-data`类型的请求，用于上传文件和其他表单数据
+- @PathVariable: 用于从URL路径中获取参数
+- @RequestHeader: 用途：用于获取请求头中的参数。
+- @CookieValue: 用途：用于获取请求中的Cookie值
+- @SessionAttribute: 用途：用于从HTTP Session中获取属性
+- 不同类型请求中混合使用@RequestParam、@RequestBody、@ModelAttribute和@RequestPart注解时，需要根据请求的Content-Type和具体需求进行搭配
