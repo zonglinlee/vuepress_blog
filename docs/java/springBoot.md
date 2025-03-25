@@ -124,3 +124,8 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 - @CookieValue: 用途：用于获取请求中的Cookie值
 - @SessionAttribute: 用途：用于从HTTP Session中获取属性
 - 不同类型请求中混合使用@RequestParam、@RequestBody、@ModelAttribute和@RequestPart注解时，需要根据请求的Content-Type和具体需求进行搭配
+
+- @DependsOn: forces certain other beans to be initialized first
+- @Profile: this annotation lets you indicate that a component is eligible for registration when one or more specified profiles are active.
+- ApplicationListener && ApplicationEvent && @EventListener :If a bean that implements the ApplicationListener interface is deployed into the context, every time an ApplicationEvent gets published to the ApplicationContext, that bean is notified.
+- Converter :
