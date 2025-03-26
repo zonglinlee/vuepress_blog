@@ -115,9 +115,11 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 - @Value is typically used to inject externalized properties
 - @PostConstruct and @PreDestroy: lifecycle annotations
 
-- @RequestParam:URL参数：适用于GET请求，参数拼接在URL中,`http://example.com/api?param1=value1&param2=value2`;表单参数：适用于POST请求，Content-Type为`application/x-www-form-urlencoded`，参数在请求体中以键值对形式传递。
+- @RequestParam:
+  URL参数：适用于GET请求，参数拼接在URL中,`http://example.com/api?param1=value1&param2=value2`;表单参数：适用于POST请求，Content-Type为`application/x-www-form-urlencoded`，参数在请求体中以键值对形式传递。
 - @RequestBody: 适用于POST、PUT等请求，Content-Type为`application/json`
-- @ModelAttribute 表单参数：与`@RequestParam`类似，适用于Content-Type为`application/x-www-form-urlencoded`的POST请求。 JSON数据：与`@RequestBody`类似，适用于Content-Type为`application/json`的POST请求。
+- @ModelAttribute 表单参数：与`@RequestParam`类似，适用于Content-Type为`application/x-www-form-urlencoded`的POST请求。
+  JSON数据：与`@RequestBody`类似，适用于Content-Type为`application/json`的POST请求。
 - @RequestPart 文件上传：适用于`multipart/form-data`类型的请求，用于上传文件和其他表单数据
 - @PathVariable: 用于从URL路径中获取参数
 - @RequestHeader: 用途：用于获取请求头中的参数。
@@ -126,6 +128,64 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 - 不同类型请求中混合使用@RequestParam、@RequestBody、@ModelAttribute和@RequestPart注解时，需要根据请求的Content-Type和具体需求进行搭配
 
 - @DependsOn: forces certain other beans to be initialized first
-- @Profile: this annotation lets you indicate that a component is eligible for registration when one or more specified profiles are active.
-- ApplicationListener && ApplicationEvent && @EventListener :If a bean that implements the ApplicationListener interface is deployed into the context, every time an ApplicationEvent gets published to the ApplicationContext, that bean is notified.
+- @Profile: this annotation lets you indicate that a component is eligible for registration when one or more specified
+  profiles are active.
+- ApplicationListener && ApplicationEvent && @EventListener :If a bean that implements the ApplicationListener interface
+  is deployed into the context, every time an ApplicationEvent gets published to the ApplicationContext, that bean is
+  notified.
 - Converter :
+
+### AOP
+
+AOP（面向切面编程）是一种编程范式，用于将横切关注点（如日志、事务管理、安全检查等）与业务逻辑分离。AOP 的实现主要依赖于 AOP 框架，其中最流行的两个框架是 **Spring AOP** 和 **AspectJ**。
+Spring AOP 基于动态代理（JDK 动态代理或 CGLIB），运行时织入,主要支持方法级别的拦截，不支持字段级或构造器级别的通知.AspectJ
+基于字节码修改，支持编译时、类加载时和运行时织入,支持更广泛的连接点类型，包括方法调用、字段访问、构造器调用等
+
+AOP 核心概念
+
+- 切面（Aspect）：封装横切关注点的模块，包含切入点和通知。
+- 切入点（Pointcut）：通过表达式定义通知触发的位置。
+- 通知（Advice）：在特定的连接点执行的动作，如方法执行前后执行的代码
+
+## jdbc
+JDBC（Java Database Connectivity，Java数据库连接）是一种用于执行SQL语句的Java API，它为多种关系数据库提供统一访问。JDBC由一组用Java语言编写的类和接口组成，使得数据库开发人员能够编写数据库应用程序。
+
+主要功能
+
+• **与数据库建立连接**：JDBC允许Java应用程序连接到各种关系型数据库，如MySQL、Oracle、PostgreSQL等。
+• **发送操作数据库的语句**：通过JDBC，可以执行各种SQL语句，包括查询、插入、更新和删除操作。
+• **处理结果**：JDBC提供了处理查询结果的方法，使得开发人员可以方便地获取和操作数据库中的数据。
+
+编程步骤
+
+1. **注册驱动**：加载并注册要使用的数据库驱动程序。
+2. **建立连接**：通过`DriverManager.getConnection()`方法建立与数据库的连接。
+3. **创建Statement对象**：使用`Connection.createStatement()`方法创建一个`Statement`对象，用于执行SQL语句。
+4. **执行SQL语句**：使用`Statement.executeQuery()`或`Statement.executeUpdate()`方法执行SQL查询或更新操作。
+5. **处理结果集**：如果执行的是查询操作，使用`ResultSet`对象遍历查询结果。
+6. **关闭资源**：操作完成后，关闭`ResultSet`、`Statement`和`Connection`对象，释放资源。
+
+DBC的应用场景
+
+• **数据库查询和更新**：使用JDBC可以方便地进行数据库查询和更新操作。
+• **数据库连接池**：在高并发的应用程序中，使用JDBC连接池可以提高性能并减少对数据库的连接请求。
+• **ORM框架**：许多Java ORM框架（如Hibernate和MyBatis）底层都使用JDBC来访问数据库。
+• **数据库工具**：许多数据库管理工具也使用JDBC与数据库进行通信和操作。
+
+
+
+
+Hibernate 是一个开放源代码的对象关系映射（ORM）框架，它对 JDBC 进行了轻量级的对象封装,使用HQL（Hibernate Query Language），这是一种面向对象的查询语言
+
+
+JTA（Java Transaction API） 定义：JTA是Java平台的一部分，用于支持分布式事务管理，允许应用程序在多个网络计算机资源上执行事务
+
+JPA（Java Persistence API） 定义：JPA是Java EE平台的一部分，用于对象关系映射（ORM），将Java对象持久化到关系型数据库中
+
+
+## 事务
+本地事务和全局事务是数据库事务管理的两种主要类型
+
+本地事务 定义：本地事务是指在单个数据库或资源管理器中执行的事务，事务的生命周期完全由该资源管理器控制。典型的本地事务使用数据库提供的ACID特性来保证事务的原子性、一致性、隔离性和持久性，严格支持ACID特性，确保事务的可靠性和数据的一致性，只能管理单个数据库或资源，无法处理跨多个数据库或服务的事务
+
+全局事务 定义：全局事务是指跨越多个数据库、服务或资源管理器的事务，事务的生命周期由一个全局事务管理器（Transaction Manager）协调和管理。全局事务通常遵循X/Open DTP（Distributed Transaction Processing）模型，使用两阶段提交（2PC）协议来保证事务的原子性
