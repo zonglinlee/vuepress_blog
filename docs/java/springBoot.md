@@ -105,15 +105,25 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.slf4j.Slf4jImpl
 - `JsonObjectSerializer` and `JsonObjectDeserializer`
 - `BeanPostProcessor`接口: 用于在 Spring 容器实例化、配置以及初始化 bean 的过程中对 bean 进行自定义处理。它允许开发者在 bean 的生命周期的特定阶段插入自定义逻辑，**
   BeanPostProcessor** 会作用于容器中的所有 **bean**,：多个 **BeanPostProcessor** 可以通过实现 **Ordered** 接口或使用 **@Order** 注解来指定执行顺序。
+- `RequestContextHolder`:是 Spring 框架提供的一个工具类，用于在当前线程中存储和访问 HTTP 请求的上下文信息。它通过 ThreadLocal 机制来实现这一点，使得在应用的任何地方都能获取到当前请求的信息，而不需要直接传递这些信息作为方法参数。
 
+- `FilterRegistrationBean`: 是 Spring Framework 提供的一个类，主要用于在 Servlet 容器中注册自定义的 Filter。它允许开发者以编程方式配置过滤器，而不是通过传统的 web.xml 配置文件来完成。
+- `OncePerRequestFilter`
 - `@Autowired` applies to fields, constructors, and multi-argument methods, allowing for narrowing through `@Qualifier`
   annotations at the parameter level. In contrast, `@Resource` is supported only for fields and bean property setter
   methods with a single argument.`@Resource` takes a name attribute. By default, Spring interprets that value as the
   bean name to be injected
 
 
-- @Value is typically used to inject externalized properties
-- @PostConstruct and @PreDestroy: lifecycle annotations
+- `@Value` is typically used to inject externalized properties
+- `@PostConstruct` and `@PreDestroy`: lifecycle annotations
+- stereotype annotations: `@Component, @Service, @Repository,and @Controller`. Spring can automatically detect
+  stereotyped
+  classes and register corresponding BeanDefinition instances with the `ApplicationContext`.To autodetect these classes
+  and register the corresponding beans, you need to add `@ComponentScan` to your `@Configuration` class.By default,
+  classes annotated with @Component, @Repository, @Service, @Controller, @Configuration, or a custom annotation that
+  itself is annotated with @Component are the only detected candidate components.
+- @Configuration 来注解一个类，表明它的主要目的是作为Bean定义的来源。此外， @Configuration 类允许通过调用同一个类中的其他 @Bean 方法来定义bean间的依赖关系。
 
 - @RequestParam:
   URL参数：适用于GET请求，参数拼接在URL中,`http://example.com/api?param1=value1&param2=value2`;表单参数：适用于POST请求，Content-Type为`application/x-www-form-urlencoded`，参数在请求体中以键值对形式传递。
