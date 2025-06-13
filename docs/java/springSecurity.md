@@ -96,3 +96,8 @@ UserDetails
 CustomToken
 
 ![Authentication](../images/springSecurity/custom_token.png)
+
+
+
+
+
