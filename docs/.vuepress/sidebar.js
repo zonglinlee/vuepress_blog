@@ -189,6 +189,7 @@ export const SidebarConfig = {
                 '/java/ItextPdf.md',
                 '/java/springBoot.md',
                 '/java/springSecurity.md',
+                '/java/springSecurity1.md',
                 '/java/oAuth2.md',
                 '/java/java_api.md',
             ],
