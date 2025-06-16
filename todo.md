@@ -1,0 +1,15 @@
+rbac 关系模型（role based）
+
+自定义 token 拦截过滤器
+OncePerRequestFilter
+
+
+开启全局资源权限判定
+@EnableGlobalMethodSecurity
+权限不足处理class
+AccessDeniedHandler
+认证失败处理class
+AuthenticationEntryPoint
+
+自定义认证失败处理器
+AuthenticationFailureHandler
