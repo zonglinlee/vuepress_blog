@@ -36,6 +36,7 @@ export default {
       level: [1, 2, 3, 4],
     },
   },
+  clientConfigFile: path.resolve(__dirname, './client.js'),
   plugins: [
     copyCodePlugin({}),
     [

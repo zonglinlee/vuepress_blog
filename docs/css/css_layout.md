@@ -11,7 +11,7 @@ relative并分别配合right和left属性，以便左右两栏div移动后不遮
 缺点：正常情况下没有问题，但是特殊情况下就会暴漏此方案的弊端，如果浏览器无限放大时，圣杯将会破坏掉。当center部分的宽小于right部分时就会发生布局混乱。（`center<right`即会变形）
 
 
-<css-layout />
+<CssLayout />
 
 ```html
 
@@ -111,7 +111,7 @@ relative并分别配合right和left属性，以便左右两栏div移动后不遮
 
 [What's the difference between align-content and align-items?](https://stackoverflow.com/questions/27539262/whats-the-difference-between-align-content-and-align-items)
 
-<css-center />
+<CssCenter />
 
 
 ## css sticky position

@@ -192,6 +192,8 @@ export const SidebarConfig = {
                 '/java/springSecurity1.md',
                 '/java/oAuth2.md',
                 '/java/java_api.md',
+                '/java/springSecurity/springSecurity1.md',
+                '/java/springBoot/springBoot_core.md',
             ],
         },
     ],
