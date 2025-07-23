@@ -167,6 +167,32 @@ Environment=no_proxy=localhost,127.0.0.1
 Environment=https_proxy=http://IP:PORT/
 ```
 
+
+
+## docker-compose 启动 jar 文件(远程调试)
+远程jar启动调试端口
+```yaml
+services:
+  my-service:
+    image: eclipse-temurin:17
+    volumes:
+     - /home/jar/:/spring-boot
+    ports:
+     - "9002:9002"
+     - "5050:5050"
+    restart: always
+    container_name: my-service
+    environment:
+     - TZ=Asia/Shanghai
+    command:
+     - /bin/bash
+     - -c
+     - |
+       cd /spring-boot
+       java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5050   -jar  myApp.jar --server.port=9002
+```
+idea debug 启动
+![idea配置](../images/others/java_remote_debug.png)
 ## 参考
 
 - [Check connection between nodes if there is no 'ping' command](https://superuser.com/questions/1270370/check-connection-between-nodes-if-there-is-no-ping-command)

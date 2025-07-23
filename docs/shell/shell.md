@@ -392,6 +392,7 @@ autoindex off;
 - [tr command](https://www.baeldung.com/linux/tr-command)
 - [sed command](https://phoenixnap.com/kb/sed-replace)
 - [awk command](https://www.tutorialspoint.com/awk/awk_workflow.htm)
+- [linux-shell](https://aaltoscicomp.github.io/linux-shell/)
 
 
 
