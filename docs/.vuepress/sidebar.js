@@ -198,6 +198,12 @@ export const SidebarConfig = {
                 '/java/springBoot/springBoot_core.md',
             ],
         },
+        {
+            text: 'Maven',
+            children: [
+                '/java/maven/maven_basic.md',
+            ],
+        },
     ],
     '/android/': [
         {

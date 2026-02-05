@@ -370,3 +370,9 @@ public User getUserByNameAndAge(String name, int age) {
 `JdbcTemplate`：适合简单的SQL操作，使用位置参数（?）。
 `NamedParameterJdbcTemplate`：基于JdbcTemplate实现,适合复杂的SQL操作，使用命名参数（:paramName），更具可读性和灵活性。
 在实际开发中，可以根据具体需求选择合适的工具。如果需要处理复杂的SQL语句，推荐优先使用NamedParameterJdbcTemplate。
+
+
+
+## springBoot 中 自动装配 Bean
+
+![AccountAuthenticationProvider](../images/springboot/autobean.png)

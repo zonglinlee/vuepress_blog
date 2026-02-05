@@ -62,6 +62,37 @@ git tag
 
 ```
 
+
+### git stash
+```shell
+# 查看暂存列表 stash@{n} 是暂存的标识，n 从 0 开始（最新的暂存）。
+git stash list
+
+# 恢复指定的stash并删除栈信息（以下两种方式都可以，推荐纯数字写法）
+git stash pop 1
+git stash pop stash@{1}
+
+# 恢复指定的stash，不删除栈信息（比如stash@{1}）
+git stash apply 1
+git stash apply stash@{1}
+
+#  删除指定的stash记录
+git stash drop 1
+git stash drop stash@{1}
+
+```
+
+
+### git branch
+```shell
+# 切换分支：推荐
+git switch dev
+git checkout dev
+
+# 显示分支
+git branch
+```
+
 ## FAQ
 
 ### Git origin/master
