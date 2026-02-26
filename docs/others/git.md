@@ -65,6 +65,7 @@ git tag
 
 ### git stash
 ```shell
+git stash save 'commit message'
 # 查看暂存列表 stash@{n} 是暂存的标识，n 从 0 开始（最新的暂存）。
 git stash list
 

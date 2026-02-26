@@ -196,6 +196,11 @@ export const SidebarConfig = {
                 '/java/java_api.md',
                 '/java/springSecurity/springSecurity1.md',
                 '/java/springBoot/springBoot_core.md',
+                '/java/java_basic.md',
+                '/java/java_deep_clone.md',
+                '/java/Comparator_vs_Comparable.md',
+                '/java/java_generic.md',
+                '/java/java_annotation.md',
             ],
         },
         {
