@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-122b460e","path":"/vue2/vue_migration.html","title":"vue_migration","lang":"zh-CN","frontmatter":{"title":"vue_migration"},"headers":[],"git":{"updatedTime":1692082048000,"contributors":[{"name":"lizonglin","email":"173389705@qq.com","commits":1}]},"filePathRelative":"vue2/vue_migration.md"}');export{t as data};

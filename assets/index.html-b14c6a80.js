@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-6d0a518d","path":"/code/components/TinyMceEditor/tinymce/langs/","title":"","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1701050681000,"contributors":[{"name":"lizonglin","email":"173389705@qq.com","commits":1}]},"filePathRelative":"_code/components/TinyMceEditor/tinymce/langs/README.md"}');export{e as data};

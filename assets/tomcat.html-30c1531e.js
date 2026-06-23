@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-24add022","path":"/others/tomcat.html","title":"tomcat","lang":"zh-CN","frontmatter":{"title":"tomcat"},"headers":[],"git":{"updatedTime":1701682295000,"contributors":[{"name":"lizonglin","email":"173389705@qq.com","commits":1}]},"filePathRelative":"others/tomcat.md"}');export{t as data};

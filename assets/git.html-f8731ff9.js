@@ -1,0 +1,44 @@
+import{_ as t,r as i,o as c,c as r,a as s,b as e,d as o,e as a}from"./app-6be1f847.js";const d={},l=a('<h2 id="git常用命令" tabindex="-1"><a class="header-anchor" href="#git常用命令" aria-hidden="true">#</a> git常用命令</h2><h3 id="git-rebase" tabindex="-1"><a class="header-anchor" href="#git-rebase" aria-hidden="true">#</a> git rebase</h3><p>Note: <strong>永远不要去 rebase 本地之外的任何提交</strong></p><h4 id="用法一-通过-rebase-策略执行-git-pull" tabindex="-1"><a class="header-anchor" href="#用法一-通过-rebase-策略执行-git-pull" aria-hidden="true">#</a> 用法一:通过 rebase 策略执行 git pull</h4><ul><li><code>git pull</code> 实际上等于 <code>git fetch + git merge</code>,这样会添加一条 merge 的commit记录。 我们可以在第二步直接用 <code>git rebase</code> 替换 <code>git merge</code> 来合并 fetch 取得的变更，作用同样是避免额外的 merge 提交以保持线性的提交历史。也可以 用 <code>git pull --rebase</code> 命令来代替 <code>git fetch + git rebase</code></li></ul><h4 id="用法二-合并多个没有意义的-commit" tabindex="-1"><a class="header-anchor" href="#用法二-合并多个没有意义的-commit" aria-hidden="true">#</a> 用法二: 合并多个没有意义的 commit</h4><ul><li><code>git rebase -i [start] [end]</code>,-i 会唤起交互式界面让用户编辑以完成变基操作，其中<code>[start]与[end]</code>分别对应了需要操作的commit id区间 <strong>(左开右闭)</strong>， 如果省略了<code>[end]</code> ，则该区间的终点默认是当前分支HEAD所指向的commit</li></ul>',7),p={href:"https://juejin.cn/post/6844904089722208270",target:"_blank",rel:"noopener noreferrer"},m=a(`<h3 id="git-reset-vs-git-revert-版本回退" tabindex="-1"><a class="header-anchor" href="#git-reset-vs-git-revert-版本回退" aria-hidden="true">#</a> <code>git reset</code> vs <code>git revert</code> (版本回退)</h3><p>Note: <strong>已经push到远程仓库的commit不允许reset</strong>, 如果commit已经被push到远程仓库上了，也就意味着其他开发人员就可能基于这个commit形成了新的commit，这时你去reset，就会造成其他开发人员的提交历史莫名其妙的丢失 <code>git reset</code> 会回退当前 <code>HEAD</code> 到指定 <code>commit id</code>, 比如现在有 <code>commit1, commit2, commit3</code> 共三条 commit 记录，现在需要回退到 <code>commit1</code> ,回退之后，<code> commit2, commit3</code>的提交信息在默认(--mixed情况下)会被 放到缓冲区</p><p><code>git reset</code> 选项</p><div class="language-text line-numbers-mode" data-ext="text"><pre class="language-text"><code>--mixed 重置索引，但不重置工作树，更改后的文件标记为未提交（add）的状态。默认操作。
+--soft 回退后a分支修改的代码被保留并标记为add的状态（git status 是绿色的状态）
+--hard 重置索引和工作树，并且a分支修改的所有文件和中间的提交，没提交的代码都被丢弃了。
+--merge 和--hard类似，只不过如果在执行reset命令之前你有改动一些文件并且未提交，merge会保留你的这些修改，hard则不会。【注：如果你的这些修改add过或commit过，merge和hard都将删除你的提交】
+--keep 和--hard类似，执行reset之前改动文件如果是a分支修改了的，会提示你修改了相同的文件，不能合并。如果不是a分支修改的文件，会移除缓存区。git status还是可以看到保持了这些修改。
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><code>git revert</code> 回撤销历史提交中的指定 commit id,但是它的 HEAD 不是往回退，而是重新创建一个 commit 记录，让 HEAD 前进一步，相当于创建一个撤销的commit来对冲历史提交的记录</p><h3 id="git-cherry-pick-https-www-ruanyifeng-com-blog-2020-04-git-cherry-pick-html" tabindex="-1"><a class="header-anchor" href="#git-cherry-pick-https-www-ruanyifeng-com-blog-2020-04-git-cherry-pick-html" aria-hidden="true">#</a> [git cherry-pick] (https://www.ruanyifeng.com/blog/2020/04/git-cherry-pick.html)</h3><h3 id="git-tag" tabindex="-1"><a class="header-anchor" href="#git-tag" aria-hidden="true">#</a> git tag</h3><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token comment"># 删除远程tag</span>
+<span class="token function">git</span> push origin <span class="token parameter variable">--delete</span> <span class="token operator">&lt;</span>tagname<span class="token operator">&gt;</span>
+<span class="token comment"># 删除本地分支tag</span>
+<span class="token function">git</span> tag <span class="token parameter variable">-d</span> <span class="token operator">&lt;</span>tagname<span class="token operator">&gt;</span>
+<span class="token comment"># 推送全部tag</span>
+<span class="token function">git</span> push origin <span class="token parameter variable">--tags</span>
+<span class="token comment"># 推送单个tag</span>
+<span class="token function">git</span> push origin <span class="token operator">&lt;</span>tagname<span class="token operator">&gt;</span>
+<span class="token comment"># 轻量tag</span>
+<span class="token function">git</span> tag <span class="token operator">&lt;</span>tagname<span class="token operator">&gt;</span>
+<span class="token comment"># 附注tag</span>
+<span class="token function">git</span> tag <span class="token parameter variable">-a</span> <span class="token operator">&lt;</span>tagname<span class="token operator">&gt;</span> <span class="token parameter variable">-m</span>  <span class="token string">&quot;tag submit msg&quot;</span>
+<span class="token comment"># 查看tag</span>
+<span class="token function">git</span> tag
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="git-stash" tabindex="-1"><a class="header-anchor" href="#git-stash" aria-hidden="true">#</a> git stash</h3><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token function">git</span> stash save <span class="token string">&#39;commit message&#39;</span>
+<span class="token comment"># 查看暂存列表 stash@{n} 是暂存的标识，n 从 0 开始（最新的暂存）。</span>
+<span class="token function">git</span> stash list
+
+<span class="token comment"># 恢复指定的stash并删除栈信息（以下两种方式都可以，推荐纯数字写法）</span>
+<span class="token function">git</span> stash pop <span class="token number">1</span>
+<span class="token function">git</span> stash pop stash@<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span>
+
+<span class="token comment"># 恢复指定的stash，不删除栈信息（比如stash@{1}）</span>
+<span class="token function">git</span> stash apply <span class="token number">1</span>
+<span class="token function">git</span> stash apply stash@<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span>
+
+<span class="token comment">#  删除指定的stash记录</span>
+<span class="token function">git</span> stash drop <span class="token number">1</span>
+<span class="token function">git</span> stash drop stash@<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">}</span>
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="git-branch" tabindex="-1"><a class="header-anchor" href="#git-branch" aria-hidden="true">#</a> git branch</h3><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token comment"># 切换分支：推荐</span>
+<span class="token function">git</span> switch dev
+<span class="token function">git</span> checkout dev
+
+<span class="token comment"># 显示分支</span>
+<span class="token function">git</span> branch
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="faq" tabindex="-1"><a class="header-anchor" href="#faq" aria-hidden="true">#</a> FAQ</h2><h3 id="git-origin-master" tabindex="-1"><a class="header-anchor" href="#git-origin-master" aria-hidden="true">#</a> Git origin/master</h3><blockquote><p>远程仓库名字 “origin” 与分支名字 “master” 一样，在 Git 中并没有任何特别的含义一样。 同时 “master” 是当你运行 git init 时默认的起始分支名字，原因仅仅是它的广泛使用，“origin” 是当你运行 git clone 时默认的远程仓库名字</p></blockquote>`,15);function g(u,h){const n=i("ExternalLinkIcon");return c(),r("div",null,[l,s("p",null,[e("参考链接: "),s("a",p,[e("git rebase的用法"),o(n)])]),m])}const b=t(d,[["render",g],["__file","/home/runner/work/vuepress_blog/vuepress_blog/docs/.vuepress/.temp/pages/others/git.html.vue"]]);export{b as default};

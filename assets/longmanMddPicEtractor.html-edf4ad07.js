@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-c8f60742","path":"/others/longmanMddPicEtractor.html","title":"mdx 图片提取","lang":"zh-CN","frontmatter":{"title":"mdx 图片提取"},"headers":[],"git":{"updatedTime":1693215307000,"contributors":[{"name":"lizonglin","email":"173389705@qq.com","commits":1}]},"filePathRelative":"others/longmanMddPicEtractor.md"}');export{t as data};

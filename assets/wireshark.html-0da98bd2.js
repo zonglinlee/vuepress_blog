@@ -1,0 +1,6 @@
+import{_ as e,o as s,c as a,e as c}from"./app-6be1f847.js";const p="/vuepress_blog/assets/wireshark1-7b3b7c55.png",r={},n=c(`<p>tcpdump 抓取的数据包顺序 基本与网络传输的物理顺序一致</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code><span class="token comment"># 捕获全部流量并保存到文件 app_traffic.pcap</span>
+tcpdump <span class="token parameter variable">-i</span> any <span class="token parameter variable">-w</span> app_traffic.pcap
+
+<span class="token comment"># 下载 app_traffic.pcap 到Windows上面，用 Wireshark 打开分析</span>
+wireshark app_traffic.pcap
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>在 Wireshark 中设置过滤条件(自定义过滤条件)，比如 <code>http</code></p><p>然后分析请求定位问题，如下，<code>springBoot</code> 项目接口报错 <code>The plain HTTP request was sent to HTTPS port</code>，最早开发时候由于没有配置 <code>https</code> 证书，接口不报错，之后 <code>7006</code> 端口改为了 <code>ssl</code> 端口，继续发送 <code>http</code> 请求到 <code>https</code> 端口报错</p><p><img src="`+p+'" alt="抓包"></p>',5),t=[n];function o(i,d){return s(),a("div",null,t)}const m=e(r,[["render",o],["__file","/home/runner/work/vuepress_blog/vuepress_blog/docs/.vuepress/.temp/pages/others/computerNetwork/wireshark.html.vue"]]);export{m as default};
