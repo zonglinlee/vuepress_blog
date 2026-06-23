@@ -57,6 +57,7 @@ export const SidebarConfig = {
                 '/others/computerNetwork/basic.md',
                 '/others/computerNetwork/linux_nat.md',
                 '/others/computerNetwork/wireshark.md',
+                '/others/computerNetwork/ipv4_forwarding.md',
                 '/others/longmanMddPicEtractor.md',
                 '/others/tomcat.md',
                 '/others/uniapp.md',

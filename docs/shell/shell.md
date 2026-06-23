@@ -315,6 +315,100 @@ ssh -v -N -L 63780:localhost:63780 root@remote-host-ip
 
 
 
+Setting up an SSH SOCKS proxy is a fantastic, lightweight way to solve this because it requires **zero configuration or installation** on the internet-connected server (Server B). You only need SSH access.
+
+Here is exactly how to set it up, use it, and make it permanent.
+
+
+### Step 1: Start the Proxy on the Offline Server (Server A)
+
+Run this command from **Server A** to connect to Server B and open a local SOCKS proxy port (we'll use `1080` as an example):
+
+```bash
+ssh -N -D 1080 user@Server_B_IP
+
+```
+
+**What those flags mean:**
+
+* `-D 1080`: Opens a "dynamic" port forwarding on your local port 1080. This turns your SSH client into a SOCKS proxy server.
+* `-N`: Tells SSH not to execute a remote command or open a shell. This is perfect for just forwarding ports so the terminal session hangs quietly.
+
+> 💡 **Tip:** If you want this to run in the background so it doesn't hijack your terminal, add the `-f` flag (i.e., `ssh -f -N -D 1080 user@Server_B_IP`).
+
+---
+
+### Step 2: Configure Your Tools to Use the Proxy
+
+Now that port `1080` on Server A is acting as an internet gateway, you can tell your applications to use it.
+
+#### For standard CLI tools (`curl`, `wget`)
+
+You can pass the proxy directly in the command:
+
+```bash
+# Test if it works
+curl --socks5-hostname localhost:1080 https://www.google.com
+
+# For wget
+wget -e use_proxy=yes -e socks_proxy=localhost:1080 https://example.com/file.tar.gz
+
+```
+
+*(Note: Using `--socks5-hostname` ensures that DNS resolution happens on Server B, preventing DNS leaks or failures on your offline server).*
+
+#### For Package Managers (`apt` or `yum`/`dnf`)
+
+If you need to update the OS on Server A:
+
+* **For Ubuntu/Debian (`apt`):**
+  Create or edit `/etc/apt/apt.conf.d/12proxy` and add:
+```text
+Acquire::socks::proxy "socks5h://localhost:1080/";
+
+```
+
+
+
+```
+*   **For RHEL/CentOS/Rocky (`dnf` or `yum`):**
+    Edit `/etc/dnf/dnf.conf` (or `yum.conf`) and add:
+    ```text
+    proxy=socks5h://localhost:1080
+
+```
+
+#### For Programming Environments (`Python`, `Node.js`)
+
+To download packages for your apps:
+
+```bash
+# For pip (Python)
+pip install --proxy socks5h://localhost:1080 requests
+
+# For npm (Node.js)
+npm config set proxy http://localhost:1080
+# Note: npm sometimes prefers an HTTP proxy; if it struggles, Method 1 (Squid/Tinyproxy) is better for npm.
+
+```
+
+---
+
+### Step 3: Keeping it Alive (Optional but Recommended)
+
+Standard SSH connections can drop if they are idle. If you want this proxy to be robust and reconnect automatically, install `autossh` on Server A and run:
+
+```bash
+autossh -f -M 0 -N -D 1080 user@Server_B_IP -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3"
+
+```
+
+This will run in the background and instantly rebuild the tunnel if the network blips.
+
+
+
+
+
 ## 中间件初始化注意事项
 ### redis
 ```shell
